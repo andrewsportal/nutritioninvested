@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="832" height="1248" viewBox="0 0 832 1248">
+  <rect width="832" height="1248" fill="#35714B"/>
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" text-anchor="middle">
+    <text x="416" y="560" fill="#FFFFFF" font-size="100" font-weight="800" letter-spacing="-2">NUTRITION,</text>
+    <text x="416" y="676" fill="#FFFFFF" font-size="100" font-weight="800" letter-spacing="-2">INVESTED</text>
+    <text x="420" y="1120" fill="#D4AF37" font-size="36" font-weight="600" letter-spacing="8">ANDREW RIOS</text>
+  </g>
+  <rect x="376" y="732" width="80" height="4" fill="#D4AF37"/>
+</svg>
