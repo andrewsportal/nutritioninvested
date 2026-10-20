@@ -2,13 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="theme-color" content="#F1F4EF">
-  <meta name="description" content="The Tactical Nutrition Playbook. Time is money. Pay yourself interest. A practical guide to building sustainable nutrition habits.">
+  <meta name="description" content="A survival guide to food. Five anchors. One plate. Ninety days. No apps, no trackers, no meal plans. Your hand is the only tool it takes.">
   <title>Nutrition, Invested</title>
 
+  <meta property="og:type" content="book">
+  <meta property="og:site_name" content="Nutrition, Invested">
+  <meta property="og:title" content="Nutrition, Invested by Andrew Rios">
+  <meta property="og:description" content="A survival guide to food. Five anchors. One plate. Ninety days.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Icons: drop one square image (512px or larger) in the repo and cut these three sizes from it -->
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
@@ -149,7 +156,7 @@
     }
 
     @media (max-height: 900px) {
-      .page-1 .page-inner { overflow-y: auto; overscroll-behavior-y: contain; touch-action: pan-y; }
+      .page-1 .page-inner { overflow-y: auto; overscroll-behavior-y: contain; touch-action: pan-y pinch-zoom; }
     }
 
     body.vp-short .page-1 .page-inner {
@@ -295,7 +302,7 @@
     .about-bio-wrap.at-bottom { --fade-bottom: 0px; --clear-bottom: 0px; }
     .about-bio-scroll {
       flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto;
-      touch-action: pan-y; overscroll-behavior-y: contain; scrollbar-width: none;
+      touch-action: pan-y pinch-zoom; overscroll-behavior-y: contain; scrollbar-width: none;
       padding: 2px 2px 14px;
     }
     .about-bio-scroll::-webkit-scrollbar { display: none; }
@@ -485,7 +492,7 @@
 
     .blurb-list {
       flex: 1; display: flex; flex-direction: column; gap: 0; padding: 6px 24px 6px 24px;
-      overflow-x: hidden; overflow-y: auto; touch-action: pan-y; overscroll-behavior-y: contain; scrollbar-width: none;
+      overflow-x: hidden; overflow-y: auto; touch-action: pan-y pinch-zoom; overscroll-behavior-y: contain; scrollbar-width: none;
     }
     .blurb-list::-webkit-scrollbar { display: none; }
     .blurb-list:focus-visible { outline-offset: -2px; }
@@ -653,8 +660,7 @@
 
       <div class="cover-wrapper">
         <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system" target="_blank" rel="noopener">
-          <img src="./cover.png" alt="Nutrition, Invested book cover" width="832" height="1248" fetchpriority="high" decoding="async"
-               onerror="if (!this.dataset.retried) { this.dataset.retried = '1'; this.src = './cover.PNG'; }">
+          <img src="./cover.jpg" alt="Nutrition, Invested book cover" width="832" height="1248" fetchpriority="high" decoding="async">
         </a>
       </div>
 
@@ -1317,6 +1323,7 @@
     }, { passive: true });
 
     document.addEventListener('touchmove', function (e) {
+      if (e.touches.length > 1) return;
       var scroller = null;
       if (blurbList && blurbList.contains(e.target)) { scroller = blurbList; }
       else if (aboutBioScroll && aboutBioScroll.contains(e.target)) { scroller = aboutBioScroll; }
