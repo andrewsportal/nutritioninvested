@@ -320,15 +320,6 @@
       object-fit: cover; object-position: 50% 24%; flex-shrink: 0;
       background: rgba(var(--accent-rgb), 0.10); -webkit-user-drag: none;
     }
-    .about-hero-wrap { position: relative; flex-shrink: 0; }
-    .about-hero-place {
-      position: absolute; right: 10px; bottom: 10px;
-      padding: 5px 10px; border-radius: var(--radius-pill);
-      background: var(--lg-bg); border: 1px solid var(--lg-border);
-      backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
-      font-size: 11px; font-weight: 600; letter-spacing: var(--track-wide);
-      color: var(--color-body); pointer-events: none;
-    }
     @media (max-height: 560px) { .about-hero { height: 120px; } }
     .about-platter-body {
       width: 100%; padding: 24px 28px 28px 28px;
@@ -1181,12 +1172,9 @@
           <path d="M15 18l-6-6 6-6"/>
         </svg>
       </button>
-      <div class="about-hero-wrap">
-        <img class="about-hero" src="./author.jpg" alt="Andrew Rios at Angkor Wat in Siem Reap, Cambodia"
-             width="640" height="1137" decoding="async"
-             onerror="this.parentNode.remove();">
-        <span class="about-hero-place">Angkor Wat, Cambodia</span>
-      </div>
+      <img class="about-hero" src="./author.jpg" alt="Andrew Rios at Angkor Wat in Siem Reap, Cambodia"
+           width="640" height="1137" decoding="async"
+           onerror="this.remove();">
       <div id="about-body" class="about-platter-body">
       <div id="about-id" class="about-id">
         <h2 class="about-name">Andrew Rios</h2>
