@@ -477,8 +477,8 @@
       .about-platter-body { padding: 28px 32px 32px; }
     }
 
-    /* The big title only shows beside the cover on wide screens; phones have it in the bar and on the cover */
-    .hero-title { display: none; }
+    /* The title and tagline show beside the cover on wide screens; on phones the cover itself carries them */
+    .hero-title, .hero-tagline { display: none; }
     .hero-copy { display: contents; }
 
     /* Computers and iPads held sideways: the bar's links in a row, wider sections side by side */
@@ -520,6 +520,7 @@
       .page-1 .preview-hint { grid-area: hint; align-self: start; }
       .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
       .hero-title { display: block; font-size: calc(var(--dt-ui) * 56px); line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
+      .hero-tagline { display: block; margin-top: 16px; font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.4; font-weight: 500; color: var(--color-body); }
       .page-1 .content-platter { width: 100%; max-width: 440px; margin-top: 40px; padding: 24px; }
       .page-1 .buy-btn { min-height: 50px; font-size: calc(var(--dt-ui) * 17px); }
 
@@ -643,6 +644,7 @@
 
       <div class="hero-copy">
       <p class="hero-title">Nutrition, Invested</p>
+      <p class="hero-tagline">A survival guide to food.<br>Five anchors. One plate. Ninety days.</p>
       <div id="buy" class="content-platter">
         <h1 class="headline">Get the Playbook<span class="divider" aria-hidden="true">—</span><span class="price">$9.99</span></h1>
 
