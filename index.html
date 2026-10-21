@@ -229,9 +229,11 @@
     }
     .site-nav-chevron { width: 12px; height: 12px; flex-shrink: 0; margin-left: 6px; color: var(--color-muted); transition: transform 0.2s ease; }
     .site-nav.menu-open .site-nav-chevron { transform: rotate(180deg); }
-    /* nearly solid, so the links read even where the blur is off (Reduce Transparency) */
+    /* nearly solid, so the links read even where the blur is off (Reduce Transparency).
+       It scrolls if very large text runs it past the bottom of the screen */
     .site-nav-links {
       position: absolute; top: calc(100% + 1px); left: 0; right: 0; list-style: none;
+      max-height: calc(100vh - 100% - 1px); max-height: calc(100dvh - 100% - 1px); overflow-y: auto; overscroll-behavior: contain;
       padding: 4px max(var(--sp-3), env(safe-area-inset-right)) 12px max(var(--sp-3), env(safe-area-inset-left));
       background: var(--nav-bg-open);
       backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -499,9 +501,9 @@
       .site-nav-title { margin-right: auto; padding: 10px 0; font-size: calc(var(--dt-ui) * 19px); }
       .site-nav-title-text { overflow: visible; }
       .site-nav-home { display: inline-flex; }
-      .site-nav-toggle { display: none; }
+      .site-nav-toggle, .site-nav-top { display: none; }
       .site-nav-links {
-        position: static; display: flex; gap: 28px; padding: 0;
+        position: static; display: flex; gap: 28px; padding: 0; max-height: none; overflow: visible;
         background: none; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0;
         visibility: visible; opacity: 1; transform: none; transition: none;
       }
@@ -618,6 +620,7 @@
       <svg class="site-nav-chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <ul id="site-nav-links" class="site-nav-links">
+      <li class="site-nav-top"><a href="#top">The Book</a></li>
       <li><a href="#whats-inside">What's Inside</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#questions">Questions</a></li>
@@ -841,15 +844,15 @@
     });
     window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
 
-    // A link to a section also gives its heading focus, so VoiceOver and the keyboard land there too
+    // A link to a section also gives its heading focus, or at the top the cover, so VoiceOver and the keyboard land there too
     siteNav.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         setMenu(false);
         var href = link.getAttribute('href');
         var section = href.charAt(0) === '#' && document.querySelector(href);
-        var heading = section && section.querySelector('h2[tabindex]');
+        var landing = section && section.querySelector('h2[tabindex], .cover-wrapper a');
         // once the jump is done; the jump itself leaves focus nowhere
-        if (heading) setTimeout(function () { heading.focus({ preventScroll: true }); });
+        if (landing) setTimeout(function () { landing.focus({ preventScroll: true }); });
       });
     });
 
