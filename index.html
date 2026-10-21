@@ -107,10 +107,9 @@
       --rule-intro: rgba(var(--teal-rgb), 0.18);
       --hairline: rgba(0, 0, 0, 0.08);
       --nav-bg: rgba(241, 244, 239, 0.72);
+      --nav-bg-open: rgba(241, 244, 239, 0.94);
       --nav-link: rgba(51, 51, 51, 0.82);
       --hero-glow: rgba(255, 255, 255, 0.84);
-      --menu-line: rgba(0, 0, 0, 0.5);
-      --menu-icon: rgba(0, 0, 0, 0.62);
       --font: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
       --text-caption: clamp(0.75rem, 2.8vw, 0.8125rem);
@@ -135,20 +134,6 @@
       --shadow-btn: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
       --shadow-surface: 0 2px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
       --shadow-primary: 0 8px 32px rgba(var(--accent-rgb), 0.25), 0 2px 8px rgba(0,0,0,0.1);
-      --shadow-control: 0 2px 10px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.05);
-      --shadow-control-hover: 0 5px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.06);
-      --lg-bg: rgba(255, 255, 255, 0.44);
-      --lg-bg-hover: rgba(255, 255, 255, 0.62);
-      --lg-border: rgba(255, 255, 255, 0.6);
-      --lg-blur: saturate(200%) blur(20px) brightness(1.05);
-      --lg-edge:
-        inset 0 1px 0 rgba(255, 255, 255, 0.85),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.32),
-        inset 1px 0 0 rgba(255, 255, 255, 0.22),
-        inset -1px 0 0 rgba(255, 255, 255, 0.22);
-      --lg-sheen:
-        radial-gradient(130% 100% at 16% 0%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.10) 45%, transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,0.20) 0%, transparent 32%);
       --timing-spring: 0.22s cubic-bezier(0.32, 0.72, 0, 1);
 
       --safe-top: env(safe-area-inset-top, 0px);
@@ -178,25 +163,12 @@
         --rule-intro: rgba(255, 255, 255, 0.10);
         --hairline: rgba(255, 255, 255, 0.10);
         --nav-bg: rgba(15, 20, 17, 0.72);
+        --nav-bg-open: rgba(15, 20, 17, 0.94);
         --nav-link: rgba(236, 238, 236, 0.82);
         --hero-glow: rgba(var(--tint-rgb), 0.10);
-        --menu-line: rgba(255, 255, 255, 0.72);
-        --menu-icon: rgba(255, 255, 255, 0.82);
         --shadow-cover: drop-shadow(0 12px 40px rgba(0,0,0,0.55)) drop-shadow(0 4px 12px rgba(0,0,0,0.35));
         --shadow-btn: 0 1px 3px rgba(0,0,0,0.35);
         --shadow-surface: 0 2px 20px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.25);
-        --shadow-control: 0 2px 10px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.3);
-        --shadow-control-hover: 0 5px 16px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
-        --lg-bg: rgba(44, 50, 46, 0.55);
-        --lg-bg-hover: rgba(58, 66, 61, 0.7);
-        --lg-border: rgba(255, 255, 255, 0.12);
-        --lg-blur: saturate(160%) blur(20px);
-        --lg-edge:
-          inset 0 1px 0 rgba(255, 255, 255, 0.14),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-          inset 1px 0 0 rgba(255, 255, 255, 0.05),
-          inset -1px 0 0 rgba(255, 255, 255, 0.05);
-        --lg-sheen: radial-gradient(130% 100% at 16% 0%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 45%, transparent 62%);
       }
       .payment-logos img { filter: invert(1); }
     }
@@ -214,87 +186,79 @@
 
     svg { pointer-events: none; }
 
-    /* Phones: one page that scrolls, with the menu floating above it */
+    /* The bar is the same on every screen: on the page at the top, frosted once content scrolls
+       beneath it. On phones its links fold behind a chevron, as on apple.com */
+    .site-nav {
+      position: sticky; top: 0; z-index: 300;
+      padding-top: var(--safe-top);
+      border-bottom: 1px solid transparent;
+    }
+    /* the frosting is a layer of its own, so the open menu can frost the page beneath it too */
+    .site-nav::before {
+      content: ''; position: absolute; inset: 0 0 -1px; z-index: -1;
+      border-bottom: 1px solid transparent;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .site-nav.is-scrolled::before, .site-nav.menu-open::before {
+      background: var(--nav-bg);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom-color: var(--hairline);
+    }
+    .site-nav.menu-open::before { background: var(--nav-bg-open); }
+    .site-nav-inner {
+      height: 52px; display: flex; align-items: center; gap: 12px;
+      padding: 0 max(var(--sp-3), env(safe-area-inset-right)) 0 max(var(--sp-3), env(safe-area-inset-left));
+    }
+    .site-nav-title {
+      display: inline-flex; align-items: center; gap: 8px; min-width: 0; padding: 12px 0;
+      font-size: 17px; font-weight: 600; letter-spacing: var(--track-normal); color: var(--color-body); text-decoration: none;
+    }
+    .site-nav-title-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .site-nav-mark { width: 16px; height: 16px; flex-shrink: 0; }
+    .site-nav-toggle {
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 44px; height: 44px; margin: 0 auto 0 -14px; padding: 0;
+      border: 0; background: none; color: var(--color-muted); cursor: pointer;
+    }
+    .site-nav-toggle svg { width: 12px; height: 12px; transition: transform 0.2s ease; }
+    .site-nav.menu-open .site-nav-toggle svg { transform: rotate(180deg); }
+    /* nearly solid, so the links read even where the blur is off (Reduce Transparency) */
+    .site-nav-links {
+      position: absolute; top: calc(100% + 1px); left: 0; right: 0; list-style: none;
+      padding: 4px max(var(--sp-3), env(safe-area-inset-right)) 12px max(var(--sp-3), env(safe-area-inset-left));
+      background: var(--nav-bg-open);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--hairline);
+      visibility: hidden; opacity: 0; transform: translateY(-4px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    }
+    .site-nav.menu-open .site-nav-links { visibility: visible; opacity: 1; transform: none; transition: opacity 0.2s ease, transform 0.2s ease; }
+    .site-nav-links li + li { border-top: 1px solid var(--hairline); }
+    .site-nav-links a {
+      display: block; padding: 12px 0; font-size: 17px; letter-spacing: var(--track-normal);
+      color: var(--color-body); text-decoration: none;
+    }
+    .site-nav-links a:active { color: var(--color-tint); }
+    .site-nav-buy {
+      display: inline-flex; align-items: center; flex-shrink: 0; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
+      background: var(--color-accent); color: var(--color-white); font-size: 13px; font-weight: 600;
+      letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; position: relative;
+    }
+    .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
+
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
 
     .page-inner {
-      width: 100%; min-height: 100vh; min-height: 100svh;
-      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      width: 100%;
+      display: flex; flex-direction: column; align-items: center;
       gap: var(--stack-gap);
-      padding-top: calc(var(--safe-top) + 24px);
-      padding-left: var(--sp-3); padding-right: var(--sp-3);
-      padding-bottom: max(calc(var(--safe-bottom) + 24px), 32px);
+      padding: 16px var(--sp-3);
       position: relative;
     }
 
-    body.vp-short .page-1 .page-inner {
-      gap: clamp(8px, 1.6svh, 14px);
-      padding-top: calc(var(--safe-top) + 24px);
-      padding-bottom: max(calc(var(--safe-bottom) + 16px), 24px);
-    }
-    body.vp-short .content-platter { padding: 10px; }
-
-    .menu-btn {
-      position: fixed; top: calc(var(--safe-top) + 16px); left: var(--sp-3);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-      width: 44px; height: 44px; padding: 0;
-      background: var(--lg-bg);
-      backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
-      border: 1px solid var(--lg-border);
-      border-radius: var(--radius-circle);
-      box-shadow: var(--shadow-control), var(--lg-edge);
-      cursor: pointer; z-index: 402;
-      transition: transform var(--timing-spring), box-shadow 0.2s ease, background 0.2s ease, opacity 0.15s ease;
-    }
-    .menu-btn:active { transform: scale(0.95); opacity: 0.92; }
-    .menu-btn.open { background: var(--lg-bg-hover); box-shadow: var(--shadow-control-hover), var(--lg-edge); }
-    .menu-btn span {
-      display: block; width: 16px; height: 2px;
-      background: var(--menu-line);
-      border-radius: 1px;
-      transform-origin: center;
-      transition: transform var(--timing-spring), opacity 0.2s ease, background 0.2s ease;
-    }
-    .menu-btn.open span { background: var(--menu-icon); }
-    .menu-btn.open span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
-    .menu-btn.open span:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
-
-    .menu-envelope {
-      position: fixed; top: calc(var(--safe-top) + 172px);
-      left: var(--sp-3);
-      width: 44px; height: 44px; background: var(--lg-bg);
-      backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
-      border: 1px solid var(--lg-border); border-radius: var(--radius-circle);
-      box-shadow: var(--shadow-control), var(--lg-edge);
-      display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--menu-icon);
-      z-index: 401; opacity: 0;
-      pointer-events: none; transform: translateY(-10px) scale(0.9);
-      transition: opacity 0.2s ease, transform var(--timing-spring), box-shadow 0.2s ease, background 0.2s ease;
-      -webkit-touch-callout: none;
-    }
-    .menu-envelope.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); background: var(--lg-bg); }
-    .menu-envelope:active { transform: translateY(0) scale(0.95); }
-
-    .menu-about, .menu-faq {
-      appearance: none; padding: 0; border: 1px solid var(--lg-border);
-      position: fixed; top: calc(var(--safe-top) + 68px); left: var(--sp-3);
-      width: 44px; height: 44px; background: var(--lg-bg); color: var(--menu-icon);
-      backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
-      border-radius: var(--radius-circle); box-shadow: var(--shadow-control), var(--lg-edge);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 401; opacity: 0; cursor: pointer;
-      pointer-events: none; transform: translateY(-10px) scale(0.9);
-      transition: opacity 0.2s ease, transform var(--timing-spring), box-shadow 0.2s ease, background 0.2s ease;
-    }
-    .menu-faq { top: calc(var(--safe-top) + 120px); }
-    .menu-about.open, .menu-faq.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
-    .menu-about:active, .menu-faq:active { transform: translateY(0) scale(0.95); }
-
     @media (hover: hover) and (pointer: fine) {
-      .menu-btn:hover { background: var(--lg-bg-hover); box-shadow: var(--shadow-control-hover), var(--lg-edge); }
-      .menu-envelope.open:hover { background: var(--lg-bg-hover); box-shadow: var(--shadow-control-hover), var(--lg-edge); }
-      .menu-about.open:hover, .menu-faq.open:hover { background: var(--lg-bg-hover); box-shadow: var(--shadow-control-hover), var(--lg-edge); }
-      .preview-hint:hover, .scroll-hint:hover { background: var(--lg-bg-hover); box-shadow: var(--shadow-control-hover), var(--lg-edge); transform: translateY(-1px); }
+      .site-nav-buy:hover { background: var(--color-accent-hover); }
+      .preview-hint:hover { text-decoration: underline; text-underline-offset: 3px; }
       .about-social-link:hover { background: var(--color-fill-strong); }
       .cover-wrapper img:hover { transform: scale(1.01); }
       .buy-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06); }
@@ -319,30 +283,31 @@
       object-fit: cover; object-position: 50% 24%; flex-shrink: 0;
       background: rgba(var(--accent-rgb), 0.10); -webkit-user-drag: none;
     }
+    /* text starts at the leading edge, as in What's Inside and on desktop */
     .about-platter-body {
       width: 100%; padding: 24px 28px 28px 28px;
-      display: flex; flex-direction: column; align-items: center;
+      display: flex; flex-direction: column; align-items: flex-start;
     }
-    .about-id { width: 100%; display: flex; flex-direction: column; align-items: center; }
+    .about-id { width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
     .about-bio-wrap, .about-bio-scroll { width: 100%; }
     .about-name {
       font-size: clamp(1.125rem, 4.5vw, 1.25rem); font-weight: 700;
-      color: var(--color-body); letter-spacing: var(--track-tight); text-align: center; margin-bottom: 4px;
+      color: var(--color-body); letter-spacing: var(--track-tight); margin-bottom: 4px;
     }
     .about-role {
       font-size: var(--text-caption); font-weight: 600; color: var(--color-muted);
-      letter-spacing: var(--track-wide); text-transform: uppercase; text-align: center;
+      letter-spacing: var(--track-wide); text-transform: uppercase;
       line-height: 1; margin-bottom: 14px;
     }
     .about-rule { width: 100%; height: 1px; background: var(--rule); margin-bottom: 20px; flex-shrink: 0; }
     .about-bio {
       font-size: var(--text-body); color: var(--color-body); line-height: 1.6;
-      text-align: center; margin-bottom: 12px;
+      margin-bottom: 12px;
     }
     .about-bio:last-child { margin-bottom: 0; }
     .faq-q {
       font-size: var(--text-body); font-weight: 700; color: var(--color-body);
-      text-align: center; margin: 0 0 6px;
+      margin: 0 0 6px;
     }
     .faq-a { margin-bottom: 22px; }
 
@@ -358,10 +323,11 @@
     .about-social-link::after { content: ''; position: absolute; inset: -4px 0; }
     .about-social-link:active { transform: scale(0.96); background: var(--color-fill-strong); }
 
+    /* half the screen, so the tagline and the buy buttons show on the first screen too */
     .cover-wrapper {
-      width: 100%; max-width: 416px; margin-top: auto;
+      width: 100%; max-width: 416px; flex-shrink: 0;
+      height: clamp(260px, 50vh, 460px); height: clamp(260px, 50svh, 460px);
       display: flex; align-items: center; justify-content: center;
-      flex: 1.25 1 0%; min-height: 20vh; max-height: var(--cover-mh, 64svh);
     }
     .cover-wrapper a { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
     .cover-wrapper img {
@@ -372,40 +338,20 @@
     }
     .cover-wrapper img:active { transform: scale(0.99); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.10)); }
 
-    .preview-hint, .scroll-hint {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      height: 36px; padding: 0 15px; font-size: var(--text-label); font-weight: 600;
-      border-radius: var(--radius-pill); letter-spacing: var(--track-wide); flex-shrink: 0; z-index: 10; text-decoration: none;
-      position: relative;
-    }
-    .preview-hint::after, .scroll-hint::after { content: ''; position: absolute; inset: -6px 0; }
-
+    /* a link in the page, so no glass: that's for controls floating above it */
     .preview-hint {
-      margin: 0; color: var(--color-body); background: var(--lg-bg);
-      backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur);
-      box-shadow: var(--shadow-control), var(--lg-edge); border: 1px solid var(--lg-border); cursor: pointer;
-      transition: transform var(--timing-spring), box-shadow 0.2s ease, background 0.2s ease;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0;
+      padding: 6px 8px; position: relative;
+      font-size: var(--text-label); font-weight: 600; letter-spacing: var(--track-wide);
+      color: var(--color-tint); text-decoration: none;
     }
-    .preview-hint:active { transform: scale(0.96); }
+    .preview-hint::after { content: ''; position: absolute; inset: -7px 0; }
+    .preview-hint:active { opacity: 0.6; }
 
-    .scroll-hint {
-      margin: 0 0 auto; background: var(--lg-bg); backdrop-filter: var(--lg-blur);
-      -webkit-backdrop-filter: var(--lg-blur); border: 1px solid var(--lg-border); color: var(--color-body);
-      cursor: pointer; box-shadow: var(--shadow-control), var(--lg-edge); gap: 8px;
-      transition: background 0.2s ease, box-shadow 0.2s ease, transform var(--timing-spring), color 0.2s ease;
+    .hero-tagline {
+      max-width: 432px; font-size: 19px; line-height: 1.35; font-weight: 500;
+      text-align: center; color: var(--color-body); text-wrap: balance;
     }
-    .scroll-hint:active { transform: scale(0.96); }
-    .scroll-hint-chevron { display: flex; align-items: center; }
-
-    /* ---- Liquid Glass specular sheen (iOS 26 style) ---- */
-    .menu-btn::before, .menu-about::before, .menu-faq::before, .menu-envelope::before,
-    .preview-hint::before, .scroll-hint::before {
-      content: ''; position: absolute; inset: 0; border-radius: inherit;
-      background: var(--lg-sheen); pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-    .menu-btn:active::before, .menu-about:active::before, .menu-faq:active::before, .menu-envelope:active::before,
-    .preview-hint:active::before, .scroll-hint:active::before { opacity: 0.55; }
 
     .content-platter {
       width: 100%; max-width: 432px; background: var(--card-bg); border-radius: var(--radius-lg);
@@ -439,11 +385,6 @@
     .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 0; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
     .payment-logos { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; opacity: 0.45; margin-top: 4px; }
     .payment-logos img { height: 12px; width: auto; display: block; -webkit-user-drag: none; }
-
-    @keyframes chevron-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-    @media (prefers-reduced-motion: no-preference) {
-      .scroll-hint-chevron { animation: chevron-pulse 1.6s ease-in-out infinite; }
-    }
 
     .page-2-inner {
       width: 100%; display: flex; flex-direction: column; align-items: center;
@@ -511,11 +452,19 @@
     .site-footer-links { display: flex; gap: 24px; list-style: none; }
     .site-footer-links a { display: inline-block; padding: 14px 8px; margin: -14px -8px; color: inherit; text-decoration: none; }
 
-    /* Text enlarged so far that the screen is under 300 points wide: the Breakdown's icons step aside for the words */
+    /* Small phones: a tighter bar, so the whole title fits */
+    @media (max-width: 339px) {
+      .site-nav-inner { gap: 8px; padding-left: 16px; padding-right: 16px; }
+      .site-nav-buy { padding: 0 12px; }
+    }
+
+    /* Text enlarged so far that the screen is under 300 points wide: the Breakdown's icons step aside for the words,
+       and the bar gives its Buy button's room to the title, which may take two lines; the buy buttons are in the page */
     @media (max-width: 299px) {
-      .page-inner, .page-2-inner, .about-page-inner { padding-left: 12px; padding-right: 12px; }
+      .page-inner, .page-2-inner, .about-page-inner, .site-nav-inner, .site-nav-links { padding-left: 12px; padding-right: 12px; }
       .blurb-list { padding-left: 16px; padding-right: 16px; }
-      .blurb-icon { display: none; }
+      .blurb-icon, .site-nav-buy { display: none; }
+      .site-nav-title-text { white-space: normal; line-height: 1.15; }
     }
 
     @media (min-width: 768px) {
@@ -526,47 +475,36 @@
       .about-platter-body { padding: 28px 32px 32px; }
     }
 
-    /* Desktop-only pieces: hidden on phones, where the hero copy wrapper doesn't affect layout */
-    .site-nav, .hero-title, .hero-tagline { display: none; }
+    /* The big title only shows beside the cover on wide screens; phones have it in the bar and on the cover */
+    .hero-title { display: none; }
     .hero-copy { display: contents; }
 
-    /* Computers and iPads held sideways: a bar of links on top, wider sections side by side */
+    /* Computers and iPads held sideways: the bar's links in a row, wider sections side by side */
     @media (min-width: 1024px) {
       html { scroll-padding-top: 84px; }
-      .menu-btn, .menu-about, .menu-faq, .menu-envelope, .scroll-hint { display: none; }
 
-      /* The bar sits on the page at the top and turns frosted once content scrolls beneath it */
-      .site-nav {
-        display: block; position: sticky; top: 0; z-index: 300;
-        border-bottom: 1px solid transparent;
-        transition: background-color 0.2s ease, border-color 0.2s ease;
-      }
+      /* no menu to frost here, so the bar frosts itself */
+      .site-nav { transition: background-color 0.2s ease, border-color 0.2s ease; }
+      .site-nav::before { content: none; }
       .site-nav.is-scrolled {
         background: var(--nav-bg);
         backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
         border-bottom-color: var(--hairline);
       }
-      .site-nav-inner { max-width: 1076px; height: 52px; margin: 0 auto; padding: 0 48px; display: flex; align-items: center; gap: 32px; }
-      .site-nav-title {
-        display: inline-flex; align-items: center; gap: 8px; margin-right: auto; padding: 10px 0;
-        font-size: 19px; font-weight: 600; letter-spacing: var(--track-normal); color: var(--color-body); text-decoration: none;
+      .site-nav-inner { max-width: 1076px; margin: 0 auto; padding: 0 48px; gap: 32px; }
+      .site-nav-title { margin-right: auto; padding: 10px 0; font-size: 19px; }
+      .site-nav-title-text { overflow: visible; }
+      .site-nav-toggle { display: none; }
+      .site-nav-links {
+        position: static; display: flex; gap: 28px; padding: 0;
+        background: none; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0;
+        visibility: visible; opacity: 1; transform: none; transition: none;
       }
-      .site-nav-mark { width: 16px; height: 16px; flex-shrink: 0; }
-      .site-nav-links { display: flex; gap: 28px; list-style: none; }
-      .site-nav-links a {
-        display: block; padding: 14px 8px; margin: 0 -8px; font-size: 14px; letter-spacing: var(--track-normal);
-        color: var(--nav-link); text-decoration: none; transition: color 0.2s ease;
-      }
+      .site-nav-links li + li { border-top: 0; }
+      .site-nav-links a { padding: 14px 8px; margin: 0 -8px; font-size: 14px; color: var(--nav-link); transition: color 0.2s ease; }
       .site-nav-links a:hover { color: var(--color-tint); }
-      .site-nav-buy {
-        display: inline-flex; align-items: center; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
-        background: var(--color-accent); color: var(--color-white); font-size: 13px; font-weight: 600;
-        letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; position: relative;
-      }
-      .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
-      .site-nav-buy:hover { background: var(--color-accent-hover); }
 
-      .page-1 .page-inner, body.vp-short .page-1 .page-inner {
+      .page-1 .page-inner {
         min-height: calc(100vh - 53px); min-height: calc(100svh - 53px);
         max-width: 1076px; margin: 0 auto; padding: 48px 48px 72px;
         display: grid; grid-template-columns: auto minmax(0, 440px); grid-template-areas: 'cover copy' 'hint copy';
@@ -574,19 +512,14 @@
         align-content: center; justify-content: center; align-items: center;
       }
       .page-1 .cover-wrapper {
-        grid-area: cover; align-self: end; flex: none; width: auto; max-width: none; min-height: 0; max-height: none; margin-top: 0;
+        grid-area: cover; align-self: end; width: auto; max-width: none;
         height: clamp(320px, calc(100vh - 232px), 640px); height: clamp(320px, calc(100svh - 232px), 640px); aspect-ratio: 832 / 1248;
       }
-      .page-1 .preview-hint {
-        grid-area: hint; align-self: start; height: auto; padding: 6px 8px;
-        background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; color: var(--color-tint);
-      }
-      .page-1 .preview-hint::before { content: none; }
-      .page-1 .preview-hint:hover { background: none; box-shadow: none; transform: none; text-decoration: underline; text-underline-offset: 3px; }
+      .page-1 .preview-hint { grid-area: hint; align-self: start; }
       .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
       .hero-title { display: block; font-size: 56px; line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
-      .hero-tagline { display: block; margin-top: 16px; font-size: 21px; line-height: 1.4; font-weight: 500; color: var(--color-body); }
-      .page-1 .content-platter, body.vp-short .content-platter { width: 100%; max-width: 440px; margin-top: 40px; padding: 24px; }
+      .hero-tagline { max-width: none; margin-top: 16px; font-size: 21px; line-height: 1.4; text-align: left; }
+      .page-1 .content-platter { width: 100%; max-width: 440px; margin-top: 40px; padding: 24px; }
       .page-1 .buy-btn { min-height: 50px; font-size: 17px; }
 
       .page-2-inner { max-width: 1076px; margin: 0 auto; padding: 24px 48px 0; gap: 40px; }
@@ -616,13 +549,12 @@
       .about-platter { max-width: 980px; margin: 0 auto; }
       #about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
       .about-hero { height: 0; min-height: 100%; object-position: 50% 30%; }
-      .about-platter-body { padding: 56px 64px 64px; align-items: flex-start; }
-      .about-id { align-items: flex-start; }
-      .about-name { font-size: 40px; line-height: 1.1; letter-spacing: 0; text-align: left; margin-bottom: 8px; }
-      .about-role { text-align: left; margin-bottom: 20px; }
+      .about-platter-body { padding: 56px 64px 64px; }
+      .about-name { font-size: 40px; line-height: 1.1; letter-spacing: 0; margin-bottom: 8px; }
+      .about-role { margin-bottom: 20px; }
       .about-rule { margin-bottom: 28px; }
-      .about-bio { max-width: 640px; font-size: 17px; line-height: 1.6; text-align: left; margin-bottom: 16px; }
-      .faq-q { font-size: 21px; line-height: 1.3; text-align: left; margin-bottom: 8px; }
+      .about-bio { max-width: 640px; font-size: 17px; line-height: 1.6; margin-bottom: 16px; }
+      .faq-q { font-size: 21px; line-height: 1.3; margin-bottom: 8px; }
       #faq-scroll { display: grid; grid-auto-flow: column; grid-template-rows: auto auto; grid-auto-columns: minmax(0, 1fr); column-gap: 56px; }
       .faq-a { margin-bottom: 0; }
 
@@ -644,6 +576,7 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
       }
     }
   </style>
@@ -654,9 +587,12 @@
   <div class="site-nav-inner">
     <a class="site-nav-title" href="#top">
       <svg class="site-nav-mark" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M186.0 951.6C186.0 872.1 186.3 866.5 191.9 844.8C205.3 793.4 235.8 753.9 308.4 694.2C350.3 659.7 363.9 648.3 372.0 641.1C401.5 614.9 431.3 583.0 437.5 571.0C444.4 557.4 448.0 537.4 448.0 512.0C448.0 486.6 444.4 466.6 437.5 453.0C431.2 440.8 401.7 409.2 371.5 382.4C363.8 375.6 348.8 363.1 308.4 329.8C262.4 292.0 237.5 266.7 218.9 238.6C206.0 219.1 197.4 200.3 191.9 179.2C186.3 157.5 186.0 151.9 186.0 72.4L186.0 0.0L512.0 0.0L838.0 0.0L838.0 72.4C838.0 152.0 837.7 157.4 832.0 179.6C820.2 225.4 791.0 265.7 735.0 313.7C728.7 319.1 711.3 333.5 696.4 345.7C681.6 357.9 664.3 372.2 658.2 377.5C627.0 404.3 593.3 439.8 586.5 453.0C579.6 466.6 576.0 486.6 576.0 512.0C576.0 537.4 579.6 557.4 586.5 571.0C593.3 584.2 627.0 619.7 658.2 646.5C664.3 651.8 681.6 666.1 696.4 678.3C711.3 690.5 728.7 704.9 735.0 710.3C791.0 758.3 820.2 798.6 832.0 844.4C837.7 866.6 838.0 872.0 838.0 951.6L838.0 1024.0L512.0 1024.0L186.0 1024.0L186.0 951.6Z"/></svg>
-      Nutrition, Invested
+      <span class="site-nav-title-text">Nutrition, Invested</span>
     </a>
-    <ul class="site-nav-links">
+    <button class="site-nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav-links">
+      <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <ul id="site-nav-links" class="site-nav-links">
       <li><a href="#whats-inside">What's Inside</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#questions">Questions</a></li>
@@ -671,22 +607,6 @@
 
   <section id="top" class="page page-1">
     <div class="page-inner">
-
-      <button id="menu-btn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu-envelope">
-        <span></span><span></span>
-      </button>
-
-      <button id="menu-about" class="menu-about" aria-label="About the author">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      </button>
-
-      <button id="menu-faq" class="menu-faq" aria-label="Questions">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-      </button>
-
-      <a id="menu-envelope" class="menu-envelope" href="mailto:riosandrew9@gmail.com" aria-label="Send email">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6 12 13 2 6"/></svg>
-      </a>
 
       <div class="cover-wrapper">
         <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system" target="_blank" rel="noopener">
@@ -746,15 +666,6 @@
         </div>
       </div>
       </div>
-
-      <button id="scroll-down" class="scroll-hint">
-        <span class="scroll-hint-label">What's Inside</span>
-        <span class="scroll-hint-chevron">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </button>
 
     </div>
   </section>
@@ -872,69 +783,35 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var menuBtn = document.getElementById('menu-btn');
-    var menuAbout = document.getElementById('menu-about');
-    var menuFaq = document.getElementById('menu-faq');
-    var menuEnvelope = document.getElementById('menu-envelope');
-    var menuItems = [menuAbout, menuFaq, menuEnvelope];
-    var menuOpen = false;
-    var menuTimers = [];
+    // The bar: clear while the page sits at the top, frosted once content scrolls beneath it
+    var siteNav = document.querySelector('.site-nav');
+    var navToggle = siteNav.querySelector('.site-nav-toggle');
+    function updateNav() { siteNav.classList.toggle('is-scrolled', window.scrollY > 0); }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
 
-    // While the menu is closed, its buttons stay out of reach of the keyboard and VoiceOver
-    function syncMenu() {
-      menuItems.forEach(function (el) { if (el) el.inert = !menuOpen; });
+    // On phones the chevron unfolds the links; choosing one, tapping elsewhere or Escape folds them away
+    function setMenu(open) {
+      siteNav.classList.toggle('menu-open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
     }
-
-    function openMenu() {
-      menuTimers.forEach(clearTimeout); menuTimers = [];
-      menuOpen = true;
-      menuBtn.classList.add('open');
-      menuBtn.setAttribute('aria-expanded', 'true');
-      menuTimers.push(setTimeout(function () { if (menuAbout) menuAbout.classList.add('open'); }, 40));
-      menuTimers.push(setTimeout(function () { if (menuFaq) menuFaq.classList.add('open'); }, 90));
-      menuTimers.push(setTimeout(function () { menuEnvelope.classList.add('open'); }, 140));
-      syncMenu();
-    }
-
-    function closeMenu() {
-      menuTimers.forEach(clearTimeout); menuTimers = [];
-      menuOpen = false;
-      menuItems.forEach(function (el) { if (el) el.classList.remove('open'); });
-      menuBtn.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded', 'false');
-      syncMenu();
-    }
-    syncMenu();
-
-    // Scroll to a section and give its heading focus, so VoiceOver and the keyboard land there too
-    function goTo(id) {
-      var section = document.getElementById(id);
-      if (!section) return;
-      closeMenu();
-      section.scrollIntoView({ block: 'start' });
-      var heading = section.querySelector('h2');
-      if (heading) heading.focus({ preventScroll: true });
-    }
-
-    menuBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (menuOpen) { closeMenu(); } else { openMenu(); }
-    });
-    if (menuAbout) menuAbout.addEventListener('click', function (e) { e.stopPropagation(); goTo('about'); });
-    if (menuFaq) menuFaq.addEventListener('click', function (e) { e.stopPropagation(); goTo('questions'); });
-    menuEnvelope.addEventListener('click', function () { setTimeout(closeMenu, 200); });
-    document.getElementById('scroll-down').addEventListener('click', function () { goTo('whats-inside'); });
-
-    // A tap or click anywhere else closes the menu, and so does Escape
-    function closeIfOutside(e) {
-      if (!menuOpen || menuBtn.contains(e.target)) return;
-      if (menuItems.some(function (el) { return el && el.contains(e.target); })) return;
-      closeMenu();
-    }
-    document.addEventListener('touchstart', closeIfOutside, { passive: true });
-    document.addEventListener('click', closeIfOutside);
+    navToggle.addEventListener('click', function () { setMenu(!siteNav.classList.contains('menu-open')); });
+    document.addEventListener('pointerdown', function (e) { if (!siteNav.contains(e.target)) setMenu(false); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && menuOpen) { closeMenu(); menuBtn.focus({ preventScroll: true }); }
+      if (e.key === 'Escape' && siteNav.classList.contains('menu-open')) { setMenu(false); navToggle.focus(); }
+    });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
+
+    // A link to a section also gives its heading focus, so VoiceOver and the keyboard land there too
+    siteNav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        setMenu(false);
+        var href = link.getAttribute('href');
+        var section = href.charAt(0) === '#' && document.querySelector(href);
+        var heading = section && section.querySelector('h2[tabindex]');
+        // once the jump is done; the jump itself leaves focus nowhere
+        if (heading) setTimeout(function () { heading.focus({ preventScroll: true }); });
+      });
     });
 
     var aboutSocial = document.getElementById('about-social');
@@ -960,26 +837,6 @@
       });
     }
 
-    // Size the first screen to the phone. Only a change of width counts, so nothing shifts
-    // when Safari's toolbar slides away during a scroll
-    var coverWrapper = document.querySelector('.cover-wrapper');
-    var lastWidth = 0;
-    function fitToScreen() {
-      if (window.innerWidth === lastWidth) return;
-      lastWidth = window.innerWidth;
-      var vvh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-      document.body.classList.toggle('vp-short', vvh < 780);
-      var t = Math.max(0, Math.min(1, (vvh - 700) / (830 - 700)));
-      if (coverWrapper) coverWrapper.style.setProperty('--cover-mh', (74 + (86 - 74) * t).toFixed(1) + 'svh');
-    }
-    fitToScreen();
-    window.addEventListener('resize', fitToScreen);
-
-    // Desktop bar: clear while the page sits at the top, frosted once content scrolls beneath it
-    var siteNav = document.querySelector('.site-nav');
-    function updateNav() { if (siteNav) siteNav.classList.toggle('is-scrolled', window.scrollY > 0); }
-    window.addEventListener('scroll', updateNav, { passive: true });
-    updateNav();
   });
 </script>
 
