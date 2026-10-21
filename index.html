@@ -112,10 +112,15 @@
       --hero-glow: rgba(255, 255, 255, 0.84);
       --font: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-      --text-caption: clamp(0.75rem, 2.8vw, 0.8125rem);
-      --text-label: clamp(0.875rem, 3.2vw, 0.9375rem);
-      --text-body: 1.0625rem;
-      --text-headline: clamp(1.0625rem, 4vw, 1.25rem);
+      /* Text follows the reader's text size setting on iPhone and iPad (Dynamic Type): a script in the head
+         sets --dt to their Body size over the default 17pt. Reading text follows it all the way; bars, buttons
+         and labels stop at the largest standard size, and headings never fall below the text they head */
+      --dt: 1;
+      --dt-ui: clamp(1, var(--dt), 1.35);
+      --text-caption: clamp(calc(var(--dt-ui) * 0.75rem), calc(var(--dt-ui) * 2.8vw), calc(var(--dt-ui) * 0.8125rem));
+      --text-label: clamp(calc(var(--dt-ui) * 0.875rem), calc(var(--dt-ui) * 3.2vw), calc(var(--dt-ui) * 0.9375rem));
+      --text-body: calc(var(--dt) * 1.0625rem);
+      --text-headline: clamp(calc(var(--dt-ui) * 1.0625rem), calc(var(--dt-ui) * 4vw), calc(var(--dt-ui) * 1.25rem));
 
       --track-tight: -0.022em;
       --track-normal: -0.011em;
@@ -211,7 +216,7 @@
     }
     .site-nav-title {
       display: inline-flex; align-items: center; gap: 8px; min-width: 0; padding: 12px 0;
-      font-size: 17px; font-weight: 600; letter-spacing: var(--track-normal); color: var(--color-body); text-decoration: none;
+      font-size: calc(var(--dt-ui) * 17px); font-weight: 600; letter-spacing: var(--track-normal); color: var(--color-body); text-decoration: none;
     }
     .site-nav-title-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .site-nav-mark { width: 16px; height: 16px; flex-shrink: 0; }
@@ -235,16 +240,20 @@
     .site-nav.menu-open .site-nav-links { visibility: visible; opacity: 1; transform: none; transition: opacity 0.2s ease, transform 0.2s ease; }
     .site-nav-links li + li { border-top: 1px solid var(--hairline); }
     .site-nav-links a {
-      display: block; padding: 12px 0; font-size: 17px; letter-spacing: var(--track-normal);
+      display: block; padding: 12px 0; font-size: calc(var(--dt-ui) * 17px); letter-spacing: var(--track-normal);
       color: var(--color-body); text-decoration: none;
     }
     .site-nav-links a:active { color: var(--color-tint); }
     .site-nav-buy {
       display: inline-flex; align-items: center; flex-shrink: 0; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
-      background: var(--color-accent); color: var(--color-white); font-size: 13px; font-weight: 600;
+      background: var(--color-accent); color: var(--color-white); font-size: calc(var(--dt-ui) * 13px); font-weight: 600;
       letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; position: relative;
     }
     .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
+
+    /* a press shows, as on iPhone */
+    .site-nav-title:active, .site-nav-toggle:active, .site-footer-links a:active { opacity: 0.6; }
+    .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; }
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
 
@@ -275,7 +284,6 @@
       background: var(--card-bg); border-radius: var(--radius-lg);
       border: 1px solid var(--card-border); padding: 0;
       box-shadow: var(--shadow-surface);
-      backdrop-filter: saturate(160%) blur(24px); -webkit-backdrop-filter: saturate(160%) blur(24px);
       display: flex; flex-direction: column; overflow: hidden;
     }
     .about-hero {
@@ -291,7 +299,7 @@
     .about-id { width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
     .about-bio-wrap, .about-bio-scroll { width: 100%; }
     .about-name {
-      font-size: clamp(1.125rem, 4.5vw, 1.25rem); font-weight: 700;
+      font-size: max(clamp(calc(var(--dt-ui) * 1.125rem), calc(var(--dt-ui) * 4.5vw), calc(var(--dt-ui) * 1.25rem)), var(--text-body)); font-weight: 700;
       color: var(--color-body); letter-spacing: var(--track-tight); margin-bottom: 4px;
     }
     .about-role {
@@ -348,15 +356,10 @@
     .preview-hint::after { content: ''; position: absolute; inset: -7px 0; }
     .preview-hint:active { opacity: 0.6; }
 
-    .hero-tagline {
-      max-width: 432px; font-size: 19px; line-height: 1.35; font-weight: 500;
-      text-align: center; color: var(--color-body); text-wrap: balance;
-    }
 
     .content-platter {
       width: 100%; max-width: 432px; background: var(--card-bg); border-radius: var(--radius-lg);
       border: 1px solid var(--card-border); padding: 10px 10px 12px 10px; box-shadow: var(--shadow-surface);
-      backdrop-filter: saturate(160%) blur(24px); -webkit-backdrop-filter: saturate(160%) blur(24px);
       display: flex; flex-direction: column; align-items: center; margin: 0; flex-shrink: 0; z-index: 5;
     }
 
@@ -394,12 +397,11 @@
     .page-2-platter {
       width: 100%; max-width: 448px;
       background: var(--card-bg); border-radius: var(--radius-lg); border: 1px solid var(--card-border);
-      backdrop-filter: saturate(160%) blur(24px); -webkit-backdrop-filter: saturate(160%) blur(24px);
       box-shadow: var(--shadow-surface); position: relative;
     }
 
     .page-2-header { width: 100%; padding: 22px 24px 0; }
-    .info-section-sublabel { font-size: clamp(1.125rem, 4.5vw, 1.375rem); letter-spacing: var(--track-tight); font-weight: 600; color: var(--color-body); }
+    .info-section-sublabel { font-size: max(clamp(calc(var(--dt-ui) * 1.125rem), calc(var(--dt-ui) * 4.5vw), calc(var(--dt-ui) * 1.375rem)), var(--text-body)); letter-spacing: var(--track-tight); font-weight: 600; color: var(--color-body); }
 
     .blurb-scroll-wrapper { margin: 14px 0 0; }
     .blurb-list { padding: 6px 24px 24px; }
@@ -447,7 +449,7 @@
     .site-footer-inner {
       max-width: 432px; margin: 0 auto;
       display: flex; flex-direction: column; align-items: center; gap: 16px;
-      font-size: 12px; line-height: 1.33; color: var(--color-muted); text-align: center;
+      font-size: calc(var(--dt-ui) * 12px); line-height: 1.33; color: var(--color-muted); text-align: center;
     }
     .site-footer-links { display: flex; gap: 24px; list-style: none; }
     .site-footer-links a { display: inline-block; padding: 14px 8px; margin: -14px -8px; color: inherit; text-decoration: none; }
@@ -492,7 +494,7 @@
         border-bottom-color: var(--hairline);
       }
       .site-nav-inner { max-width: 1076px; margin: 0 auto; padding: 0 48px; gap: 32px; }
-      .site-nav-title { margin-right: auto; padding: 10px 0; font-size: 19px; }
+      .site-nav-title { margin-right: auto; padding: 10px 0; font-size: calc(var(--dt-ui) * 19px); }
       .site-nav-title-text { overflow: visible; }
       .site-nav-toggle { display: none; }
       .site-nav-links {
@@ -501,7 +503,7 @@
         visibility: visible; opacity: 1; transform: none; transition: none;
       }
       .site-nav-links li + li { border-top: 0; }
-      .site-nav-links a { padding: 14px 8px; margin: 0 -8px; font-size: 14px; color: var(--nav-link); transition: color 0.2s ease; }
+      .site-nav-links a { padding: 14px 8px; margin: 0 -8px; font-size: calc(var(--dt-ui) * 14px); color: var(--nav-link); transition: color 0.2s ease; }
       .site-nav-links a:hover { color: var(--color-tint); }
 
       .page-1 .page-inner {
@@ -517,32 +519,31 @@
       }
       .page-1 .preview-hint { grid-area: hint; align-self: start; }
       .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
-      .hero-title { display: block; font-size: 56px; line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
-      .hero-tagline { max-width: none; margin-top: 16px; font-size: 21px; line-height: 1.4; text-align: left; }
+      .hero-title { display: block; font-size: calc(var(--dt-ui) * 56px); line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
       .page-1 .content-platter { width: 100%; max-width: 440px; margin-top: 40px; padding: 24px; }
-      .page-1 .buy-btn { min-height: 50px; font-size: 17px; }
+      .page-1 .buy-btn { min-height: 50px; font-size: calc(var(--dt-ui) * 17px); }
 
       .page-2-inner { max-width: 1076px; margin: 0 auto; padding: 24px 48px 0; gap: 40px; }
       .page-2-platter { max-width: 980px; padding: 56px 64px 64px; }
       .page-2-header { padding: 0; }
-      .info-section-sublabel { font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: 0; }
+      .info-section-sublabel { font-size: max(calc(var(--dt-ui) * 40px), calc(var(--dt) * 19px)); line-height: 1.1; font-weight: 700; letter-spacing: 0; }
       .blurb-scroll-wrapper { margin: 28px 0 0; }
       .blurb-list { padding: 0; }
       .blurb-intro { padding: 0; }
       .blurb-intro-hook, .blurb-intro-body { max-width: 760px; }
-      .blurb-intro-hook { font-size: 24px; line-height: 1.33; margin-bottom: 16px; }
-      .blurb-intro-body { font-size: 19px; line-height: 1.55; margin-bottom: 16px; }
+      .blurb-intro-hook { font-size: max(calc(var(--dt-ui) * 24px), calc(var(--dt) * 19px)); line-height: 1.33; margin-bottom: 16px; }
+      .blurb-intro-body { font-size: calc(var(--dt) * 19px); line-height: 1.55; margin-bottom: 16px; }
       .blurb-intro-rule { margin: 40px 0 32px; }
-      .blurb-intro-lead { margin-bottom: 28px; font-size: 28px; line-height: 1.15; font-weight: 700; letter-spacing: 0; }
+      .blurb-intro-lead { margin-bottom: 28px; font-size: max(calc(var(--dt-ui) * 28px), calc(var(--dt) * 17px)); line-height: 1.15; font-weight: 700; letter-spacing: 0; }
       .blurb-items { display: grid; grid-template-columns: 1fr 1fr; column-gap: 56px; row-gap: 32px; }
       .blurb-item { padding-bottom: 0; }
       .blurb-icon, .blurb-icon-badge { width: 44px; }
       .blurb-icon-badge { height: 44px; }
       .blurb-icon-badge svg { width: 20px; height: 20px; }
-      .blurb-title { margin: 10px 0 4px; font-size: 17px; font-weight: 700; }
-      .blurb-body { font-size: 17px; line-height: 1.55; }
+      .blurb-title { margin: 10px 0 4px; font-size: calc(var(--dt) * 17px); font-weight: 700; }
+      .blurb-body { font-size: calc(var(--dt) * 17px); line-height: 1.55; }
       .counter-bar { max-width: 980px; padding: 48px 64px; }
-      .tagline-setup, .tagline-punch { font-size: 28px; line-height: 1.2; }
+      .tagline-setup, .tagline-punch { font-size: max(calc(var(--dt-ui) * 28px), calc(var(--dt) * 17px)); line-height: 1.2; }
       .tagline-setup { margin-bottom: 6px; }
 
       .about-page-inner { display: block; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; }
@@ -550,11 +551,11 @@
       #about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
       .about-hero { height: 0; min-height: 100%; object-position: 50% 30%; }
       .about-platter-body { padding: 56px 64px 64px; }
-      .about-name { font-size: 40px; line-height: 1.1; letter-spacing: 0; margin-bottom: 8px; }
+      .about-name { font-size: max(calc(var(--dt-ui) * 40px), calc(var(--dt) * 17px)); line-height: 1.1; letter-spacing: 0; margin-bottom: 8px; }
       .about-role { margin-bottom: 20px; }
       .about-rule { margin-bottom: 28px; }
-      .about-bio { max-width: 640px; font-size: 17px; line-height: 1.6; margin-bottom: 16px; }
-      .faq-q { font-size: 21px; line-height: 1.3; margin-bottom: 8px; }
+      .about-bio { max-width: 640px; font-size: calc(var(--dt) * 17px); line-height: 1.6; margin-bottom: 16px; }
+      .faq-q { font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.3; margin-bottom: 8px; }
       #faq-scroll { display: grid; grid-auto-flow: column; grid-template-rows: auto auto; grid-auto-columns: minmax(0, 1fr); column-gap: 56px; }
       .faq-a { margin-bottom: 0; }
 
@@ -580,6 +581,24 @@
       }
     }
   </style>
+  <script>
+    // Dynamic Type: on iPhone and iPad the page's text follows the reader's text size setting. Their Body size
+    // over the default 17pt becomes --dt, measured again whenever the page comes back, as after a trip to Settings
+    (function () {
+      if (!(window.CSS && CSS.supports('font', '-apple-system-body') && CSS.supports('-webkit-touch-callout', 'none'))) return;
+      var root = document.documentElement;
+      function measure() {
+        var probe = document.createElement('span');
+        probe.style.font = '-apple-system-body';
+        root.appendChild(probe);
+        var size = parseFloat(getComputedStyle(probe).fontSize);
+        root.removeChild(probe);
+        if (size) root.style.setProperty('--dt', String(size / 17));
+      }
+      measure();
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) measure(); });
+    })();
+  </script>
 </head>
 <body>
 
@@ -609,12 +628,12 @@
     <div class="page-inner">
 
       <div class="cover-wrapper">
-        <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system" target="_blank" rel="noopener">
+        <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system">
           <img src="./cover-placeholder.svg" alt="Nutrition, Invested by Andrew Rios" width="832" height="1248" fetchpriority="high" decoding="async">
         </a>
       </div>
 
-      <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system" target="_blank" rel="noopener" class="preview-hint">
+      <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system" class="preview-hint">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width:16px; height:16px;">
           <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
           <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
@@ -624,12 +643,11 @@
 
       <div class="hero-copy">
       <p class="hero-title">Nutrition, Invested</p>
-      <p class="hero-tagline">A survival guide to food.<br>Five anchors. One plate. Ninety days.</p>
       <div id="buy" class="content-platter">
         <h1 class="headline">Get the Playbook<span class="divider" aria-hidden="true">—</span><span class="price">$9.99</span></h1>
 
         <div class="buttons">
-          <a href="https://www.amazon.com/dp/B0F1RX4JWV" target="_blank" rel="noopener" class="buy-btn primary">
+          <a href="https://www.amazon.com/dp/B0F1RX4JWV" class="buy-btn primary">
             <span style="display:flex; align-items:center;">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
                 <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
@@ -637,7 +655,7 @@
             </span>
             <span>Buy on Amazon</span>
           </a>
-          <a href="https://payhip.com/b/eBook-Nutrition-Invested" target="_blank" rel="noopener" class="buy-btn secondary">
+          <a href="https://payhip.com/b/eBook-Nutrition-Invested" class="buy-btn secondary">
             <span style="display:flex; align-items:center;">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>
@@ -783,6 +801,9 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // iPhone shows the pressed look (:active) only on a page that listens for touches
+    document.addEventListener('touchstart', function () {}, { passive: true });
+
     // The first screen's height, taken once and again only when the width changes: in Chrome on
     // iPhone the page grows taller as the toolbars slide away, and the cover mustn't grow with it
     var screenWidth = 0;
@@ -855,7 +876,7 @@
   <div class="about-page-inner">
     <div id="about" class="about-platter">
       <img class="about-hero" src="./author.jpg" alt="Andrew Rios at Angkor Wat in Siem Reap, Cambodia"
-           width="640" height="1137" decoding="async"
+           width="640" height="1137" loading="lazy" decoding="async"
            onerror="this.remove();">
       <div id="about-body" class="about-platter-body">
       <div id="about-id" class="about-id">
