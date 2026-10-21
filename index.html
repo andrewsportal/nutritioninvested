@@ -583,28 +583,124 @@
       .about-platter-body { padding: 28px 32px 32px; }
     }
 
+    /* Desktop-only pieces: hidden on phones, where the hero copy wrapper doesn't affect layout */
+    .site-nav, .hero-title, .hero-tagline, .site-footer { display: none; }
+    .hero-copy { display: contents; }
+
+    /* Computers and iPads held sideways get a normal scrolling page: a bar of links, then the sections in order */
     @media (min-width: 1024px) {
-      .page-inner { padding-top: calc(var(--safe-top) + 32px); padding-bottom: max(calc(var(--safe-bottom) + 32px), 48px); }
+      html, body { height: auto; }
+      html { overscroll-behavior: auto; scroll-padding-top: 84px; }
+      body { overflow: visible; user-select: auto; -webkit-user-select: auto; -webkit-touch-callout: default; }
+
+      .slide-container { position: static; height: auto; transform: none !important; transition: none; will-change: auto; background: none; }
+      .page { position: static; height: auto; overflow: visible; background: none; }
+      .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, rgba(255,255,255,0.84) 0%, transparent 66%); }
+      .menu-btn, .menu-about, .menu-faq, .menu-envelope, .scroll-hint,
+      .page-2-back, .about-back, .more-cue, .about-more-cue { display: none; }
+
+      .site-nav {
+        display: block; position: sticky; top: 0; z-index: 300;
+        background: rgba(241, 244, 239, 0.72);
+        backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .site-nav-inner { max-width: 1076px; height: 52px; margin: 0 auto; padding: 0 48px; display: flex; align-items: center; gap: 32px; }
+      .site-nav-title {
+        display: inline-flex; align-items: center; gap: 8px; margin-right: auto;
+        font-size: 19px; font-weight: 600; letter-spacing: var(--track-normal); color: var(--color-body); text-decoration: none;
+      }
+      .site-nav-mark { width: 16px; height: 16px; flex-shrink: 0; }
+      .site-nav-links { display: flex; gap: 28px; list-style: none; }
+      .site-nav-links a {
+        display: block; padding: 8px 0; font-size: 14px; letter-spacing: var(--track-normal);
+        color: rgba(51, 51, 51, 0.82); text-decoration: none; transition: color 0.2s ease;
+      }
+      .site-nav-links a:hover { color: var(--color-accent); }
+      .site-nav-buy {
+        display: inline-flex; align-items: center; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
+        background: var(--color-accent); color: var(--color-white); font-size: 13px; font-weight: 600;
+        letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease;
+      }
+      .site-nav-buy:hover { background: #2C5F3F; }
+
       .page-1 .page-inner, body.vp-short .page-1 .page-inner {
-        display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-        grid-template-areas: 'cover platter' 'hint platter';
-        column-gap: clamp(48px, 6vw, 88px);
-        row-gap: 24px;
-        align-content: center; align-items: center; justify-items: center;
-        max-width: 1140px; margin: 0 auto;
+        height: auto; min-height: calc(100vh - 53px); min-height: calc(100dvh - 53px);
+        max-width: 1076px; margin: 0 auto; padding: 48px 48px 72px;
+        display: grid; grid-template-columns: auto minmax(0, 440px); grid-template-areas: 'cover copy' 'hint copy';
+        column-gap: clamp(64px, 8vw, 120px); row-gap: 20px;
+        align-content: center; justify-content: center; align-items: center;
+        overflow: visible; background: none;
       }
       .page-1 .cover-wrapper {
-        grid-area: cover; align-self: end; max-width: 560px; min-height: 0;
-        height: min(62vh, 600px); height: min(62dvh, 600px); max-height: none;
+        grid-area: cover; align-self: end; flex: none; width: auto; max-width: none; min-height: 0; max-height: none;
+        height: clamp(320px, calc(100vh - 232px), 640px); height: clamp(320px, calc(100dvh - 232px), 640px); aspect-ratio: 832 / 1248;
       }
-      .page-1 .preview-hint { grid-area: hint; align-self: start; }
-      .page-1 .content-platter { grid-area: platter; }
-      .page-1 .scroll-hint { grid-column: 1 / -1; align-self: end; }
-      .page-2-inner { padding-top: calc(var(--safe-top) + 48px); padding-bottom: max(calc(var(--safe-bottom) + 32px), 48px); gap: 24px; }
-      .page-2-platter, .counter-bar { max-width: 560px; }
-      .page-2-header { padding: 18px 24px 0 18px; }
-      .blurb-list { padding: 8px 32px; }
+      .page-1 .preview-hint {
+        grid-area: hint; align-self: start; height: auto; padding: 6px 8px;
+        background: none; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; color: var(--color-accent);
+      }
+      .page-1 .preview-hint::before { content: none; }
+      .page-1 .preview-hint:hover { background: none; box-shadow: none; transform: none; text-decoration: underline; text-underline-offset: 3px; }
+      .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
+      .hero-title { display: block; font-size: 56px; line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
+      .hero-tagline { display: block; margin-top: 16px; font-size: 21px; line-height: 1.4; font-weight: 500; color: var(--color-body); }
+      .page-1 .content-platter, body.vp-short .content-platter { width: 100%; max-width: 440px; margin-top: 40px; padding: 24px; }
+      .page-1 .buy-btn { min-height: 50px; font-size: 17px; }
+
+      .page-2-inner { height: auto; max-width: 1076px; margin: 0 auto; padding: 24px 48px 0; gap: 40px; overflow: visible; }
+      .page-2-platter { flex: none; display: block; max-width: 980px; padding: 56px 64px 64px; overflow: visible; }
+      .page-2-header { padding: 0; }
+      .info-section-sublabel { font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: 0; color: var(--color-body); }
+      .blurb-scroll-wrapper { flex: none; display: block; margin: 28px 0 0; -webkit-mask-image: none; mask-image: none; }
+      .blurb-list { flex: none; display: block; padding: 0; overflow: visible; }
+      .blurb-intro { padding: 0; }
+      .blurb-intro-hook, .blurb-intro-body { max-width: 760px; }
+      .blurb-intro-hook { font-size: 24px; line-height: 1.33; margin-bottom: 16px; }
+      .blurb-intro-body { font-size: 19px; line-height: 1.55; margin-bottom: 16px; }
+      .blurb-intro-rule { margin: 40px 0 32px; }
+      .blurb-intro-lead { margin-bottom: 28px; font-size: 28px; line-height: 1.15; font-weight: 700; letter-spacing: 0; color: var(--color-body); }
+      .blurb-items { display: grid; grid-template-columns: 1fr 1fr; column-gap: 56px; row-gap: 32px; }
+      .blurb-item { padding-bottom: 0; }
+      .blurb-icon, .blurb-icon-badge { width: 44px; }
+      .blurb-icon-badge { height: 44px; }
+      .blurb-icon-badge svg { width: 20px; height: 20px; }
+      .blurb-title { display: block; margin: 10px 0 4px; font-size: 17px; font-weight: 700; color: var(--color-body); }
+      .blurb-body { font-size: 17px; line-height: 1.55; }
+      .counter-bar { max-width: 980px; padding: 48px 64px; }
+      .tagline-setup, .tagline-punch { font-size: 28px; line-height: 1.2; }
+      .tagline-setup { margin-bottom: 6px; }
+
+      .about-page { position: static; z-index: auto; transform: none; transition: none; will-change: auto; overflow: visible; background: none; }
+      .about-page-inner { display: block; height: auto; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; background: none; }
+      .about-platter { max-width: 980px; max-height: none; margin: 0 auto; }
+      #about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+      .about-hero { height: 0; min-height: 100%; object-position: 50% 30%; }
+      .about-platter-body { padding: 56px 64px 64px; align-items: flex-start; }
+      .about-id { align-items: flex-start; }
+      .about-name { font-size: 40px; line-height: 1.1; letter-spacing: 0; text-align: left; margin-bottom: 8px; }
+      .about-role { text-align: left; margin-bottom: 20px; }
+      .about-rule { margin-bottom: 28px; }
+      .about-bio-wrap { flex: none; display: block; min-height: 0; -webkit-mask-image: none; mask-image: none; }
+      .about-bio-scroll { flex: none; overflow: visible; padding: 0 !important; }
+      .about-bio { max-width: 640px; font-size: 17px; line-height: 1.6; text-align: left; margin-bottom: 16px; }
+      .faq-q { font-size: 21px; line-height: 1.3; text-align: left; margin-bottom: 8px; }
+      #faq-scroll { display: grid; grid-auto-flow: column; grid-template-rows: auto auto; grid-auto-columns: minmax(0, 1fr); column-gap: 56px; }
+      .faq-a { margin-bottom: 0; }
+
+      .site-footer { display: block; max-width: 1076px; margin: 96px auto 0; padding: 0 48px 48px; }
+      .site-footer-inner {
+        display: flex; align-items: center; justify-content: space-between; gap: 24px;
+        padding-top: 20px; border-top: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: 12px; line-height: 1.33; color: var(--color-muted);
+      }
+      .site-footer-links { display: flex; gap: 24px; list-style: none; }
+      .site-footer-links a { color: inherit; text-decoration: none; }
+      .site-footer-links a:hover { color: var(--color-body); text-decoration: underline; }
+    }
+
+    @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -618,9 +714,25 @@
 </head>
 <body>
 
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="site-nav-title" href="#top">
+      <svg class="site-nav-mark" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M186.0 951.6C186.0 872.1 186.3 866.5 191.9 844.8C205.3 793.4 235.8 753.9 308.4 694.2C350.3 659.7 363.9 648.3 372.0 641.1C401.5 614.9 431.3 583.0 437.5 571.0C444.4 557.4 448.0 537.4 448.0 512.0C448.0 486.6 444.4 466.6 437.5 453.0C431.2 440.8 401.7 409.2 371.5 382.4C363.8 375.6 348.8 363.1 308.4 329.8C262.4 292.0 237.5 266.7 218.9 238.6C206.0 219.1 197.4 200.3 191.9 179.2C186.3 157.5 186.0 151.9 186.0 72.4L186.0 0.0L512.0 0.0L838.0 0.0L838.0 72.4C838.0 152.0 837.7 157.4 832.0 179.6C820.2 225.4 791.0 265.7 735.0 313.7C728.7 319.1 711.3 333.5 696.4 345.7C681.6 357.9 664.3 372.2 658.2 377.5C627.0 404.3 593.3 439.8 586.5 453.0C579.6 466.6 576.0 486.6 576.0 512.0C576.0 537.4 579.6 557.4 586.5 571.0C593.3 584.2 627.0 619.7 658.2 646.5C664.3 651.8 681.6 666.1 696.4 678.3C711.3 690.5 728.7 704.9 735.0 710.3C791.0 758.3 820.2 798.6 832.0 844.4C837.7 866.6 838.0 872.0 838.0 951.6L838.0 1024.0L512.0 1024.0L186.0 1024.0L186.0 951.6Z"/></svg>
+      Nutrition, Invested
+    </a>
+    <ul class="site-nav-links">
+      <li><a href="#whats-inside">What's Inside</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#questions">Questions</a></li>
+      <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
+    </ul>
+    <a class="site-nav-buy" href="#buy">Buy</a>
+  </div>
+</nav>
+
 <div id="slide-container" class="slide-container">
 
-  <section class="page page-1">
+  <section id="top" class="page page-1">
     <div class="page-inner">
 
       <button id="menu-btn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu-envelope">
@@ -653,7 +765,10 @@
         Read a preview
       </a>
 
-      <div class="content-platter">
+      <div class="hero-copy">
+      <p class="hero-title">Nutrition, Invested</p>
+      <p class="hero-tagline">A survival guide to food.<br>Five anchors. One plate. Ninety days.</p>
+      <div id="buy" class="content-platter">
         <h1 class="headline">Get the Playbook<span class="divider" aria-hidden="true">—</span><span class="price">$9.99</span></h1>
 
         <div class="buttons">
@@ -693,6 +808,7 @@
           </div>
         </div>
       </div>
+      </div>
 
       <button id="scroll-down" class="scroll-hint" aria-label="Scroll to more info">
         <span class="scroll-hint-label">What's Inside</span>
@@ -709,7 +825,7 @@
   <section class="page page-2">
     <div class="page-2-inner">
 
-      <div class="page-2-platter">
+      <div id="whats-inside" class="page-2-platter">
         <header class="page-2-header">
           <button id="page-2-back" class="page-2-back" aria-label="Back to homepage">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -837,6 +953,7 @@
     var blurbPlatter = blurbWrapper ? blurbWrapper.closest('.page-2-platter') : null;
     var currentPage = 0;
     var isAnimating = false;
+    var desktopMQ = window.matchMedia('(min-width: 1024px)');
 
     function updateFades() {
       if (!blurbList || !blurbWrapper) return;
@@ -1009,6 +1126,7 @@
       if (!page) return;
       var startX = 0, startY = 0, dragging = false, axis = null;
       page.addEventListener('touchstart', function (e) {
+        if (desktopMQ.matches) return;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
         dragging = true;
@@ -1130,7 +1248,7 @@
     }, { passive: true });
 
     document.addEventListener('touchmove', function (e) {
-      if (e.touches.length > 1) return;
+      if (desktopMQ.matches || e.touches.length > 1) return;
       var scroller = null;
       if (blurbList && blurbList.contains(e.target)) { scroller = blurbList; }
       else if (aboutBioScroll && aboutBioScroll.contains(e.target)) { scroller = aboutBioScroll; }
@@ -1146,6 +1264,7 @@
     }, { passive: false });
 
     document.addEventListener('touchend', function (e) {
+      if (desktopMQ.matches) return;
       if (aboutPage && aboutPage.classList.contains('open')) return;
       if (faqPage && faqPage.classList.contains('open')) return;
       var dy = touchStartY - e.changedTouches[0].clientY;
@@ -1169,7 +1288,7 @@
 
 <div id="about-page" class="about-page">
   <div class="about-page-inner">
-    <div class="about-platter">
+    <div id="about" class="about-platter">
       <button id="about-back" class="about-back" aria-label="Back">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M15 18l-6-6 6-6"/>
@@ -1217,7 +1336,7 @@
 
 <div id="faq-page" class="about-page">
   <div class="about-page-inner">
-    <div class="about-platter">
+    <div id="questions" class="about-platter">
       <button id="faq-back" class="about-back" aria-label="Back">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M15 18l-6-6 6-6"/>
@@ -1245,6 +1364,16 @@
     </div>
   </div>
 </div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p>&copy; 2026 Andrew Rios</p>
+    <ul class="site-footer-links">
+      <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
+      <li><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+  </div>
+</footer>
 
 </body>
 </html>
