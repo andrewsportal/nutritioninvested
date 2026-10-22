@@ -857,13 +857,14 @@
         var landing = section && section.querySelector('h2[tabindex], .cover-wrapper a');
         // once the jump is done; the jump itself leaves focus nowhere. iPhones would ring it even after a tap
         if (landing) setTimeout(function () {
-          if (e.detail) {
-            landing.classList.add('landed');
-            landing.addEventListener('blur', function () { landing.classList.remove('landed'); }, { once: true });
-          }
+          if (e.detail) landing.classList.add('landed');
           landing.focus({ preventScroll: true });
         });
       });
+    });
+    // the mark goes when focus moves on in the page; a trip to another app or tab keeps focus there and brings it back
+    document.addEventListener('focusout', function (e) {
+      if (document.activeElement !== e.target) e.target.classList.remove('landed');
     });
 
     var aboutSocial = document.getElementById('about-social');
