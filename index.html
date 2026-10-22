@@ -290,9 +290,10 @@
       box-shadow: var(--shadow-surface);
       display: flex; flex-direction: column; overflow: hidden;
     }
+    /* framed so a little stone shows above the head, enough for the upward look */
     .about-hero {
       display: block; width: 100%; height: clamp(160px, 56vw, 250px);
-      object-fit: cover; object-position: 50% 24%; flex-shrink: 0;
+      object-fit: cover; object-position: 50% 27%; flex-shrink: 0;
       background: rgba(var(--accent-rgb), 0.10); -webkit-user-drag: none;
     }
     /* text starts at the leading edge, as in What's Inside and on desktop */
@@ -478,6 +479,7 @@
       .cover-wrapper { max-width: 480px; }
       .page-2-platter, .counter-bar { max-width: 520px; }
       .about-platter { max-width: 480px; }
+      .about-hero { object-position: 50% 25.5%; }
       .about-platter-body { padding: 28px 32px 32px; }
     }
 
