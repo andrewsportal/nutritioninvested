@@ -392,8 +392,9 @@
     .buy-btn.secondary { background: var(--color-surface); border-color: var(--btn-secondary-border); }
 
     .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
-    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 10px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
-    /* "Reads on" is about the book, so it stays with the buttons; Secure Checkout and its logos are one group below */
+    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: var(--sp-1); font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
+    /* "Reads on" is about the book, so it stays with the buttons; Secure Checkout and its logos are one group below.
+       Inside a group things sit --sp-1 apart, and the groups --sp-2 */
     /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the text above */
     .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; opacity: 0.57; margin-top: 0; }
     .payment-logos img { width: 22px; height: 12px; object-fit: contain; display: block; -webkit-user-drag: none; }
