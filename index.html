@@ -395,9 +395,10 @@
     .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: var(--sp-1); font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
     /* "Reads on" is about the book, so it stays with the buttons; Secure Checkout and its logos are one group below.
        Inside a group things sit --sp-1 apart, and the groups --sp-2 */
-    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the text above */
+    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the text above.
+       Each box fits its mark, so the row centres on what's drawn */
     .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; opacity: 0.57; margin-top: 0; }
-    .payment-logos img { width: 22px; height: 12px; object-fit: contain; display: block; -webkit-user-drag: none; }
+    .payment-logos img { width: auto; max-width: 22px; height: 12px; object-fit: contain; display: block; -webkit-user-drag: none; }
 
     .page-2-inner {
       width: 100%; display: flex; flex-direction: column; align-items: center;
@@ -684,8 +685,8 @@
 
         <div class="payment-section">
           <p>Reads on Kindle, Apple Books &amp; Google Play Books</p>
-          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: var(--text-caption); color: var(--color-muted); font-weight: 500;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width:16px; height:16px;">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10.4px; font-size: var(--text-caption); color: var(--color-muted); font-weight: 500;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="3 1 14 18" fill="currentColor" style="width:11.2px; height:14.4px;">
               <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
             </svg>
             Secure Checkout
