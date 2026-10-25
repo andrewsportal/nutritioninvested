@@ -393,8 +393,9 @@
 
     .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
     .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 0; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
-    .payment-logos { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; opacity: 0.45; margin-top: 4px; }
-    .payment-logos img { height: 12px; width: auto; display: block; -webkit-user-drag: none; }
+    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the text above */
+    .payment-logos { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; opacity: 0.57; margin-top: 4px; }
+    .payment-logos img { width: 30px; height: 16px; object-fit: contain; display: block; -webkit-user-drag: none; }
 
     .page-2-inner {
       width: 100%; display: flex; flex-direction: column; align-items: center;
@@ -688,12 +689,12 @@
             Secure Checkout
           </div>
           <div class="payment-logos">
-            <img src="./applepay.svg" alt="Apple Pay" width="38" height="12" decoding="async" onerror="this.style.display='none'">
-            <img src="./googlepay.svg" alt="Google Pay" width="38" height="12" decoding="async" onerror="this.style.display='none'">
-            <img src="./paypal.svg" alt="PayPal" width="50" height="12" decoding="async" onerror="this.style.display='none'">
-            <img src="./visa.svg" alt="Visa" width="38" height="12" decoding="async" onerror="this.style.display='none'">
-            <img src="./mastercard.svg" alt="Mastercard" width="24" height="12" decoding="async" onerror="this.style.display='none'">
-            <img src="./americanexpress.svg" alt="Amex" width="24" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./applepay.svg" alt="Apple Pay" width="30" height="16" decoding="async" onerror="this.style.display='none'">
+            <img src="./googlepay.svg" alt="Google Pay" width="30" height="16" decoding="async" onerror="this.style.display='none'">
+            <img src="./paypal.svg" alt="PayPal" width="30" height="16" decoding="async" onerror="this.style.display='none'">
+            <img src="./visa.svg" alt="Visa" width="30" height="16" decoding="async" onerror="this.style.display='none'">
+            <img src="./mastercard.svg" alt="Mastercard" width="30" height="16" decoding="async" onerror="this.style.display='none'">
+            <img src="./americanexpress.svg" alt="Amex" width="30" height="16" decoding="async" onerror="this.style.display='none'">
           </div>
         </div>
       </div>
