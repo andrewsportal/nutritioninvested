@@ -273,15 +273,18 @@
     .site-nav.buy-away .site-nav-buy { opacity: 0; scale: 0.88; visibility: hidden; pointer-events: none; }
     .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, opacity 0.18s ease-in, scale 0.18s ease-in, visibility 0s linear 0.18s; }
     /* On desktop the links sit beside Buy: while it's away they slide over its room, so the bar ends where the page does,
-       and slide back as it steps in. Buy keeps its size and moves exactly as on iPhone; the script measures its room */
+       and slide back as it steps in. Buy keeps its size and moves exactly as on iPhone. The two take turns and never cross:
+       the links clear its room before it steps in, and it's gone before they close over it. The script measures its room */
     @media (min-width: 1024px) {
       .site-nav.buy-away .site-nav-links { transform: translateX(var(--buy-room, 0px)); }
       .site-nav.buy-ready .site-nav-links { transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
+      .site-nav.buy-ready.buy-away .site-nav-links { transition-delay: 0.14s; }
+      .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, opacity 0.25s ease-out 0.08s, scale 0.35s cubic-bezier(0.32, 0.72, 0, 1) 0.08s, visibility 0s 0.08s; }
     }
 
-    /* a press shows, as on iPhone */
+    /* a press shows at once, as on iPhone; for Buy, over the timing of its steps in and out */
     .site-nav-title:active, .site-nav-toggle:active, .site-footer-links a:active { opacity: 0.6; }
-    .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
+    .site-nav .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; transition-delay: 0s; }
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
 

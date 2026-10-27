@@ -121,12 +121,13 @@
       letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease;
     }
     .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
-    .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
     /* Buy is the shortcut to the buy card at the end; it steps out while that card's own buttons are on screen and back in
        when they leave, with the main page's motion: a quick fade with a slight grow on the way in, a quicker fade out */
     .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, opacity 0.25s ease-out, scale 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
     .site-nav.buy-away .site-nav-buy { opacity: 0; scale: 0.88; visibility: hidden; pointer-events: none; }
     .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, opacity 0.18s ease-in, scale 0.18s ease-in, visibility 0s linear 0.18s; }
+    /* a press shows at once, as on iPhone, over the timing of the steps in and out */
+    .site-nav .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; transition-delay: 0s; }
     /* small phones: a tighter bar; desktop: the bar keeps to the page's width. Both as on the main page */
     @media (max-width: 339px) { .site-nav-inner { padding-left: 16px; padding-right: 16px; } .site-nav-buy { padding: 0 12px; } }
     @media (min-width: 1024px) {
