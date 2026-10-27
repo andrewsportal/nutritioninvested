@@ -92,6 +92,9 @@
     }
 
     html { background: var(--color-bg); scroll-padding-top: calc(var(--safe-top) + 72px); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    /* as on the main page: while focus is in the bar, the room kept for it moves onto the sections, so Tab into it stays put */
+    html:has(.site-nav:focus-within) { scroll-padding-top: 0; }
+    html:has(.site-nav:focus-within) [id] { scroll-margin-top: calc(var(--safe-top) + 72px); }
     body { background: var(--color-bg); color: var(--color-body); font-family: var(--font); -webkit-tap-highlight-color: transparent; }
     svg { pointer-events: none; }
 
