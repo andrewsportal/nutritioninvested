@@ -264,16 +264,17 @@
     .site-nav-buy {
       display: inline-flex; align-items: center; flex-shrink: 0; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
       background: var(--color-accent); color: var(--color-white); font-size: calc(var(--dt-ui) * 13px); font-weight: 600;
-      letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; position: relative;
+      letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; position: relative; pointer-events: auto;
     }
     .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
-    /* Buy steps into the bar once the card's own buy buttons have scrolled up past it, and steps out when they come back,
-       as a large title moves into the bar on iPhone: a quick fade with a slight grow on the way in, a quicker fade out */
-    .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, opacity 0.25s ease-out, scale 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
-    .site-nav.buy-away .site-nav-buy { opacity: 0; scale: 0.88; visibility: hidden; pointer-events: none; }
-    .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, opacity 0.18s ease-in, scale 0.18s ease-in, visibility 0s linear 0.18s; }
-    /* On desktop the links sit beside Buy: while it's away they slide over its room, so the bar ends where the page does,
-       and slide back as it steps in. Buy keeps its size and moves exactly as on iPhone; the script measures its room */
+    /* Buy steps into the bar once the card's own buy buttons have scrolled up past it, and steps out when they come back.
+       It slides out from behind a line just past the end of the bar, the edge of a slot of its own, and back behind it */
+    .site-nav-buy-slot { display: flex; flex-shrink: 0; padding: 8px 6px; margin: -8px -6px; overflow: hidden; overflow: clip; pointer-events: none; }
+    .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
+    .site-nav.buy-away .site-nav-buy { translate: var(--buy-room) 0; visibility: hidden; pointer-events: none; }
+    .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.35s; }
+    /* On desktop the links sit beside Buy and move with it as one row: while it's away they sit over its room, so the bar
+       ends where the page does, and it pushes them back as it slides in. The script measures its room */
     @media (min-width: 1024px) {
       .site-nav.buy-away .site-nav-links { transform: translateX(var(--buy-room, 0px)); }
       .site-nav.buy-ready .site-nav-links { transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
@@ -509,7 +510,7 @@
     @media (max-width: 299px) {
       .page-inner, .page-2-inner, .about-page-inner, .site-nav-inner, .site-nav-links { padding-left: 12px; padding-right: 12px; }
       .blurb-list { padding-left: 16px; padding-right: 16px; }
-      .blurb-icon, .site-nav-buy { display: none; }
+      .blurb-icon, .site-nav-buy-slot { display: none; }
       .site-nav-title-text { white-space: normal; line-height: 1.15; }
     }
 
@@ -667,7 +668,7 @@
       <li><a href="#questions">Questions</a></li>
       <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
     </ul>
-    <a class="site-nav-buy" href="#buy">Buy</a>
+    <span class="site-nav-buy-slot"><a class="site-nav-buy" href="#buy">Buy</a></span>
   </div>
 </nav>
 <div class="menu-curtain" aria-hidden="true"></div>
@@ -870,20 +871,21 @@
     updateNav();
 
     // Buy waits while the card's own buy buttons are on screen, and steps into the bar once they've scrolled up past it.
-    // The first look is taken before anything is drawn, so nothing fades in or out as the page opens
+    // The first look is taken before anything is drawn, so nothing slides in or out as the page opens
     var cardButtons = document.querySelector('#buy .buttons');
     if (cardButtons && 'IntersectionObserver' in window) {
       var setBuy = function (passed) { siteNav.classList.toggle('buy-away', !passed); };
-      // the room Buy takes in the bar, for the desktop links to slide over while it's away, at whatever text size
-      var buy = siteNav.querySelector('.site-nav-buy');
-      var setRoom = function () { siteNav.style.setProperty('--buy-room', (parseFloat(getComputedStyle(buy).width) + (parseFloat(getComputedStyle(buy.parentNode).columnGap) || 0)) + 'px'); };
+      // the room Buy takes in the bar, at whatever text size and width: how far it slides, and the desktop links with it
+      var buy = siteNav.querySelector('.site-nav-buy'), bar = siteNav.querySelector('.site-nav-inner');
+      var setRoom = function () { siteNav.style.setProperty('--buy-room', (parseFloat(getComputedStyle(buy).width) + (parseFloat(getComputedStyle(bar).columnGap) || 0)) + 'px'); };
       setRoom();
-      if ('ResizeObserver' in window) new ResizeObserver(setRoom).observe(buy);
+      if ('ResizeObserver' in window) { var roomWatch = new ResizeObserver(setRoom); roomWatch.observe(buy); roomWatch.observe(bar); }
       setBuy(cardButtons.getBoundingClientRect().bottom <= siteNav.offsetHeight);
+      // the watch runs from under the bar to far below the screen, so a jump straight past the buttons still counts as passing them
       new IntersectionObserver(function (entries) {
         var e = entries[entries.length - 1];
         setBuy(!e.isIntersecting && e.boundingClientRect.bottom <= e.rootBounds.top + 1);
-      }, { rootMargin: '-' + siteNav.offsetHeight + 'px 0px 0px 0px' }).observe(cardButtons);
+      }, { rootMargin: '-' + siteNav.offsetHeight + 'px 0px 100000px 0px' }).observe(cardButtons);
       requestAnimationFrame(function () { requestAnimationFrame(function () { siteNav.classList.add('buy-ready'); }); });
     }
 
