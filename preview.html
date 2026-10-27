@@ -123,9 +123,13 @@
     .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
     .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
     /* Buy is the shortcut to the buy card at the end; it steps out while that card's own buttons are on screen and back in
-       when they leave, with the main page's motion: it slides back behind a line just past the end of the bar, the edge of a
-       slot of its own, and out again, as far as on the main page */
-    .site-nav-buy-slot { display: flex; flex-shrink: 0; padding: 8px 6px; margin: -8px -6px; overflow: hidden; overflow: clip; pointer-events: none; }
+       when they leave, with the main page's motion: it slides back behind a line at the end of the bar, where it comes to
+       rest, and out again, as far as on the main page. The line is the edge of a slot of its own, which gives its focus ring
+       and tap area their few points past the line once it's in */
+    .site-nav-buy-slot { display: flex; flex-shrink: 0; padding: 8px 6px; margin: -8px -6px; overflow: hidden; overflow: clip; pointer-events: none; clip-path: inset(0); }
+    .site-nav.buy-away .site-nav-buy-slot { clip-path: inset(0 6px 0 0); }
+    .site-nav.buy-ready .site-nav-buy-slot { transition: clip-path 0s 0.35s; }
+    .site-nav.buy-ready.buy-away .site-nav-buy-slot { transition: none; }
     .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
     .site-nav.buy-away .site-nav-buy { translate: calc(100% + 12px) 0; visibility: hidden; pointer-events: none; }
     .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.35s; }
