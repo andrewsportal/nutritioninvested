@@ -272,19 +272,11 @@
     .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, opacity 0.25s ease-out, scale 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
     .site-nav.buy-away .site-nav-buy { opacity: 0; scale: 0.88; visibility: hidden; pointer-events: none; }
     .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, opacity 0.18s ease-in, scale 0.18s ease-in, visibility 0s linear 0.18s; }
-    /* On desktop the links sit beside Buy: while it's away they move up to the edge, so the bar ends where the page does,
-       and they glide back to make room as it steps in */
+    /* On desktop the links sit beside Buy: while it's away they slide over its room, so the bar ends where the page does,
+       and slide back as it steps in. Buy keeps its size and moves exactly as on iPhone; the script measures its room */
     @media (min-width: 1024px) {
-      .site-nav-buy { max-width: 80px; overflow: hidden; white-space: nowrap; }
-      .site-nav.buy-away .site-nav-buy { max-width: 0; padding: 0; margin-left: -32px; }
-      .site-nav.buy-ready .site-nav-buy {
-        transition: background 0.2s ease, opacity 0.25s ease-out 0.1s, scale 0.35s cubic-bezier(0.32, 0.72, 0, 1),
-          max-width 0.35s cubic-bezier(0.32, 0.72, 0, 1), padding 0.35s cubic-bezier(0.32, 0.72, 0, 1), margin 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s;
-      }
-      .site-nav.buy-ready.buy-away .site-nav-buy {
-        transition: background 0.2s ease, opacity 0.15s ease-in, scale 0.2s ease-in,
-          max-width 0.35s cubic-bezier(0.32, 0.72, 0, 1), padding 0.35s cubic-bezier(0.32, 0.72, 0, 1), margin 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.35s;
-      }
+      .site-nav.buy-away .site-nav-links { transform: translateX(var(--buy-room, 0px)); }
+      .site-nav.buy-ready .site-nav-links { transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
     }
 
     /* a press shows, as on iPhone */
@@ -882,6 +874,11 @@
     var cardButtons = document.querySelector('#buy .buttons');
     if (cardButtons && 'IntersectionObserver' in window) {
       var setBuy = function (passed) { siteNav.classList.toggle('buy-away', !passed); };
+      // the room Buy takes in the bar, for the desktop links to slide over while it's away, at whatever text size
+      var buy = siteNav.querySelector('.site-nav-buy');
+      var setRoom = function () { siteNav.style.setProperty('--buy-room', (parseFloat(getComputedStyle(buy).width) + (parseFloat(getComputedStyle(buy.parentNode).columnGap) || 0)) + 'px'); };
+      setRoom();
+      if ('ResizeObserver' in window) new ResizeObserver(setRoom).observe(buy);
       setBuy(cardButtons.getBoundingClientRect().bottom <= siteNav.offsetHeight);
       new IntersectionObserver(function (entries) {
         var e = entries[entries.length - 1];
