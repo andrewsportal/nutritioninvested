@@ -187,6 +187,10 @@
       scroll-padding-top: calc(var(--safe-top) + 72px);
       -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
     }
+    /* Focus in the bar is always in view, but the browser, minding the room kept for the bar, would scroll the page up to
+       show it. While focus is in the bar that room moves off the page and onto the sections a link there can jump to */
+    html:has(.site-nav:focus-within) { scroll-padding-top: 0; }
+    html:has(.site-nav:focus-within) [id] { scroll-margin-top: calc(var(--safe-top) + 72px); }
 
     body {
       background: var(--color-bg); color: var(--color-body); font-family: var(--font);
@@ -534,6 +538,7 @@
     /* Computers and iPads held sideways: the bar's links in a row, wider sections side by side */
     @media (min-width: 1024px) {
       html { scroll-padding-top: 84px; }
+      html:has(.site-nav:focus-within) [id] { scroll-margin-top: 84px; }
 
       /* no menu to frost here, so the bar frosts itself */
       .site-nav { transition: background-color 0.2s ease, border-color 0.2s ease; }
