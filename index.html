@@ -110,6 +110,7 @@
       --hairline: rgba(0, 0, 0, 0.08);
       --nav-bg: rgba(241, 244, 239, 0.72);
       --nav-bg-open: rgba(241, 244, 239, 0.94);
+      --curtain: rgba(241, 244, 239, 0.4);
       --nav-link: rgba(51, 51, 51, 0.82);
       --hero-glow: rgba(255, 255, 255, 0.84);
       --font: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -171,6 +172,7 @@
         --hairline: rgba(255, 255, 255, 0.10);
         --nav-bg: rgba(15, 20, 17, 0.72);
         --nav-bg-open: rgba(15, 20, 17, 0.94);
+        --curtain: rgba(15, 20, 17, 0.45);
         --nav-link: rgba(236, 238, 236, 0.82);
         --hero-glow: rgba(var(--tint-rgb), 0.10);
         --shadow-cover: drop-shadow(0 12px 40px rgba(0,0,0,0.55)) drop-shadow(0 4px 12px rgba(0,0,0,0.35));
@@ -231,6 +233,15 @@
     }
     .site-nav-chevron { width: 12px; height: 12px; flex-shrink: 0; margin-left: 6px; color: var(--color-muted); transition: transform 0.2s ease; }
     .site-nav.menu-open .site-nav-chevron { transform: rotate(180deg); }
+    /* while the menu is open the page beneath softens behind a veil, as under the menus on apple.com;
+       a tap on it only closes the menu, and never reaches a link underneath */
+    .menu-curtain {
+      position: fixed; inset: 0; z-index: 299; touch-action: none;
+      background: var(--curtain);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+    }
+    .site-nav.menu-open + .menu-curtain { opacity: 1; visibility: visible; transition: opacity 0.2s ease; }
     /* nearly solid, so the links read even where the blur is off (Reduce Transparency).
        It scrolls if very large text runs it past the bottom of the screen */
     .site-nav-links {
@@ -510,7 +521,7 @@
       .site-nav-title { margin-right: auto; padding: 10px 0; font-size: calc(var(--dt-ui) * 19px); }
       .site-nav-title-text { overflow: visible; }
       .site-nav-home { display: inline-flex; }
-      .site-nav-toggle { display: none; }
+      .site-nav-toggle, .menu-curtain { display: none; }
       .site-nav-links {
         position: static; display: flex; gap: 28px; padding: 0; max-height: none; overflow: visible;
         background: none; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0;
@@ -638,6 +649,7 @@
     <a class="site-nav-buy" href="#buy">Buy</a>
   </div>
 </nav>
+<div class="menu-curtain" aria-hidden="true"></div>
 
 <main>
 <div id="slide-container" class="slide-container">
@@ -846,7 +858,11 @@
       navToggle.setAttribute('aria-expanded', String(open));
     }
     navToggle.addEventListener('click', function () { setMenu(!siteNav.classList.contains('menu-open')); });
-    document.addEventListener('pointerdown', function (e) { if (!siteNav.contains(e.target)) setMenu(false); });
+    // the veil closes the menu as the finger lifts, not as it lands: gone from under a finger still down,
+    // it would hand the lift to the link beneath
+    var curtain = document.querySelector('.menu-curtain');
+    document.addEventListener('pointerdown', function (e) { if (!siteNav.contains(e.target) && e.target !== curtain) setMenu(false); });
+    curtain.addEventListener('click', function () { setMenu(false); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && siteNav.classList.contains('menu-open')) { setMenu(false); navToggle.focus(); }
     });
