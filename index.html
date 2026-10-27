@@ -267,10 +267,15 @@
       letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; position: relative;
     }
     .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
+    /* Buy steps into the bar once the card's own buy buttons have scrolled up past it, and steps out when they come back,
+       as a large title moves into the bar on iPhone: a quick fade with a slight grow on the way in, a quicker fade out */
+    .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, opacity 0.25s ease-out, scale 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
+    .site-nav.buy-away .site-nav-buy { opacity: 0; scale: 0.88; visibility: hidden; pointer-events: none; }
+    .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, opacity 0.18s ease-in, scale 0.18s ease-in, visibility 0s linear 0.18s; }
 
     /* a press shows, as on iPhone */
     .site-nav-title:active, .site-nav-toggle:active, .site-footer-links a:active { opacity: 0.6; }
-    .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; }
+    .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
 
@@ -857,6 +862,19 @@
     function updateNav() { siteNav.classList.toggle('is-scrolled', window.scrollY > 0); }
     window.addEventListener('scroll', updateNav, { passive: true });
     updateNav();
+
+    // Buy waits while the card's own buy buttons are on screen, and steps into the bar once they've scrolled up past it.
+    // The first look is taken before anything is drawn, so nothing fades in or out as the page opens
+    var cardButtons = document.querySelector('#buy .buttons');
+    if (cardButtons && 'IntersectionObserver' in window) {
+      var setBuy = function (passed) { siteNav.classList.toggle('buy-away', !passed); };
+      setBuy(cardButtons.getBoundingClientRect().bottom <= siteNav.offsetHeight);
+      new IntersectionObserver(function (entries) {
+        var e = entries[entries.length - 1];
+        setBuy(!e.isIntersecting && e.boundingClientRect.bottom <= e.rootBounds.top + 1);
+      }, { rootMargin: '-' + siteNav.offsetHeight + 'px 0px 0px 0px' }).observe(cardButtons);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { siteNav.classList.add('buy-ready'); }); });
+    }
 
     // On phones the title unfolds the links; choosing one, tapping elsewhere or Escape folds them away
     function setMenu(open) {
