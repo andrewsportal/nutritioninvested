@@ -403,10 +403,10 @@
     .buy-btn.secondary { background: var(--color-surface); border-color: var(--btn-secondary-border); }
 
     .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
-    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: var(--sp-1); font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
-    /* "Reads on" is about the book, so it stays with the buttons; Secure Checkout and its logos are one group below.
-       Inside a group things sit --sp-1 apart, and the groups --sp-2; the logos take 2 more, since Secure Checkout
-       has no descenders, so both pairs look 10 points apart edge to edge */
+    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
+    /* "Reads on" is about the book, so it stays with the buttons; "Accepted on Payhip" and its logos are one group below.
+       Edge to edge as drawn, the lines inside a group sit 10 points apart and the groups about 18, near the card's foot:
+       that takes 6 points under "Reads on" and 2 more over the logos, on top of the 8-point gap */
     /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the text above.
        Each box fits its mark, so the row centres on what's drawn */
     .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; opacity: 0.57; margin-top: 2px; }
@@ -692,18 +692,13 @@
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>
               </svg>
             </span>
-            <span>Buy Direct on Payhip</span>
+            <span>Buy on Payhip</span>
           </a>
         </div>
 
         <div class="payment-section">
           <p>Reads on Kindle, Apple Books &amp; Google Play Books</p>
-          <div style="display: flex; align-items: center; justify-content: center; gap: 10.4px; font-size: var(--text-caption); color: var(--color-muted); font-weight: 500;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="3 1 14 18" fill="currentColor" style="width:11.2px; height:14.4px;">
-              <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
-            </svg>
-            Secure Checkout
-          </div>
+          <div style="font-size: var(--text-caption); color: var(--color-muted); font-weight: 500;">Accepted on Payhip</div>
           <div class="payment-logos">
             <img src="./applepay.svg" alt="Apple Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
             <img src="./googlepay.svg" alt="Google Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
