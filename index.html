@@ -557,18 +557,23 @@
       .site-nav-links a { padding: 14px 8px; margin: 0 -8px; font-size: calc(var(--dt-ui) * 14px); color: var(--nav-link); transition: color 0.2s ease; }
       .site-nav-links a:hover { color: var(--color-tint); }
 
-      /* the cover keeps to the column's left edge and the buy card to its right, as the bar and every section below do; on
-         shorter windows, where the cover is smaller, the room goes into the gap between them */
+      /* the cover's height follows the window's, so the whole section fits the first screen */
+      :root { --hero-cover-h: clamp(320px, calc(100vh - 232px), 640px); }
+      @supports (height: 100svh) { :root { --hero-cover-h: clamp(320px, calc(100svh - 232px), 640px); } }
+      /* The cover keeps to the column's left edge and the buy card to its right, as the bar and every section below do, the
+         room going into the gap between them. Where the window is so short that the gap would more than double, the cover and
+         text stay together instead, centred, with the gap as designed: the max() turns the stretch off past double */
       .page-1 .page-inner {
+        --gap: clamp(64px, 8vw, 120px); --stretched: calc(100% - var(--hero-cover-h) * 832 / 1248 - 440px);
         min-height: calc(100vh - 53px); min-height: calc(100svh - 53px);
         max-width: 1076px; margin: 0 auto; padding: 48px 48px 72px;
         display: grid; grid-template-columns: auto minmax(0, 440px); grid-template-areas: 'cover copy' 'hint copy';
-        column-gap: clamp(64px, 8vw, 120px); row-gap: 20px;
-        align-content: center; justify-content: space-between; align-items: center;
+        column-gap: clamp(var(--gap), var(--stretched), max(var(--gap), calc((2 * var(--gap) - var(--stretched)) * 1000 + var(--gap)))); row-gap: 20px;
+        align-content: center; justify-content: center; align-items: center;
       }
       .page-1 .cover-wrapper {
         grid-area: cover; align-self: end; width: auto; max-width: none;
-        height: clamp(320px, calc(100vh - 232px), 640px); height: clamp(320px, calc(100svh - 232px), 640px); aspect-ratio: 832 / 1248;
+        height: var(--hero-cover-h); aspect-ratio: 832 / 1248;
       }
       .page-1 .preview-hint { grid-area: hint; align-self: start; }
       .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
