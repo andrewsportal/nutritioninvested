@@ -940,7 +940,9 @@
       if (document.activeElement !== e.target) e.target.classList.remove('landed');
     });
 
-    // Instagram, from About and from the footer, opens in its app on phones, where messages are; without the app, the web page
+    // Instagram, from About and from the footer, opens in its app on phones, where messages are; without the app, the web page.
+    // an iPhone does that with the plain link alone; asking it for the app by name makes Safari ask first and leaves
+    // phones without the app nowhere, so only Android is asked
     document.querySelectorAll('#about-social, .site-footer-links a[href*="instagram.com"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         var ua = navigator.userAgent;
@@ -948,20 +950,6 @@
         if (/android/i.test(ua)) {
           e.preventDefault();
           window.location.href = 'intent://www.instagram.com/whatsupandrewriosx/#Intent;package=com.instagram.android;scheme=https;S.browser_fallback_url=' + encodeURIComponent(webUrl) + ';end';
-        } else if (/iPad|iPhone|iPod/.test(ua)) {
-          e.preventDefault();
-          // the web page only if the app never came up: the wait allows for a browser asking first, and a wait that ran
-          // long means the browser slept while the app was in front, so coming back finds the site as it was left
-          var asked = Date.now();
-          var fallback = setTimeout(function () {
-            if (document.visibilityState === 'visible' && Date.now() - asked < 2500) { window.location.href = webUrl; }
-          }, 2000);
-          var cancel = function () { clearTimeout(fallback); };
-          window.addEventListener('pagehide', cancel, { once: true });
-          document.addEventListener('visibilitychange', function () {
-            if (document.visibilityState === 'hidden') cancel();
-          }, { once: true });
-          window.location.href = 'instagram://user?username=whatsupandrewriosx';
         }
       });
     });
