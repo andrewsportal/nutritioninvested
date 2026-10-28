@@ -950,9 +950,12 @@
           window.location.href = 'intent://www.instagram.com/whatsupandrewriosx/#Intent;package=com.instagram.android;scheme=https;S.browser_fallback_url=' + encodeURIComponent(webUrl) + ';end';
         } else if (/iPad|iPhone|iPod/.test(ua)) {
           e.preventDefault();
+          // the web page only if the app never came up: the wait allows for a browser asking first, and a wait that ran
+          // long means the browser slept while the app was in front, so coming back finds the site as it was left
+          var asked = Date.now();
           var fallback = setTimeout(function () {
-            if (document.visibilityState === 'visible') { window.location.href = webUrl; }
-          }, 1200);
+            if (document.visibilityState === 'visible' && Date.now() - asked < 2500) { window.location.href = webUrl; }
+          }, 2000);
           var cancel = function () { clearTimeout(fallback); };
           window.addEventListener('pagehide', cancel, { once: true });
           document.addEventListener('visibilitychange', function () {
