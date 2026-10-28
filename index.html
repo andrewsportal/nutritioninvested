@@ -289,7 +289,7 @@
     }
 
     /* a press shows, as on iPhone */
-    .site-nav-title:active, .site-nav-toggle:active, .site-footer-links a:active { opacity: 0.6; }
+    .site-nav-title:active, .site-nav-toggle:active, .site-footer-links a:active, .site-footer-giving a:active { opacity: 0.6; }
     .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
@@ -356,6 +356,7 @@
       margin: 0 0 6px;
     }
     .faq-a { margin-bottom: 22px; }
+    .faq-a:last-child { margin-bottom: 0; }
 
     .about-social-link {
       display: inline-flex; align-items: center; gap: 8px; max-width: 100%;
@@ -505,7 +506,10 @@
       font-size: calc(var(--dt-ui) * 12px); line-height: 1.33; color: var(--color-muted); text-align: center;
     }
     .site-footer-links { display: flex; gap: 24px; list-style: none; }
-    .site-footer-links a { display: inline-block; padding: 14px 8px; margin: -14px -8px; color: inherit; text-decoration: none; }
+    .site-footer-links a, .site-footer-giving a { display: inline-block; padding: 14px 8px; margin: -14px -8px; color: inherit; text-decoration: none; }
+    /* the giving line sits under the copyright, and beside it after a bar once the footer is one row */
+    .site-footer-giving { display: block; margin-top: 12px; }
+    .site-footer-sep { display: none; }
 
     /* Small phones: a tighter bar, so the whole title fits */
     @media (max-width: 339px) {
@@ -620,7 +624,11 @@
       .about-rule { margin-bottom: 28px; }
       .about-bio { max-width: 640px; font-size: calc(var(--dt) * 17px); line-height: 1.6; margin-bottom: 16px; }
       .faq-q { font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.3; margin-bottom: 8px; }
-      #faq-scroll { display: grid; grid-auto-flow: column; grid-template-rows: auto auto; grid-auto-columns: minmax(0, 1fr); column-gap: 56px; }
+      /* two questions across, each answer level with its neighbour's; a third starts the next row, under the first */
+      #faq-scroll { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; column-gap: 56px; }
+      #faq-scroll > :nth-child(4n+1), #faq-scroll > :nth-child(4n+2) { grid-column: 1; }
+      #faq-scroll > :nth-child(4n+3), #faq-scroll > :nth-child(4n+4) { grid-column: 2; }
+      #faq-scroll > .faq-q:nth-child(n+5) { margin-top: 48px; }
       .faq-a { margin-bottom: 0; }
 
       .site-footer { max-width: 1076px; margin: 96px auto 0; padding: 0 48px 48px; }
@@ -628,8 +636,10 @@
         max-width: none; flex-direction: row; justify-content: space-between; gap: 24px; text-align: left;
         padding-top: 20px; border-top: 1px solid var(--footer-rule);
       }
-      .site-footer-links a { padding: 14px 0; margin: -14px 0; }
-      .site-footer-links a:hover { color: var(--color-body); text-decoration: underline; }
+      .site-footer-links a, .site-footer-giving a { padding: 14px 0; margin: -14px 0; }
+      .site-footer-links a:hover, .site-footer-giving a:hover { color: var(--color-body); text-decoration: underline; }
+      .site-footer-giving { display: inline; margin: 0; }
+      .site-footer-sep { display: inline; margin: 0 10px; opacity: 0.4; }
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -921,13 +931,14 @@
     });
     window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
 
-    // A link to a section also gives its heading focus, or at the top the cover, so VoiceOver and the keyboard land there too
-    siteNav.querySelectorAll('a').forEach(function (link) {
+    // A link to a section, from the bar or the footer, also gives its heading focus, or at the top the cover,
+    // so VoiceOver and the keyboard land there too; a question taking focus itself is its own landing
+    document.querySelectorAll('.site-nav a, .site-footer a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         setMenu(false);
         var href = link.getAttribute('href');
         var section = href.charAt(0) === '#' && document.querySelector(href);
-        var landing = section && section.querySelector('h2[tabindex], .cover-wrapper a');
+        var landing = section && (section.matches('h3[tabindex]') ? section : section.querySelector('h2[tabindex], .cover-wrapper a'));
         // once the jump is done; the jump itself leaves focus nowhere. iPhones would ring it even after a tap
         if (landing) setTimeout(function () {
           if (e.detail) landing.classList.add('landed');
@@ -1007,6 +1018,11 @@
       <p class="about-bio faq-a">Buy it direct and you get both files, PDF and EPUB, the minute you check out. The EPUB goes into whatever reading app you already use. The PDF opens on anything with a screen. Buy it on Amazon and it's in your Kindle library before you've put the phone down.</p>
       <h3 class="faq-q">Is this medical advice?</h3>
       <p class="about-bio faq-a">No. It's eight thousand miles of notes, not a clinic's protocol. Diabetes, kidney disease, a heart condition, a pregnancy, a diet your doctor wrote down: any of those, and the book goes to the doctor before anything on your plate changes. The blood panel chapter will make that appointment worth more.</p>
+      <h3 id="humane-accord" class="faq-q" tabindex="-1">What's The Humane Accord Initiative?</h3>
+      <div class="faq-a">
+        <p class="about-bio">The Humane Accord Initiative is our official giving pledge. At Nutrition, Invested, we believe true health extends beyond physical nourishment to the digital environments we inhabit daily.</p>
+        <p class="about-bio">With every book purchase, a portion of our profits goes directly to organizations working to bridge the divide between screen time and real life. By funding efforts that ease digital noise, addictive algorithms and parasocial overload, we help restore genuine human connection, mental clarity, and long-term well-being.</p>
+      </div>
       </div>
       </div>
       </div>
@@ -1017,7 +1033,7 @@
 
 <footer class="site-footer">
   <div class="site-footer-inner">
-    <p>&copy; 2026 Andrew Rios</p>
+    <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><a href="#humane-accord"><span aria-hidden="true">🌏</span> Giving Back: The Humane Accord Initiative</a></span></p>
     <ul class="site-footer-links">
       <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
       <li><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
