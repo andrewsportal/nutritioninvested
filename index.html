@@ -930,6 +930,24 @@
     });
     window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
 
+    // Safari on iPhone can leave what's on screen sitting a little below the top it pins the bar to, most often at the
+    // bottom of the page, and the bar rides up under the status bar. It reports the slip, so the bar and the menu's veil
+    // move down by as much; a zoomed-in page is left alone, where the slip is the reader's own panning
+    var view = window.visualViewport;
+    if (view) {
+      var slipped = 0;
+      var holdBar = function () {
+        var slip = Math.abs(view.scale - 1) < 0.01 ? Math.max(0, Math.round(view.offsetTop)) : 0;
+        if (slip === slipped) return;
+        slipped = slip;
+        siteNav.style.translate = curtain.style.translate = slip ? '0 ' + slip + 'px' : '';
+      };
+      view.addEventListener('resize', holdBar);
+      view.addEventListener('scroll', holdBar);
+      window.addEventListener('scroll', holdBar, { passive: true });
+      holdBar();
+    }
+
     // A link to a section, from the bar or the footer, also gives its heading focus, or at the top the cover,
     // so VoiceOver and the keyboard land there too; a question taking focus itself is its own landing
     document.querySelectorAll('.site-nav a, .site-footer a[href^="#"]').forEach(function (link) {
