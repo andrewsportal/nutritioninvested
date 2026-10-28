@@ -940,9 +940,9 @@
       if (document.activeElement !== e.target) e.target.classList.remove('landed');
     });
 
-    var aboutSocial = document.getElementById('about-social');
-    if (aboutSocial) {
-      aboutSocial.addEventListener('click', function (e) {
+    // Instagram, from About and from the footer, opens in its app on phones, where messages are; without the app, the web page
+    document.querySelectorAll('#about-social, .site-footer-links a[href*="instagram.com"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
         var ua = navigator.userAgent;
         var webUrl = this.href;
         if (/android/i.test(ua)) {
@@ -961,7 +961,7 @@
           window.location.href = 'instagram://user?username=whatsupandrewriosx';
         }
       });
-    }
+    });
 
   });
 </script>
