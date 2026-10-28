@@ -376,20 +376,20 @@
       display: flex; align-items: center; justify-content: center;
     }
     .cover-wrapper a { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-    /* the cover as Apple Books shows one: a crease down the spine and softly rounded corners, drawn over the artwork */
+    /* the cover with a crease down the spine, as Apple Books draws one over the artwork; its corners square, as a printed book's */
     .cover-wrapper .book {
       position: relative; display: block; height: 100%; aspect-ratio: 832 / 1248; max-width: 100%;
-      border-radius: 2px 6px 6px 2px; filter: var(--shadow-cover); will-change: filter; cursor: pointer;
+      filter: var(--shadow-cover); will-change: filter; cursor: pointer;
       transition: transform 0.22s ease, filter 0.22s ease;
     }
     .cover-wrapper .book::after {
-      content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      content: ''; position: absolute; inset: 0; pointer-events: none;
       background:
         linear-gradient(90deg, rgba(0,0,0,0.20) 0, rgba(0,0,0,0.04) 1.2%, rgba(255,255,255,0.20) 2%, rgba(255,255,255,0) 3.6%, rgba(0,0,0,0.10) 4.4%, rgba(0,0,0,0) 7.5%),
         linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0) 40%, rgba(0,0,0,0.05));
     }
     .cover-wrapper img {
-      display: block; width: 100%; height: 100%; border-radius: inherit;
+      display: block; width: 100%; height: 100%;
       object-fit: contain; -webkit-user-drag: none; -webkit-touch-callout: none;
     }
     .cover-wrapper .book:active { transform: scale(0.99); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.10)); }
