@@ -636,7 +636,9 @@
         padding-top: 20px; border-top: 1px solid var(--footer-rule);
       }
       .site-footer-links a, .site-footer-giving a { padding: 14px 0; margin: -14px 0; }
-      .site-footer-links a:hover, .site-footer-giving a:hover { color: var(--color-body); text-decoration: underline; }
+      .site-footer-links a:hover, .site-footer-giving a:hover { color: var(--color-body); }
+      /* the underline marks the words; the globe in front of the name stays clear of it */
+      .site-footer-links a:hover, .site-footer-giving a:hover .site-footer-name { text-decoration: underline; }
       .site-footer-giving { display: inline; margin: 0; }
       .site-footer-sep { display: inline; margin: 0 10px; opacity: 0.4; }
     }
@@ -1029,7 +1031,7 @@
 
 <footer class="site-footer">
   <div class="site-footer-inner">
-    <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><span aria-hidden="true">🌏</span> Giving Back: <a href="#humane-accord">The Humane Accord Initiative</a></span></p>
+    <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><a href="#humane-accord"><span aria-hidden="true">🌏</span> <span class="site-footer-name">The Humane Accord Initiative</span></a></span></p>
     <ul class="site-footer-links">
       <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
       <li><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
