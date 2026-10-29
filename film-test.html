@@ -1065,11 +1065,12 @@
     // The film: the upright cut for a screen held upright, the wide one otherwise. Readers who asked for less motion get
     // its still and never download the film; a phone in Low Power Mode won't start it, and the still stays until Play
     // is chosen. It rests while the tab is hidden, and on a phone once the buy card has gone up under the bar, the line
-    // Buy steps into the bar from, so What's Inside arrives on a still film and only its edges show between the cards
+    // Buy steps into the bar from, so What's Inside arrives on a still film and only its edges show between the cards.
+    // At the foot of the page it opens up again, and there the film picks up from the frame it stopped on
     var film = document.querySelector('.film-video'), filmToggles = document.querySelectorAll('.film-toggle');
     var filmCorner = document.querySelector('.film-corner'), filmLine = document.querySelector('.site-nav-film');
     var filmWords = filmLine.querySelector('.film-toggle-words'), upright = window.matchMedia('(orientation: portrait)');
-    var held = false, firstScreen = true;
+    var held = false, firstScreen = true, lastScreen = false;
     film.muted = film.defaultMuted = true;
     function filmCut() {
       var name = './film/reel-' + (upright.matches ? 'tall' : 'wide');
@@ -1087,7 +1088,7 @@
     }
     function filmRun() {
       if (still.matches) return;
-      if (held || document.hidden || !(firstScreen || wide.matches)) { film.pause(); showHeld(held); return; }
+      if (held || document.hidden || !(firstScreen || lastScreen || wide.matches)) { film.pause(); showHeld(held); return; }
       var playing = film.play();
       showHeld(false);
       // only a refusal holds it; a start cut short by a scroll, a hidden tab or a turned phone just waits for the next run
@@ -1106,6 +1107,9 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) { firstScreen = entries[entries.length - 1].isIntersecting; filmRun(); },
         { rootMargin: '-' + siteNav.offsetHeight + 'px 0px 100000px 0px' }).observe(document.getElementById('buy'));
+      // the foot counts once the footer is all but wholly in view, so it doesn't start beside the last answer
+      new IntersectionObserver(function (entries) { lastScreen = entries[entries.length - 1].intersectionRatio >= 0.9; filmRun(); },
+        { threshold: [0, 0.9] }).observe(document.querySelector('.site-footer'));
     }
     filmCut();
 
