@@ -318,9 +318,10 @@
         -webkit-mask-image: var(--fade); mask-image: var(--fade);
       }
     }
-    /* its pause: on a phone, the menu's last line, an action among the links with its symbol at the end, as in an iPhone
-       menu, since there the film plays only while the first screen shows. On a desktop, a button in the bottom corner,
-       over the film in the margin, since the margins show it all the way down */
+    /* its pause, which holds the footer's turning globe too: on a phone, the menu's last line, an action among the
+       links with its symbol at the end, as in an iPhone menu, since there the film plays only while the first screen
+       shows. On a desktop, a button in the bottom corner, over the film in the margin, since the margins show it all
+       the way down */
     .site-nav-film .film-toggle {
       display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 0; border: 0;
       background: none; -webkit-appearance: none; appearance: none; font-family: inherit; font-size: calc(var(--dt-ui) * 17px);
@@ -762,7 +763,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#questions">Questions</a></li>
       <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
-      <li class="site-nav-film" hidden><button class="film-toggle" type="button"><span class="film-toggle-words">Pause Background Video</span>
+      <li class="site-nav-film" hidden><button class="film-toggle" type="button"><span class="film-toggle-words">Pause Motion</span>
         <svg class="film-pause" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.75 2.5v7M8.25 2.5v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         <svg class="film-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.6 2.4v7.2L9.6 6z" fill="currentColor"/></svg>
       </button></li>
@@ -833,7 +834,7 @@
       </div>
 
     </div>
-    <button class="film-toggle film-corner" type="button" aria-label="Pause Background Video" hidden>
+    <button class="film-toggle film-corner" type="button" aria-label="Pause Motion" hidden>
       <svg class="film-pause" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.75 2.5v7M8.25 2.5v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       <svg class="film-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.6 2.4v7.2L9.6 6z" fill="currentColor"/></svg>
     </button>
@@ -1096,7 +1097,7 @@
       filmRun();
     }
     function showHeld(isHeld) {
-      var says = (isHeld ? 'Play' : 'Pause') + ' Background Video';
+      var says = (isHeld ? 'Play' : 'Pause') + ' Motion';
       filmToggles.forEach(function (toggle) { toggle.classList.toggle('is-held', isHeld); });
       filmCorner.setAttribute('aria-label', says);
       filmWords.textContent = says;
@@ -1107,13 +1108,11 @@
       var playing = film.play();
       showHeld(false);
       // only a refusal holds it; a start cut short by a scroll, a hidden tab or a turned phone just waits for the next run
-      if (playing && playing.catch) playing.catch(function (e) { if (e.name === 'NotAllowedError') { held = true; showHeld(true); } });
+      if (playing && playing.catch) playing.catch(function (e) { if (e.name === 'NotAllowedError') { held = true; showHeld(true); globeRun(); } });
     }
-    filmToggles.forEach(function (toggle) { toggle.addEventListener('click', function () { held = !held; filmRun(); }); });
+    filmToggles.forEach(function (toggle) { toggle.addEventListener('click', function () { held = !held; filmRun(); globeRun(); }); });
     // chosen from the menu, it folds the menu away as a link does, and the keyboard goes back to the title
     filmLine.querySelector('.film-toggle').addEventListener('click', function () { setMenu(false); navToggle.focus(); });
-    // a browser that can't play the film at all keeps the still, and the pause goes with the film
-    film.addEventListener('error', function () { filmCorner.hidden = filmLine.hidden = true; });
     document.addEventListener('visibilitychange', filmRun);
     upright.addEventListener('change', filmCut);
     still.addEventListener('change', filmCut);
@@ -1132,6 +1131,102 @@
         { threshold: [0, 0.9] }).observe(document.querySelector('.site-footer'));
     }
     filmCut();
+
+    // The globe beside the Humane Accord turns on its axis once every 24 seconds, an hour of the Earth's day a second,
+    // drawn from a small map of the world's land, Natural Earth's, which is free to use, so the continents slide round its
+    // face as they would from space. It starts on the Americas the still shows, turns only while it's on screen, and
+    // rests with the tab hidden or when motion is paused; readers who asked for less motion keep the still, as does a
+    // browser without the script
+    var globeStill = document.querySelector('.site-footer-globe'), globeCanvas = null, globeDraw = null, globeMap = null;
+    var globeSeen = false, globeAsked = false, globeTurned = 0, globeLast = 0, globeDrawn = 0, globeFrame = 0;
+    function globeFace(canvas, map) {
+      // the map seen from straight ahead, tipped a little to the north as the still is, and lit from the left; every
+      // point on the face knows its latitude and its longitude from the middle, so turning is only a matter of adding
+      var n = canvas.width, ctx = canvas.getContext('2d'), image = ctx.createImageData(n, n), px = image.data;
+      var tilt = 10 * Math.PI / 180, st = Math.sin(tilt), ct = Math.cos(tilt), count = n * n;
+      var lat = new Float32Array(count), dlon = new Float32Array(count), lit = new Float32Array(count), cover = new Float32Array(count);
+      var lx = -0.6, ly = 0.3, lz = 0.74, ll = Math.sqrt(lx * lx + ly * ly + lz * lz);
+      for (var j = 0; j < n; j++) for (var i = 0; i < n; i++) {
+        var k = j * n + i, x = (i + 0.5) / n * 2 - 1, y = 1 - (j + 0.5) / n * 2, rho = Math.sqrt(x * x + y * y);
+        cover[k] = Math.max(0, Math.min(1, (1 - rho) * n / 2 + 0.5));
+        if (!cover[k]) continue;
+        var r = Math.min(rho, 0.99999), c = Math.asin(r), sc = Math.sin(c), cc = Math.cos(c), z = Math.sqrt(1 - r * r);
+        lat[k] = Math.asin(cc * st + (r ? y * sc * ct / r : 0));
+        dlon[k] = Math.atan2(x * sc, r * cc * ct - y * sc * st);
+        lit[k] = Math.max(0, (x * lx + y * ly + z * lz) / ll);
+      }
+      // the still's own colours: sea and land, each from its shadow through its middle to its light
+      var sea = [[0, 14, 110], [0, 96, 214], [40, 186, 252]], ground = [[58, 128, 0], [134, 222, 18], [186, 250, 84]];
+      var w = map.w, h = map.h, land = map.land;
+      return function (lonDegrees) {
+        var lon0 = lonDegrees * Math.PI / 180;
+        for (var k = 0; k < count; k++) {
+          var o = k * 4;
+          if (!cover[k]) { px[o + 3] = 0; continue; }
+          var u = (((lon0 + dlon[k]) / (2 * Math.PI) + 0.5) % 1 + 1) % 1 * w - 0.5, v = (0.5 - lat[k] / Math.PI) * h - 0.5;
+          var u0 = Math.floor(u), fu = u - u0, ua = (u0 % w + w) % w, ub = (ua + 1) % w;
+          var v0 = Math.max(0, Math.min(h - 1, Math.floor(v))), v1 = Math.min(h - 1, v0 + 1), fv = Math.max(0, Math.min(1, v - v0));
+          var m = ((land[v0 * w + ua] * (1 - fu) + land[v0 * w + ub] * fu) * (1 - fv) + (land[v1 * w + ua] * (1 - fu) + land[v1 * w + ub] * fu) * fv) / 255;
+          var t = lit[k], low = t < 0.6, f = low ? t / 0.6 : (t - 0.6) / 0.4, a = low ? 0 : 1, b = low ? 1 : 2;
+          for (var ch = 0; ch < 3; ch++) {
+            var s = sea[a][ch] + (sea[b][ch] - sea[a][ch]) * f, g = ground[a][ch] + (ground[b][ch] - ground[a][ch]) * f;
+            px[o + ch] = s + (g - s) * m;
+          }
+          px[o + 3] = cover[k] * 255;
+        }
+        ctx.putImageData(image, 0, 0);
+      };
+    }
+    function globeAt() { return -72 - globeTurned / 24000 * 360; }
+    function globeBuild() {
+      if (!globeCanvas) {
+        globeCanvas = document.createElement('canvas');
+        globeCanvas.className = 'site-footer-globe';
+        globeCanvas.setAttribute('aria-hidden', 'true');
+        globeStill.parentNode.insertBefore(globeCanvas, globeStill);
+      }
+      globeCanvas.hidden = false; globeStill.hidden = true;
+      var n = Math.max(16, Math.round(globeCanvas.getBoundingClientRect().height * (window.devicePixelRatio || 1)));
+      if (n !== globeCanvas.width || !globeDraw) { globeCanvas.width = globeCanvas.height = n; globeDraw = globeFace(globeCanvas, globeMap); globeDraw(globeAt()); }
+    }
+    function globeTurning() { return !still.matches && !held && !document.hidden && globeSeen && globeDraw; }
+    function globeTick(now) {
+      globeFrame = 0;
+      if (!globeTurning()) { globeLast = 0; return; }
+      if (globeLast) globeTurned += now - globeLast;
+      globeLast = now;
+      // about thirty pictures a second is plenty for something this small turning this slowly
+      if (now - globeDrawn > 32) { globeDrawn = now; globeDraw(globeAt()); }
+      globeFrame = requestAnimationFrame(globeTick);
+    }
+    function globeRun() {
+      if (still.matches) { if (globeCanvas) { globeCanvas.hidden = true; globeStill.hidden = false; } return; }
+      if (!globeSeen || held && !globeDraw) return;
+      if (!globeMap) {
+        if (globeAsked) return;
+        globeAsked = true;
+        var map = new Image();
+        map.onload = function () {
+          var c = document.createElement('canvas'), x = c.getContext('2d');
+          c.width = map.naturalWidth; c.height = map.naturalHeight; x.drawImage(map, 0, 0);
+          var d = x.getImageData(0, 0, c.width, c.height).data, land = new Uint8Array(c.width * c.height);
+          for (var i = 0; i < land.length; i++) land[i] = d[i * 4];
+          globeMap = { w: c.width, h: c.height, land: land };
+          globeRun();
+        };
+        map.src = './globe-land.png';
+        return;
+      }
+      globeBuild();
+      if (globeTurning() && !globeFrame) { globeLast = 0; globeFrame = requestAnimationFrame(globeTick); }
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) { globeSeen = entries[entries.length - 1].isIntersecting; globeRun(); })
+        .observe(globeStill.parentNode);
+    }
+    document.addEventListener('visibilitychange', globeRun);
+    still.addEventListener('change', globeRun);
+    window.addEventListener('resize', function () { if (globeDraw && !still.matches) globeBuild(); });
 
     // A link to a section, from the bar or the footer, also gives its heading focus, or at the top the cover,
     // so VoiceOver and the keyboard land there too; a question taking focus itself is its own landing
