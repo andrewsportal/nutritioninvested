@@ -289,7 +289,7 @@
     }
 
     /* a press shows, as on iPhone */
-    .site-nav-title:active, .site-nav-toggle:active, .site-footer-links a:active, .site-footer-giving a:active { opacity: 0.6; }
+    .site-nav-title:active, .site-nav-toggle:active, .faq-row:active, .site-footer-links a:active, .site-footer-giving a:active { opacity: 0.6; }
     .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
@@ -356,6 +356,20 @@
       margin: 0 0 6px;
     }
     .faq-a { margin-bottom: 22px; }
+    /* On phones the questions fold away, each a row as wide as the panel with a line between rows, as in the menu, and
+       the chevron at its end turns over as its answer opens, as the menu's does. The script folds them; without it every
+       answer shows, and desktops leave them open, where all three fit on the screen side by side */
+    .faq-folds { margin: -12px 0; }
+    .faq-folds .faq-q { margin: 0; }
+    .faq-folds .faq-a + .faq-q { border-top: 1px solid var(--hairline); }
+    .faq-folds .faq-a { margin: 0; padding-bottom: 16px; }
+    .faq-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 44px;
+      padding: 12px 0; border: 0; background: none; -webkit-appearance: none; appearance: none;
+      font: inherit; color: inherit; letter-spacing: inherit; text-align: left; cursor: pointer;
+    }
+    .faq-chevron { width: 12px; height: 12px; flex-shrink: 0; color: var(--color-muted); transition: transform 0.2s ease; }
+    .faq-row[aria-expanded="true"] .faq-chevron { transform: rotate(180deg); }
 
     .about-social-link {
       display: inline-flex; align-items: center; gap: 8px; max-width: 100%;
@@ -932,6 +946,74 @@
     });
     window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
 
+    // On phones each question becomes a row that opens its answer, with the menu's own chevron. On a desktop all
+    // three fit on the screen side by side, so there they stay open, as they do without the script
+    var faq = document.getElementById('faq-scroll');
+    var wide = window.matchMedia('(min-width: 1024px)');
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var questions = [].map.call(faq.querySelectorAll('.faq-q'), function (q, i) {
+      var item = { q: q, answer: q.nextElementSibling, row: document.createElement('button'), words: document.createElement('span'), open: false };
+      var chevron = navToggle.querySelector('.site-nav-chevron').cloneNode(true);
+      chevron.setAttribute('class', 'faq-chevron');
+      item.answer.id = item.answer.id || 'faq-answer-' + (i + 1);
+      item.row.type = 'button';
+      item.row.className = 'faq-row';
+      item.row.setAttribute('aria-controls', item.answer.id);
+      item.row.setAttribute('aria-expanded', 'false');
+      item.row.append(item.words, chevron);
+      item.row.addEventListener('click', function () { setAnswer(item, !item.open, true); });
+      return item;
+    });
+    // the answer slides out from under its question and back, from wherever a quick second tap catches it;
+    // with Reduce Motion it simply shows
+    function setAnswer(item, open, slide) {
+      var a = item.answer;
+      item.open = open;
+      item.row.setAttribute('aria-expanded', String(open));
+      if (!faq.classList.contains('faq-folds')) return;
+      var from = a.hidden ? [0, '0px', 0] : [a.getBoundingClientRect().height, getComputedStyle(a).paddingBottom, getComputedStyle(a).opacity];
+      if (a.getAnimations) a.getAnimations().forEach(function (run) { run.cancel(); });
+      a.style.overflow = '';
+      a.hidden = false;
+      if (!slide || still.matches || !a.animate) { a.hidden = !open; return; }
+      var to = open ? [a.getBoundingClientRect().height, getComputedStyle(a).paddingBottom, 1] : [0, '0px', 0];
+      a.style.overflow = 'hidden';
+      var run = a.animate([
+        { height: from[0] + 'px', paddingBottom: from[1], opacity: from[2] },
+        { height: to[0] + 'px', paddingBottom: to[1], opacity: to[2] }
+      ], { duration: 300, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'forwards' });
+      run.onfinish = function () { a.hidden = !open; a.style.overflow = ''; run.cancel(); };
+    }
+    // folding moves each question's words into its row and the row into the heading; unfolding puts them back
+    function fold(on) {
+      if (faq.classList.contains('faq-folds') === on) return;
+      faq.classList.toggle('faq-folds', on);
+      questions.forEach(function (item) {
+        var from = on ? item.q : item.words, to = on ? item.words : item.q;
+        if (!on) item.row.remove();
+        while (from.firstChild) to.appendChild(from.firstChild);
+        if (on) item.q.appendChild(item.row);
+        if (item.answer.getAnimations) item.answer.getAnimations().forEach(function (run) { run.cancel(); });
+        item.answer.style.overflow = '';
+        item.answer.hidden = on && !item.open;
+      });
+    }
+    fold(!wide.matches);
+    wide.addEventListener('change', function () { fold(!wide.matches); });
+    // a link to a question opens it at once, so the jump lands on its answer; on a phone its row takes the focus
+    function reveal(q) {
+      var item = questions.filter(function (it) { return it.q === q; })[0];
+      if (!item) return q;
+      setAnswer(item, true, false);
+      return faq.classList.contains('faq-folds') ? item.row : q;
+    }
+    function askedFor() {
+      var q = location.hash && document.getElementById(location.hash.slice(1));
+      if (q && q.classList.contains('faq-q')) reveal(q);
+    }
+    askedFor();
+    window.addEventListener('hashchange', askedFor);
+
     // A link to a section, from the bar or the footer, also gives its heading focus, or at the top the cover,
     // so VoiceOver and the keyboard land there too; a question taking focus itself is its own landing
     document.querySelectorAll('.site-nav a, .site-footer a[href^="#"]').forEach(function (link) {
@@ -939,7 +1021,7 @@
         setMenu(false);
         var href = link.getAttribute('href');
         var section = href.charAt(0) === '#' && document.querySelector(href);
-        var landing = section && (section.matches('h3[tabindex]') ? section : section.querySelector('h2[tabindex], .cover-wrapper a'));
+        var landing = section && (section.matches('h3[tabindex]') ? reveal(section) : section.querySelector('h2[tabindex], .cover-wrapper a'));
         // once the jump is done; the jump itself leaves focus nowhere. iPhones would ring it even after a tap
         if (landing) setTimeout(function () {
           if (e.detail) landing.classList.add('landed');
