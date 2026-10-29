@@ -302,14 +302,18 @@
        over it, and it shows faintly through the page's own colour, so it reads as texture and not as something to
        watch. Safari on an iPhone won't draw a fixed layer past the top of its bottom toolbar, wherever the toolbar has
        got to, and shows only the page's colour behind it; so the film is as tall as the screen above the toolbar and,
-       on a phone, fades into that colour over its last stretch, easing in and out so the fade has no edge of its own.
+       on a phone, fades into that colour over its last stretch on a smootherstep curve, flat at both ends, so the fade
+       has no corner of its own where it starts or lands.
        The picture inside keeps the whole screen's height, so it doesn't swell and shrink as the toolbar does */
     .film { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100dvh; z-index: -1; overflow: hidden; pointer-events: none; }
     .film-video { display: block; width: 100%; height: 100vh; height: 100lvh; object-fit: cover; opacity: 0.14; }
     @media (prefers-color-scheme: dark) { .film-video { opacity: 0.2; } }
     @media (max-width: 1023px) {
       .film {
-        --fade: linear-gradient(#000 calc(100% - 140px), rgb(0 0 0 / 0.84) calc(100% - 105px), rgb(0 0 0 / 0.5) calc(100% - 70px), rgb(0 0 0 / 0.16) calc(100% - 35px), transparent);
+        --fade: linear-gradient(#000 calc(100% - 140px), rgb(0 0 0 / 0.991) calc(100% - 126px), rgb(0 0 0 / 0.942) calc(100% - 112px),
+          rgb(0 0 0 / 0.837) calc(100% - 98px), rgb(0 0 0 / 0.683) calc(100% - 84px), rgb(0 0 0 / 0.5) calc(100% - 70px),
+          rgb(0 0 0 / 0.317) calc(100% - 56px), rgb(0 0 0 / 0.163) calc(100% - 42px), rgb(0 0 0 / 0.058) calc(100% - 28px),
+          rgb(0 0 0 / 0.009) calc(100% - 14px), transparent);
         -webkit-mask-image: var(--fade); mask-image: var(--fade);
       }
     }
