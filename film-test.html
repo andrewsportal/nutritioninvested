@@ -297,7 +297,8 @@
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
 
-    /* A film behind the page: a slow black-and-white loop from the market, a taste of the book and no more. It stays put
+    /* A film behind the page: a slow black-and-white reel, the street and then the market, cut straight from one to the
+       next and round again, a taste of the book and no more. It stays put
        under everything, the cards stand solid over it, and it shows faintly through the page's own colour, so it reads
        as texture and not as something to watch */
     .film { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
@@ -1071,7 +1072,7 @@
     var held = false, firstScreen = true;
     film.muted = film.defaultMuted = true;
     function filmCut() {
-      var name = './film/market-' + (upright.matches ? 'tall' : 'wide');
+      var name = './film/reel-' + (upright.matches ? 'tall' : 'wide');
       film.poster = name + '.jpg';
       if (still.matches) { film.removeAttribute('src'); film.load(); }
       else if (film.getAttribute('src') !== name + '.mp4') film.src = name + '.mp4';
