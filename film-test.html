@@ -300,8 +300,9 @@
     /* A film behind the page: a slow black-and-white reel of a produce stall and the market, cut straight from one to
        the next and round again, a taste of the book and no more. It stays put under everything, the cards stand solid
        over it, and it shows faintly through the page's own colour, so it reads as texture and not as something to
-       watch */
-    .film { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+       watch. It's as tall as the whole screen, not only the part fixed things are measured against: on an iPhone that
+       part stops at the top of Safari's toolbar, and the film runs on down behind it to the bottom edge */
+    .film { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100lvh; z-index: -1; overflow: hidden; pointer-events: none; }
     .film-video { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0.14; }
     @media (prefers-color-scheme: dark) { .film-video { opacity: 0.2; } }
     /* its pause: on a phone, the menu's last line, an action among the links with its symbol at the end, as in an iPhone
@@ -1066,7 +1067,8 @@
     // its still and never download the film; a phone in Low Power Mode won't start it, and the still stays until Play
     // is chosen. It rests while the tab is hidden, and on a phone once the buy card has gone up under the bar, the line
     // Buy steps into the bar from, so What's Inside arrives on a still film and only its edges show between the cards.
-    // At the foot of the page it opens up again, and there the film picks up from the frame it stopped on
+    // It picks up again, from the frame it stopped on, once the About card has gone up under the bar the same way, or
+    // once the footer is in view where the page ends sooner, so the Questions and the footer close on a moving film
     var film = document.querySelector('.film-video'), filmToggles = document.querySelectorAll('.film-toggle');
     var filmCorner = document.querySelector('.film-corner'), filmLine = document.querySelector('.site-nav-film');
     var filmWords = filmLine.querySelector('.film-toggle-words'), upright = window.matchMedia('(orientation: portrait)');
@@ -1103,12 +1105,17 @@
     upright.addEventListener('change', filmCut);
     still.addEventListener('change', filmCut);
     wide.addEventListener('change', filmRun);
-    // the watch runs from under the bar to far below the screen, as Buy's does
+    // each watch runs from a few points under the bar to far below the screen, as Buy's does from the bar itself: a jump
+    // from the menu lands the card above its section just under the bar's edge, and that counts as gone up under it
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) { firstScreen = entries[entries.length - 1].isIntersecting; filmRun(); },
-        { rootMargin: '-' + siteNav.offsetHeight + 'px 0px 100000px 0px' }).observe(document.getElementById('buy'));
-      // the foot counts once the footer is all but wholly in view, so it doesn't start beside the last answer
-      new IntersectionObserver(function (entries) { lastScreen = entries[entries.length - 1].intersectionRatio >= 0.9; filmRun(); },
+      var underBar = { rootMargin: '-' + (siteNav.offsetHeight + 8) + 'px 0px 100000px 0px' }, aboutGone = false, footShowing = false;
+      var setLast = function () { lastScreen = aboutGone || footShowing; filmRun(); };
+      new IntersectionObserver(function (entries) { firstScreen = entries[entries.length - 1].isIntersecting; filmRun(); }, underBar)
+        .observe(document.getElementById('buy'));
+      new IntersectionObserver(function (entries) { aboutGone = !entries[entries.length - 1].isIntersecting; setLast(); }, underBar)
+        .observe(document.getElementById('about'));
+      // with the questions folded on a phone the page ends before About gets that far up, so the footer counts too
+      new IntersectionObserver(function (entries) { footShowing = entries[entries.length - 1].intersectionRatio >= 0.9; setLast(); },
         { threshold: [0, 0.9] }).observe(document.querySelector('.site-footer'));
     }
     filmCut();
