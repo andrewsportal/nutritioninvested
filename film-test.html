@@ -300,9 +300,10 @@
     /* A film behind the page: a slow black-and-white reel of a produce stall and the market, cut straight from one to
        the next and round again, a taste of the book and no more. It stays put under everything, the cards stand solid
        over it, and it shows faintly through the page's own colour, so it reads as texture and not as something to
-       watch. It's as tall as the whole screen, not only the part fixed things are measured against: on an iPhone that
-       part stops at the top of Safari's toolbar, and the film runs on down behind it to the bottom edge */
-    .film { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100lvh; z-index: -1; overflow: hidden; pointer-events: none; }
+       watch. It's as tall as the whole screen, not only the part fixed things are measured against, which on an iPhone
+       stops at the top of Safari's toolbar, and a hair short of opaque, since Safari 26 has been seen to cut a fixed
+       layer off at that toolbar unless it's a touch see-through; so the film can run on down behind it to the edge */
+    .film { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100lvh; z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.99; }
     .film-video { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0.14; }
     @media (prefers-color-scheme: dark) { .film-video { opacity: 0.2; } }
     /* its pause: on a phone, the menu's last line, an action among the links with its symbol at the end, as in an iPhone
