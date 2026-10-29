@@ -1064,8 +1064,8 @@
 
     // The film: the upright cut for a screen held upright, the wide one otherwise. Readers who asked for less motion get
     // its still and never download the film; a phone in Low Power Mode won't start it, and the still stays until Play
-    // is chosen. It rests while the tab is hidden, and on a phone once the first screen has scrolled away, where only
-    // its edges show between the cards
+    // is chosen. It rests while the tab is hidden, and on a phone once the buy card has gone up under the bar, the line
+    // Buy steps into the bar from, so What's Inside arrives on a still film and only its edges show between the cards
     var film = document.querySelector('.film-video'), filmToggles = document.querySelectorAll('.film-toggle');
     var filmCorner = document.querySelector('.film-corner'), filmLine = document.querySelector('.site-nav-film');
     var filmWords = filmLine.querySelector('.film-toggle-words'), upright = window.matchMedia('(orientation: portrait)');
@@ -1102,9 +1102,10 @@
     upright.addEventListener('change', filmCut);
     still.addEventListener('change', filmCut);
     wide.addEventListener('change', filmRun);
+    // the watch runs from under the bar to far below the screen, as Buy's does
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) { firstScreen = entries[entries.length - 1].isIntersecting; filmRun(); })
-        .observe(document.getElementById('top'));
+      new IntersectionObserver(function (entries) { firstScreen = entries[entries.length - 1].isIntersecting; filmRun(); },
+        { rootMargin: '-' + siteNav.offsetHeight + 'px 0px 100000px 0px' }).observe(document.getElementById('buy'));
     }
     filmCut();
 
