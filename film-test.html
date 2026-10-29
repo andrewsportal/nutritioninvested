@@ -319,9 +319,8 @@
       }
     }
     /* its pause, which holds the footer's turning globe too: on a phone, the menu's last line, an action among the
-       links with its symbol at the end, as in an iPhone menu, since there the film plays only while the first screen
-       shows. On a desktop, a button in the bottom corner, over the film in the margin, since the margins show it all
-       the way down */
+       links with its symbol at the end, as in an iPhone menu, at hand from anywhere on the page. On a desktop, a button
+       in the bottom corner, over the film in the margin, where it shows most */
     .site-nav-film .film-toggle {
       display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 0; border: 0;
       background: none; -webkit-appearance: none; appearance: none; font-family: inherit; font-size: calc(var(--dt-ui) * 17px);
@@ -1087,14 +1086,13 @@
 
     // The film: the upright cut for a screen held upright, the wide one otherwise. Readers who asked for less motion get
     // its still and never download the film; a phone in Low Power Mode won't start it, and the still stays until Play
-    // is chosen. It rests while the tab is hidden, and on a phone once the buy card has gone up under the bar, the line
-    // Buy steps into the bar from, so What's Inside arrives on a still film and only its edges show between the cards.
-    // It picks up again, from the frame it stopped on, once the About card has gone up under the bar the same way, or
-    // once the footer is in view where the page ends sooner, so the Questions and the footer close on a moving film
+    // is chosen. It plays only while the page rests at one of its ends, the top as it opens and the foot as it closes:
+    // the moment a scroll begins it holds its frame for the reading, and it starts again from that frame once a scroll
+    // has come to rest at an end. It rests too while the tab is hidden
     var film = document.querySelector('.film-video'), filmToggles = document.querySelectorAll('.film-toggle');
     var filmCorner = document.querySelector('.film-corner'), filmLine = document.querySelector('.site-nav-film');
     var filmWords = filmLine.querySelector('.film-toggle-words'), upright = window.matchMedia('(orientation: portrait)');
-    var held = false, firstScreen = true, lastScreen = false;
+    var held = false, atEnd = true, endSettle = 0;
     film.muted = film.defaultMuted = true;
     function filmCut() {
       var name = './film/reel-' + (upright.matches ? 'tall' : 'wide');
@@ -1112,7 +1110,7 @@
     }
     function filmRun() {
       if (still.matches) return;
-      if (held || document.hidden || !(firstScreen || lastScreen || wide.matches)) { film.pause(); showHeld(held); return; }
+      if (held || document.hidden || !atEnd) { film.pause(); showHeld(held); return; }
       var playing = film.play();
       showHeld(false);
       // only a refusal holds it; a start cut short by a scroll, a hidden tab or a turned phone just waits for the next run
@@ -1124,20 +1122,19 @@
     document.addEventListener('visibilitychange', filmRun);
     upright.addEventListener('change', filmCut);
     still.addEventListener('change', filmCut);
-    wide.addEventListener('change', filmRun);
-    // each watch runs from a few points under the bar to far below the screen, as Buy's does from the bar itself: a jump
-    // from the menu lands the card above its section just under the bar's edge, and that counts as gone up under it
-    if ('IntersectionObserver' in window) {
-      var underBar = { rootMargin: '-' + (siteNav.offsetHeight + 8) + 'px 0px 100000px 0px' }, aboutGone = false, footShowing = false;
-      var setLast = function () { lastScreen = aboutGone || footShowing; filmRun(); };
-      new IntersectionObserver(function (entries) { firstScreen = entries[entries.length - 1].isIntersecting; filmRun(); }, underBar)
-        .observe(document.getElementById('buy'));
-      new IntersectionObserver(function (entries) { aboutGone = !entries[entries.length - 1].isIntersecting; setLast(); }, underBar)
-        .observe(document.getElementById('about'));
-      // with the questions folded on a phone the page ends before About gets that far up, so the footer counts too
-      new IntersectionObserver(function (entries) { footShowing = entries[entries.length - 1].intersectionRatio >= 0.9; setLast(); },
-        { threshold: [0, 0.9] }).observe(document.querySelector('.site-footer'));
+    // an end allows a few points of give, so an iPhone's bounce at the top or the foot still counts as resting there;
+    // leaving it holds the film at once, and coming back plays it only when the scroll has settled, so it never flickers.
+    // A question opened at the foot lengthens the page under the reader, and that counts as leaving too
+    function filmAtEnd() { var y = window.scrollY; return y <= 8 || y >= document.documentElement.scrollHeight - window.innerHeight - 8; }
+    function filmScroll() {
+      clearTimeout(endSettle);
+      if (!filmAtEnd()) { if (atEnd) { atEnd = false; filmRun(); } return; }
+      if (!atEnd) endSettle = setTimeout(function () { atEnd = filmAtEnd(); filmRun(); }, 160);
     }
+    window.addEventListener('scroll', filmScroll, { passive: true });
+    window.addEventListener('resize', filmScroll);
+    if ('ResizeObserver' in window) new ResizeObserver(filmScroll).observe(document.body);
+    atEnd = filmAtEnd();
     filmCut();
 
     // The globe beside the Humane Accord turns on its axis once every 12 seconds, two hours of the Earth's day a second,
