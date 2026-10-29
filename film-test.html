@@ -1132,7 +1132,7 @@
     }
     filmCut();
 
-    // The globe beside the Humane Accord turns on its axis once every 24 seconds, an hour of the Earth's day a second,
+    // The globe beside the Humane Accord turns on its axis once every 12 seconds, two hours of the Earth's day a second,
     // drawn from a small map of the world's land, Natural Earth's, which is free to use, so the continents slide round its
     // face as they would from space. It starts on the Americas the still shows, turns only while it's on screen, and
     // rests with the tab hidden or when motion is paused; readers who asked for less motion keep the still, as does a
@@ -1177,7 +1177,7 @@
         ctx.putImageData(image, 0, 0);
       };
     }
-    function globeAt() { return -72 - globeTurned / 24000 * 360; }
+    function globeAt() { return -72 - globeTurned / 12000 * 360; }
     function globeBuild() {
       if (!globeCanvas) {
         globeCanvas = document.createElement('canvas');
