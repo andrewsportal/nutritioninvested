@@ -304,7 +304,7 @@
 
     @media (hover: hover) and (pointer: fine) {
       .site-nav-buy:hover { background: var(--color-accent-hover); }
-      .preview-hint:hover { text-decoration: underline; text-underline-offset: 3px; }
+      .preview-hint:hover, .faq-link:hover { text-decoration: underline; text-underline-offset: 3px; }
       .about-social-link:hover { background: var(--color-fill-strong); }
       .cover-wrapper .book:hover { transform: scale(1.01); }
       .buy-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06); }
@@ -356,6 +356,13 @@
       margin: 0 0 6px;
     }
     .faq-a { margin-bottom: 22px; }
+    /* a guide under the pledge, in the link colour of "Read a preview"; the arrow marks another site, which opens in a new tab */
+    .faq-link {
+      display: block; width: max-content; max-width: 100%; margin-top: 2px; padding: 11px 0;
+      font-size: var(--text-label); font-weight: 600; letter-spacing: var(--track-wide);
+      color: var(--color-tint); text-decoration: none;
+    }
+    .faq-link:active { opacity: 0.6; }
     /* On phones the questions fold away, each a row as wide as the panel with a line between rows, as in the menu, and
        the chevron at its end turns over as its answer opens, as the menu's does. The script folds them; without it every
        answer shows, and desktops leave them open, where all three fit on the screen side by side */
@@ -1104,7 +1111,7 @@
       <h3 class="faq-q">Is this medical advice?</h3>
       <p class="about-bio faq-a">No. It's eight thousand miles of notes, not a clinic's protocol. Diabetes, kidney disease, a heart condition, a pregnancy, a diet your doctor wrote down: any of those, and the book goes to the doctor before anything on your plate changes. The blood panel chapter will make that appointment worth more.</p>
       <h3 id="humane-accord" class="faq-q" tabindex="-1">What's the Humane Accord Initiative?</h3>
-      <p class="about-bio faq-a">It's the pledge behind <em>Nutrition, Invested</em>. Health doesn't stop at the plate; our phones want a portion too: the feed that asks for one more swipe, the ping that pulls us back, the scroll with no bottom. Every year, I put 1% of each sale into organizations teaching the world how to read the recipe and invest their time.</p>
+      <p class="about-bio faq-a">It's the pledge behind <em>Nutrition, Invested</em>. Health doesn't stop at the plate; our phones want a portion too: the feed that asks for one more swipe, the ping that pulls us back, the scroll with no bottom. Every year, I put 1% of each sale into organizations teaching the world how to read the recipe and invest their time.<a class="faq-link" href="https://www.humanetech.com/take-control" target="_blank" rel="noopener">Shape your screen time <span aria-hidden="true">↗</span></a></p>
       </div>
       </div>
       </div>
