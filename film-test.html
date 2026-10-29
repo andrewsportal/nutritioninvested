@@ -300,12 +300,16 @@
     /* A film behind the page: a slow black-and-white reel of a produce stall and the market, cut straight from one to
        the next and round again, a taste of the book and no more. It stays put under everything, the cards stand solid
        over it, and it shows faintly through the page's own colour, so it reads as texture and not as something to
-       watch. It's as tall as the whole screen, not only the part fixed things are measured against, which on an iPhone
-       stops at the top of Safari's toolbar, and a hair short of opaque, since Safari 26 has been seen to cut a fixed
-       layer off at that toolbar unless it's a touch see-through; so the film can run on down behind it to the edge */
-    .film { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100lvh; z-index: -1; overflow: hidden; pointer-events: none; opacity: 0.99; }
-    .film-video { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0.14; }
+       watch. Safari on an iPhone won't draw a fixed layer past the top of its bottom toolbar, wherever the toolbar has
+       got to, and shows only the page's colour behind it; so the film is as tall as the screen above the toolbar and,
+       on a phone, fades into that colour over its last few points instead of stopping on a line. The picture inside
+       keeps the whole screen's height, so it doesn't swell and shrink as the toolbar does */
+    .film { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100dvh; z-index: -1; overflow: hidden; pointer-events: none; }
+    .film-video { display: block; width: 100%; height: 100vh; height: 100lvh; object-fit: cover; opacity: 0.14; }
     @media (prefers-color-scheme: dark) { .film-video { opacity: 0.2; } }
+    @media (max-width: 1023px) {
+      .film { -webkit-mask-image: linear-gradient(#000 calc(100% - 80px), transparent); mask-image: linear-gradient(#000 calc(100% - 80px), transparent); }
+    }
     /* its pause: on a phone, the menu's last line, an action among the links with its symbol at the end, as in an iPhone
        menu, since there the film plays only while the first screen shows. On a desktop, a button in the bottom corner,
        over the film in the margin, since the margins show it all the way down */
