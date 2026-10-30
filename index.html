@@ -444,7 +444,12 @@
       padding: 6px 8px; position: relative; isolation: isolate;
       font-size: var(--text-label); font-weight: 600; letter-spacing: var(--track-wide);
       color: var(--color-tint); text-decoration: none;
+      /* the pill keeps the 16 px the cards keep between them from what's above and below it: the column's own gap
+         counts toward that, and the pill's 8 px reach past the words is added to it */
+      margin-block: calc(var(--sp-2) + 8px - var(--stack-gap));
     }
+    /* on a short first screen the column draws everything in to keep the buy buttons on it, and the pill gives way too */
+    @media (max-height: 599px) { .preview-hint { margin-block: 4px; } }
     .preview-hint::before {
       content: ''; position: absolute; inset: -8px; z-index: -1;
       border-radius: var(--radius-pill); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--shadow-surface);
@@ -633,7 +638,7 @@
         grid-area: cover; align-self: end; width: auto; max-width: none;
         height: var(--hero-cover-h); aspect-ratio: 832 / 1248;
       }
-      .page-1 .preview-hint { grid-area: hint; align-self: start; justify-self: center; }
+      .page-1 .preview-hint { grid-area: hint; align-self: start; justify-self: center; margin-block: calc(var(--sp-2) + 8px - 20px) calc(20px - 8px - var(--sp-2)); }
       .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
       .hero-title { display: block; font-size: calc(var(--dt-ui) * 56px); line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
       .hero-tagline { display: block; margin-top: 16px; font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.4; font-weight: 500; color: var(--color-body); }
