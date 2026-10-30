@@ -957,6 +957,15 @@
       requestAnimationFrame(function () { requestAnimationFrame(function () { siteNav.classList.add('buy-ready'); }); });
     }
 
+    // Buy in the bar goes back to the book with its buttons beneath, the page as it opens, as The Book does. The jump is
+    // still to the card, so the keyboard carries on from its buttons, but while they're on the first screen the room kept
+    // above the card reaches past the top of the page. Where they aren't, a phone on its side, it lands on the card
+    var buyCard = document.getElementById('buy');
+    siteNav.querySelector('.site-nav-buy').addEventListener('click', function () {
+      var firstScreen = buyCard.querySelector('.buttons').getBoundingClientRect().bottom + window.scrollY <= window.innerHeight;
+      buyCard.style.scrollMarginTop = firstScreen ? '100vh' : '';
+    });
+
     // On phones the title unfolds the links; choosing one, tapping elsewhere or Escape folds them away
     function setMenu(open) {
       siteNav.classList.toggle('menu-open', open);
