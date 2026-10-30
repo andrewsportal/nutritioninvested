@@ -1111,6 +1111,11 @@
         });
       });
     });
+    // the top of the page is the page itself: a jump there leaves the address plain, nutritioninvested.com, with no #top
+    // on it, and so does a link to it from elsewhere; the jump, its landing on the cover and its step in Back stay as they were
+    function plainTop() { if (location.hash === '#top') history.replaceState(history.state, '', location.pathname + location.search); }
+    window.addEventListener('hashchange', plainTop);
+    plainTop();
     // the mark goes when focus moves on in the page; a trip to another app or tab keeps focus there and brings it back
     document.addEventListener('focusout', function (e) {
       if (document.activeElement !== e.target) e.target.classList.remove('landed');
