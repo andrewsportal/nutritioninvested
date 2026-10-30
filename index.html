@@ -379,9 +379,9 @@
       margin: 0 0 6px;
     }
     .faq-a { margin-bottom: 22px; }
-    /* On phones the questions fold away, each a row as wide as the panel with a line between rows, as in the menu, and
-       the chevron at its end turns over as its answer opens, as the menu's does. The script folds them; without it every
-       answer shows, and desktops leave them open, where all three fit on the screen side by side */
+    /* The questions fold away, on a phone and a desktop alike, each a row as wide as the panel with a line between rows,
+       as in the menu, and the chevron at its end turns over as its answer opens, as the menu's does. The script folds
+       them; without it every answer shows */
     .faq-folds { margin: -12px 0; }
     .faq-folds .faq-q { margin: 0; }
     .faq-folds .faq-a + .faq-q { border-top: 1px solid var(--hairline); }
@@ -662,11 +662,12 @@
       .about-rule { margin-bottom: 28px; }
       .about-bio { max-width: 640px; font-size: calc(var(--dt) * 17px); line-height: 1.6; margin-bottom: 16px; }
       .faq-q { font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.3; margin-bottom: 8px; }
-      /* two questions across, each answer level with its neighbour's; a third starts the next row, under the first */
-      #faq-scroll { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; column-gap: 56px; }
-      #faq-scroll > :nth-child(4n+1), #faq-scroll > :nth-child(4n+2) { grid-column: 1; }
-      #faq-scroll > :nth-child(4n+3), #faq-scroll > :nth-child(4n+4) { grid-column: 2; }
-      #faq-scroll > .faq-q:nth-child(n+5) { margin-top: 48px; }
+      /* without the script every answer shows, two questions across, each answer level with its neighbour's; a third
+         starts the next row, under the first */
+      #faq-scroll:not(.faq-folds) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; column-gap: 56px; }
+      #faq-scroll:not(.faq-folds) > :nth-child(4n+1), #faq-scroll:not(.faq-folds) > :nth-child(4n+2) { grid-column: 1; }
+      #faq-scroll:not(.faq-folds) > :nth-child(4n+3), #faq-scroll:not(.faq-folds) > :nth-child(4n+4) { grid-column: 2; }
+      #faq-scroll:not(.faq-folds) > .faq-q:nth-child(n+5) { margin-top: 48px; }
       .faq-a { margin-bottom: 0; }
 
       .site-footer { max-width: 1076px; margin: 96px auto 0; padding: 0 48px 48px; }
@@ -982,10 +983,9 @@
     });
     window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
 
-    // On phones each question becomes a row that opens its answer, with the menu's own chevron. On a desktop all
-    // three fit on the screen side by side, so there they stay open, as they do without the script
+    // Each question becomes a row that opens its answer, with the menu's own chevron, on a phone and a desktop alike:
+    // a reader comes for one answer or two, not all four. Without the script every answer shows
     var faq = document.getElementById('faq-scroll');
-    var wide = window.matchMedia('(min-width: 1024px)');
     var still = window.matchMedia('(prefers-reduced-motion: reduce)');
     var questions = [].map.call(faq.querySelectorAll('.faq-q'), function (q, i) {
       var item = { q: q, answer: q.nextElementSibling, row: document.createElement('button'), words: document.createElement('span'), open: false };
@@ -1006,7 +1006,6 @@
       var a = item.answer;
       item.open = open;
       item.row.setAttribute('aria-expanded', String(open));
-      if (!faq.classList.contains('faq-folds')) return;
       var from = a.hidden ? [0, '0px', 0] : [a.getBoundingClientRect().height, getComputedStyle(a).paddingBottom, getComputedStyle(a).opacity];
       if (a.getAnimations) a.getAnimations().forEach(function (run) { run.cancel(); });
       a.style.overflow = '';
@@ -1020,28 +1019,19 @@
       ], { duration: 300, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'forwards' });
       run.onfinish = function () { a.hidden = !open; a.style.overflow = ''; run.cancel(); };
     }
-    // folding moves each question's words into its row and the row into the heading; unfolding puts them back
-    function fold(on) {
-      if (faq.classList.contains('faq-folds') === on) return;
-      faq.classList.toggle('faq-folds', on);
-      questions.forEach(function (item) {
-        var from = on ? item.q : item.words, to = on ? item.words : item.q;
-        if (!on) item.row.remove();
-        while (from.firstChild) to.appendChild(from.firstChild);
-        if (on) item.q.appendChild(item.row);
-        if (item.answer.getAnimations) item.answer.getAnimations().forEach(function (run) { run.cancel(); });
-        item.answer.style.overflow = '';
-        item.answer.hidden = on && !item.open;
-      });
-    }
-    fold(!wide.matches);
-    wide.addEventListener('change', function () { fold(!wide.matches); });
-    // a link to a question opens it at once, so the jump lands on its answer; on a phone its row takes the focus
+    // folding moves each question's words into its row and the row into the heading, and puts each answer away
+    faq.classList.add('faq-folds');
+    questions.forEach(function (item) {
+      while (item.q.firstChild) item.words.appendChild(item.q.firstChild);
+      item.q.appendChild(item.row);
+      item.answer.hidden = true;
+    });
+    // a link to a question opens it at once, so the jump lands on its answer, and its row takes the focus
     function reveal(q) {
       var item = questions.filter(function (it) { return it.q === q; })[0];
       if (!item) return q;
       setAnswer(item, true, false);
-      return faq.classList.contains('faq-folds') ? item.row : q;
+      return item.row;
     }
     function askedFor() {
       var q = location.hash && document.getElementById(location.hash.slice(1));
