@@ -292,7 +292,7 @@
     }
 
     /* a press shows, as on iPhone */
-    .site-nav-title:active, .site-nav-toggle:active, .faq-row:active, .film-corner:active, .site-footer-links a:active, .site-footer-giving a:active { opacity: 0.6; }
+    .site-nav-title:active, .site-nav-toggle:active, .faq-row:active, .film-toggle:active, .site-footer-links a:active, .site-footer-giving a:active { opacity: 0.6; }
     .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
@@ -318,30 +318,34 @@
         -webkit-mask-image: var(--fade); mask-image: var(--fade);
       }
     }
-    /* its pause, which holds the footer's turning globe too: on a phone, the menu's last line, an action among the
-       links with its symbol at the end, as in an iPhone menu, at hand from anywhere on the page. On a desktop, a button
-       in the bottom corner, over the film in the margin, where it shows most */
-    .site-nav-film .film-toggle {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 0; border: 0;
-      background: none; -webkit-appearance: none; appearance: none; font-family: inherit; font-size: calc(var(--dt-ui) * 17px);
-      letter-spacing: var(--track-normal); color: var(--color-body); text-align: left; cursor: pointer;
+    /* its pause, which holds the footer's turning globe too: a round button with its symbol, put where the motion is.
+       On a phone, one at the end of the bar while the page rests at the top, in the place Buy takes further down, gone
+       the moment a scroll begins and the film holds, and one at the end of the footer's line with the globe, there
+       whenever the globe is. On a desktop, one in the bottom corner, over the film in the margin, where it shows most */
+    .film-toggle {
+      position: relative; display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%;
+      background: var(--color-fill); color: var(--color-muted); cursor: pointer; -webkit-appearance: none; appearance: none;
     }
-    .site-nav-film .film-toggle:active { color: var(--color-tint); }
-    .film-toggle svg { flex-shrink: 0; width: 12px; height: 12px; }
-    .site-nav-film svg { width: 14px; height: 14px; }
+    .film-toggle[hidden] { display: none; }
+    .film-toggle::after { content: ''; position: absolute; inset: -7px; }
+    .film-toggle svg { width: 12px; height: 12px; }
     .film-toggle .film-play, .film-toggle.is-held .film-pause { display: none; }
     .film-toggle.is-held .film-play { display: block; }
+    .film-top { position: absolute; top: calc(var(--safe-top) + 11px); right: max(var(--sp-3), env(safe-area-inset-right)); opacity: 0; visibility: hidden; }
+    .site-nav.film-at-top .film-top { opacity: 1; visibility: visible; }
+    /* it fades as the scroll begins, and comes back once Buy has slid out of its place */
+    .site-nav.buy-ready .film-top { transition: opacity 0.2s ease, visibility 0s linear 0.2s; }
+    .site-nav.buy-ready.film-at-top .film-top { transition: opacity 0.2s ease 0.2s, visibility 0s linear 0.2s; }
+    .site-footer-inner > p { align-self: stretch; }
+    .site-footer-giving { position: relative; padding: 0 44px; }
+    .film-foot { position: absolute; right: 0; top: 50%; translate: 0 -50%; }
     .film-corner { display: none; }
     @media (min-width: 1024px) {
-      .site-nav-film { display: none; }
+      .film-top, .film-foot { display: none; }
       /* in the middle of the margin where the margin is narrow, so it never sits on a card */
-      .film-corner {
-        position: fixed; left: clamp(8px, calc((100vw - 1044px) / 4), 24px); bottom: 24px; z-index: 200;
-        display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%;
-        background: var(--color-fill); color: var(--color-muted); cursor: pointer; -webkit-appearance: none; appearance: none;
-      }
+      .film-corner { position: fixed; left: clamp(8px, calc((100vw - 1044px) / 4), 24px); bottom: 24px; z-index: 200; display: grid; width: 32px; height: 32px; }
       .film-corner[hidden] { display: none; }
-      .film-corner::after { content: ''; position: absolute; inset: -6px; }
+      .film-corner::after { inset: -6px; }
     }
 
     .page-inner {
@@ -579,6 +583,7 @@
     /* Small phones: a tighter bar, so the whole title fits */
     @media (max-width: 339px) {
       .site-nav-inner { gap: 8px; padding-left: 16px; padding-right: 16px; }
+      .film-top { right: 16px; }
       .site-nav-buy { padding: 0 12px; }
     }
 
@@ -588,6 +593,8 @@
       .page-inner, .page-2-inner, .about-page-inner, .site-nav-inner, .site-nav-links { padding-left: 12px; padding-right: 12px; }
       .blurb-list { padding-left: 16px; padding-right: 16px; }
       .blurb-icon, .site-nav-buy-slot { display: none; }
+      .site-nav-inner { padding-right: 54px; }
+      .film-top { right: 12px; }
       .site-nav-title-text { white-space: normal; line-height: 1.15; }
     }
 
@@ -705,7 +712,8 @@
       .site-footer-links a:hover, .site-footer-giving a:hover { color: var(--color-body); }
       /* the underline marks the words; the globe in front of the name stays clear of it */
       .site-footer-links a:hover, .site-footer-giving a:hover .site-footer-name { text-decoration: underline; }
-      .site-footer-giving { display: inline; margin: 0; }
+      .site-footer-inner > p { align-self: auto; }
+      .site-footer-giving { display: inline; margin: 0; padding: 0; position: static; }
       .site-footer-sep { display: inline; margin: 0 10px; opacity: 0.4; }
     }
 
@@ -762,12 +770,9 @@
       <li><a href="#about">About</a></li>
       <li><a href="#questions">Questions</a></li>
       <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
-      <li class="site-nav-film" hidden><button class="film-toggle" type="button"><span class="film-toggle-words">Pause Motion</span>
-        <svg class="film-pause" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.75 2.5v7M8.25 2.5v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <svg class="film-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.6 2.4v7.2L9.6 6z" fill="currentColor"/></svg>
-      </button></li>
     </ul>
     <span class="site-nav-buy-slot"><a class="site-nav-buy" href="#buy">Buy</a></span>
+    <button class="film-toggle film-top" type="button" aria-label="Pause Motion" hidden><svg class="film-pause" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.75 2.5v7M8.25 2.5v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><svg class="film-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.6 2.4v7.2L9.6 6z" fill="currentColor"/></svg></button>
   </div>
 </nav>
 <div class="menu-curtain" aria-hidden="true"></div>
@@ -992,6 +997,15 @@
       requestAnimationFrame(function () { requestAnimationFrame(function () { siteNav.classList.add('buy-ready'); }); });
     }
 
+    // Buy in the bar goes back to the book with its buttons beneath, the page as it opens, as The Book does. The jump is
+    // still to the card, so the keyboard carries on from its buttons, but while they're on the first screen the room kept
+    // above the card reaches past the top of the page. Where they aren't, a phone on its side, it lands on the card
+    var buyCard = document.getElementById('buy');
+    siteNav.querySelector('.site-nav-buy').addEventListener('click', function () {
+      var firstScreen = buyCard.querySelector('.buttons').getBoundingClientRect().bottom + window.scrollY <= window.innerHeight;
+      buyCard.style.scrollMarginTop = firstScreen ? '100vh' : '';
+    });
+
     // On phones the title unfolds the links; choosing one, tapping elsewhere or Escape folds them away
     function setMenu(open) {
       siteNav.classList.toggle('menu-open', open);
@@ -1082,25 +1096,24 @@
     // the moment a scroll begins it holds its frame for the reading, and it starts again from that frame once a scroll
     // has come to rest at an end. It rests too while the tab is hidden
     var film = document.querySelector('.film-video'), filmToggles = document.querySelectorAll('.film-toggle');
-    var filmCorner = document.querySelector('.film-corner'), filmLine = document.querySelector('.site-nav-film');
-    var filmWords = filmLine.querySelector('.film-toggle-words'), upright = window.matchMedia('(orientation: portrait)');
-    var held = false, atEnd = true, endSettle = 0;
+    var upright = window.matchMedia('(orientation: portrait)');
+    var held = false, atEnd = '', endSettle = 0;
     film.muted = film.defaultMuted = true;
     function filmCut() {
       var name = './film/reel-' + (upright.matches ? 'tall' : 'wide');
       film.poster = name + '.jpg';
       if (still.matches) { film.removeAttribute('src'); film.load(); }
       else if (film.getAttribute('src') !== name + '.mp4') film.src = name + '.mp4';
-      filmCorner.hidden = filmLine.hidden = still.matches;
+      filmToggles.forEach(function (toggle) { toggle.hidden = still.matches; });
       filmRun();
     }
     function showHeld(isHeld) {
       var says = (isHeld ? 'Play' : 'Pause') + ' Motion';
-      filmToggles.forEach(function (toggle) { toggle.classList.toggle('is-held', isHeld); });
-      filmCorner.setAttribute('aria-label', says);
-      filmWords.textContent = says;
+      filmToggles.forEach(function (toggle) { toggle.classList.toggle('is-held', isHeld); toggle.setAttribute('aria-label', says); });
     }
     function filmRun() {
+      // the bar's pause shows only while the page rests at the top, the one place the film plays up there
+      siteNav.classList.toggle('film-at-top', atEnd === 'top');
       if (still.matches) return;
       if (held || document.hidden || !atEnd) { film.pause(); showHeld(held); return; }
       var playing = film.play();
@@ -1109,24 +1122,25 @@
       if (playing && playing.catch) playing.catch(function (e) { if (e.name === 'NotAllowedError') { held = true; showHeld(true); globeRun(); } });
     }
     filmToggles.forEach(function (toggle) { toggle.addEventListener('click', function () { held = !held; filmRun(); globeRun(); }); });
-    // chosen from the menu, it folds the menu away as a link does, and the keyboard goes back to the title
-    filmLine.querySelector('.film-toggle').addEventListener('click', function () { setMenu(false); navToggle.focus(); });
     document.addEventListener('visibilitychange', filmRun);
     upright.addEventListener('change', filmCut);
     still.addEventListener('change', filmCut);
     // an end allows a few points of give, so an iPhone's bounce at the top or the foot still counts as resting there;
-    // leaving it holds the film at once, and coming back plays it only when the scroll has settled, so it never flickers.
-    // A question opened at the foot lengthens the page under the reader, and that counts as leaving too
-    function filmAtEnd() { var y = window.scrollY; return y <= 8 || y >= document.documentElement.scrollHeight - window.innerHeight - 8; }
+    // leaving it holds the film at once, and arriving plays it only when the scroll has settled, so it never flickers,
+    // even on a jump straight from one end to the other. A question opened at the foot lengthens the page under the
+    // reader, and that counts as leaving too
+    function filmEnd() { var y = window.scrollY; return y <= 8 ? 'top' : y >= document.documentElement.scrollHeight - window.innerHeight - 8 ? 'foot' : ''; }
     function filmScroll() {
       clearTimeout(endSettle);
-      if (!filmAtEnd()) { if (atEnd) { atEnd = false; filmRun(); } return; }
-      if (!atEnd) endSettle = setTimeout(function () { atEnd = filmAtEnd(); filmRun(); }, 160);
+      var end = filmEnd();
+      if (end === atEnd) return;
+      if (atEnd) { atEnd = ''; filmRun(); }
+      if (end) endSettle = setTimeout(function () { atEnd = filmEnd(); filmRun(); }, 160);
     }
     window.addEventListener('scroll', filmScroll, { passive: true });
     window.addEventListener('resize', filmScroll);
     if ('ResizeObserver' in window) new ResizeObserver(filmScroll).observe(document.body);
-    atEnd = filmAtEnd();
+    atEnd = filmEnd();
     filmCut();
 
     // The globe beside the Humane Accord turns on its axis once every 12 seconds, two hours of the Earth's day a second,
@@ -1326,7 +1340,7 @@
 
 <footer class="site-footer">
   <div class="site-footer-inner">
-    <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><a href="#humane-accord"><img class="site-footer-globe" src="./globe-americas.png" alt="" width="64" height="64" loading="lazy" decoding="async"> <span class="site-footer-name">The Humane Accord Initiative</span></a></span></p>
+    <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><a href="#humane-accord"><img class="site-footer-globe" src="./globe-americas.png" alt="" width="64" height="64" loading="lazy" decoding="async"> <span class="site-footer-name">The Humane Accord Initiative</span></a><button class="film-toggle film-foot" type="button" aria-label="Pause Motion" hidden><svg class="film-pause" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.75 2.5v7M8.25 2.5v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><svg class="film-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.6 2.4v7.2L9.6 6z" fill="currentColor"/></svg></button></span></p>
     <ul class="site-footer-links">
       <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
       <li><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
