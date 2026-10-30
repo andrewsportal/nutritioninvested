@@ -401,12 +401,6 @@
       margin-bottom: 12px;
     }
     .about-bio:last-child { margin-bottom: 0; }
-    /* the story closes as a letter does, on a toast and his signature, in the ink of the text around it */
-    .about-signoff { margin-bottom: 4px; }
-    .about-signature {
-      display: block; width: 104px; aspect-ratio: 480 / 272; background: var(--color-body);
-      -webkit-mask: url(./signature.png) left center / contain no-repeat; mask: url(./signature.png) left center / contain no-repeat;
-    }
     .faq-q {
       font-size: var(--text-body); font-weight: 700; color: var(--color-body);
       margin: 0 0 6px;
@@ -694,8 +688,6 @@
       .about-role { margin-bottom: 20px; }
       .about-rule { margin-bottom: 28px; }
       .about-bio { max-width: 640px; font-size: calc(var(--dt) * 17px); line-height: 1.6; margin-bottom: 16px; }
-      .about-signoff { margin-bottom: 6px; }
-      .about-signature { width: 128px; }
       .faq-q { font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.3; margin-bottom: 8px; }
       /* two questions across, each answer level with its neighbour's; a third starts the next row, under the first */
       #faq-scroll { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; column-gap: 56px; }
@@ -1299,8 +1291,6 @@
       <p class="about-bio">Home, onto delivery routes. Thirty packages left and energy to spare. Every paycheck bought one new food, and every break went to reading up on it.</p>
       <p class="about-bio">Nutrition, Invested is the notes: eight thousand miles of them, written between bites, then pieced together.</p>
       <p class="about-bio">His bag is still by the door.</p>
-      <p class="about-bio about-signoff">Salud,</p>
-      <span class="about-signature" role="img" aria-label="Andrew Rios's signature"></span>
       </div>
       </div>
       </div>
