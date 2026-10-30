@@ -112,7 +112,6 @@
       --hairline: rgba(0, 0, 0, 0.08);
       --nav-bg: rgba(241, 244, 239, 0.72);
       --nav-bg-open: rgba(241, 244, 239, 0.94);
-      --preview-wash: #E5E8E3;
       --curtain: rgba(241, 244, 239, 0.4);
       --nav-link: rgba(51, 51, 51, 0.82);
       --hero-glow: rgba(255, 255, 255, 0.84);
@@ -175,7 +174,6 @@
         --hairline: rgba(255, 255, 255, 0.10);
         --nav-bg: rgba(15, 20, 17, 0.72);
         --nav-bg-open: rgba(15, 20, 17, 0.94);
-        --preview-wash: #1B1E1C;
         --curtain: rgba(15, 20, 17, 0.45);
         --nav-link: rgba(236, 238, 236, 0.82);
         --hero-glow: rgba(var(--tint-rgb), 0.10);
@@ -440,9 +438,9 @@
     .cover-wrapper .book:active { transform: scale(0.99); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.10)); }
 
     /* a link in the page, so no glass: that's for controls floating above it. It sits straight on the street, though,
-       which would leave its green short of a comfortable read, so a soft wash in the street's own tone lies behind the
-       words: on the light page lightened only as far as the green needs, on the dark page the street's tone itself, and
-       blurred at its edge so it has no line of its own. It reaches 8 px past the words all round, as the tap area does */
+       which would leave its green short of a comfortable read, so it rests on a pill cut from the buy card's own
+       surface: the card's colour, edge and shadow, light or dark, so it reads as one of the card's family. The pill
+       reaches 8 px past the words all round, as the tap area does */
     .preview-hint {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0;
       padding: 6px 8px; position: relative; isolation: isolate;
@@ -451,7 +449,7 @@
     }
     .preview-hint::before {
       content: ''; position: absolute; inset: -8px; z-index: -1;
-      border-radius: var(--radius-pill); background: var(--preview-wash); filter: blur(6px);
+      border-radius: var(--radius-pill); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--shadow-surface);
     }
     .preview-hint::after { content: ''; position: absolute; inset: -8px; }
     .preview-hint:active { opacity: 0.6; }
