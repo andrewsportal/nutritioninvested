@@ -112,6 +112,7 @@
       --hairline: rgba(0, 0, 0, 0.08);
       --nav-bg: rgba(241, 244, 239, 0.72);
       --nav-bg-open: rgba(241, 244, 239, 0.94);
+      --preview-wash: #E5E8E3;
       --curtain: rgba(241, 244, 239, 0.4);
       --nav-link: rgba(51, 51, 51, 0.82);
       --hero-glow: rgba(255, 255, 255, 0.84);
@@ -174,6 +175,7 @@
         --hairline: rgba(255, 255, 255, 0.10);
         --nav-bg: rgba(15, 20, 17, 0.72);
         --nav-bg-open: rgba(15, 20, 17, 0.94);
+        --preview-wash: #1B1E1C;
         --curtain: rgba(15, 20, 17, 0.45);
         --nav-link: rgba(236, 238, 236, 0.82);
         --hero-glow: rgba(var(--tint-rgb), 0.10);
@@ -437,14 +439,21 @@
     }
     .cover-wrapper .book:active { transform: scale(0.99); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.10)); }
 
-    /* a link in the page, so no glass: that's for controls floating above it */
+    /* a link in the page, so no glass: that's for controls floating above it. It sits straight on the street, though,
+       which would leave its green short of a comfortable read, so a soft wash in the street's own tone lies behind the
+       words: on the light page lightened only as far as the green needs, on the dark page the street's tone itself, and
+       blurred at its edge so it has no line of its own. It reaches 8 px past the words all round, as the tap area does */
     .preview-hint {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0;
-      padding: 6px 8px; position: relative;
+      padding: 6px 8px; position: relative; isolation: isolate;
       font-size: var(--text-label); font-weight: 600; letter-spacing: var(--track-wide);
       color: var(--color-tint); text-decoration: none;
     }
-    .preview-hint::after { content: ''; position: absolute; inset: -7px 0; }
+    .preview-hint::before {
+      content: ''; position: absolute; inset: -8px; z-index: -1;
+      border-radius: var(--radius-pill); background: var(--preview-wash); filter: blur(6px);
+    }
+    .preview-hint::after { content: ''; position: absolute; inset: -8px; }
     .preview-hint:active { opacity: 0.6; }
 
 
@@ -628,7 +637,7 @@
         grid-area: cover; align-self: end; width: auto; max-width: none;
         height: var(--hero-cover-h); aspect-ratio: 832 / 1248;
       }
-      .page-1 .preview-hint { grid-area: hint; align-self: start; }
+      .page-1 .preview-hint { grid-area: hint; align-self: start; justify-self: center; }
       .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
       .hero-title { display: block; font-size: calc(var(--dt-ui) * 56px); line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
       .hero-tagline { display: block; margin-top: 16px; font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.4; font-weight: 500; color: var(--color-body); }
