@@ -202,8 +202,8 @@
 
     svg { pointer-events: none; }
 
-    /* The bar is the same on every screen: frosted glass over the page from the first screen, so it reads as a bar
-       over the film, with a line beneath once content scrolls under it. On phones its links fold behind the title */
+    /* The bar is the same on every screen: on the page at the top, frosted once content scrolls
+       beneath it. On phones its links fold behind the title */
     .site-nav {
       position: sticky; top: 0; z-index: 300;
       padding-top: var(--safe-top);
@@ -212,12 +212,14 @@
     /* the frosting is a layer of its own, so the open menu can frost the page beneath it too */
     .site-nav::before {
       content: ''; position: absolute; inset: 0 0 -1px; z-index: -1;
-      background: var(--nav-bg);
-      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid transparent;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
-    .site-nav.is-scrolled::before, .site-nav.menu-open::before { border-bottom-color: var(--hairline); }
+    .site-nav.is-scrolled::before, .site-nav.menu-open::before {
+      background: var(--nav-bg);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom-color: var(--hairline);
+    }
     .site-nav.menu-open::before { background: var(--nav-bg-open); }
     .site-nav-inner {
       height: 52px; display: flex; align-items: center; gap: 12px;
@@ -608,13 +610,13 @@
       html:has(.site-nav:focus-within) [id] { scroll-margin-top: 84px; }
 
       /* no menu to frost here, so the bar frosts itself */
-      .site-nav {
+      .site-nav { transition: background-color 0.2s ease, border-color 0.2s ease; }
+      .site-nav::before { content: none; }
+      .site-nav.is-scrolled {
         background: var(--nav-bg);
         backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
-        transition: border-color 0.2s ease;
+        border-bottom-color: var(--hairline);
       }
-      .site-nav::before { content: none; }
-      .site-nav.is-scrolled { border-bottom-color: var(--hairline); }
       .site-nav-inner { max-width: 1076px; margin: 0 auto; padding: 0 48px; gap: 32px; }
       .site-nav-title { margin-right: auto; padding: 10px 0; font-size: calc(var(--dt-ui) * 19px); }
       .site-nav-title-text { overflow: visible; }
