@@ -1053,16 +1053,16 @@
     // The film: the upright cut for a screen held upright, the wide one otherwise. Readers who asked for less motion get
     // its still and never download the film; a phone in Low Power Mode won't start it, and keeps the still. It moves for
     // a moment at each end of the page and no longer, so it never needs a pause: as the page opens it plays the stall
-    // once, five seconds, and holds on its last frame, and as it closes it plays the river market once and holds the
-    // same way. A scroll away holds it at once; coming back to an end finishes that end's scene from the frame it
-    // stopped on, or plays it again once it has finished
+    // and then the tour boat, five seconds in all, and holds on the last frame, and as it closes it plays the rowers
+    // and then the stall again, and holds the same way. A scroll away holds it at once; coming back to an end finishes
+    // that end's five seconds from the frame it stopped on, or plays them again once they've finished
     var film = document.querySelector('.film-video'), upright = window.matchMedia('(orientation: portrait)');
-    // each end's scene in the reel, which cuts from the stall to the river at five seconds; each stops a little short
-    // of its cut, so not a frame of the next one shows
+    // each end's five seconds in the reel, two shots apiece: the stall and the tour boat for the top, the rowers and
+    // the stall for the foot. Each stops a little short of the other's first frame, so not a frame of it shows
     var scenes = { top: [0, 4.9], foot: [5, 9.9] }, atEnd = '', endSettle = 0, sceneDone = false;
     film.muted = film.defaultMuted = true;
     function filmCut() {
-      var name = './film/reel-' + (upright.matches ? 'tall' : 'wide');
+      var name = './film/reel2-' + (upright.matches ? 'tall' : 'wide');
       film.poster = name + '.jpg';
       if (still.matches) { film.removeAttribute('src'); film.load(); }
       else if (film.getAttribute('src') !== name + '.mp4') film.src = name + '.mp4';
