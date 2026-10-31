@@ -336,6 +336,7 @@
       .cover-wrapper .book:hover { transform: scale(1.01); }
       .buy-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06); }
       .buy-btn.primary:hover { box-shadow: 0 6px 22px rgba(var(--accent-rgb), 0.38), 0 2px 8px rgba(0,0,0,0.10); }
+      .receipts-step:hover { background: rgba(255, 255, 255, 0.22); }
     }
 
     .about-page-inner {
@@ -562,6 +563,61 @@
     .blurb-intro-close { color: var(--color-body); text-align: center; margin: 24px 0; }
     .blurb-intro-close .tagline-punch { color: inherit; font-weight: 600; }
 
+    /* Under What's Inside: the market line over the faces and the count of those who've bought in, then the Receipts,
+       readers' own words given with their permission. Stacked on a phone, side by side on a wide screen; the words step
+       with the arrows or a swipe */
+    .receipts { flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 24px; color: var(--color-white); }
+    .receipts-tagline { margin: 0 0 16px; }
+    .receipts-label {
+      font-size: var(--text-caption); font-weight: 600; letter-spacing: var(--track-wide); text-transform: uppercase;
+      line-height: 1; color: rgba(255, 255, 255, 0.9); margin-bottom: 14px;
+    }
+    .receipts-faces { display: flex; align-items: center; margin-bottom: 10px; }
+    /* each face is cut from the bar by a ring of its green, as overlapping faces are on an iPhone; until a reader's
+       photo goes in, a plain figure stands in */
+    .receipts-face, .receipts-more { height: 32px; min-width: 32px; border-radius: var(--radius-pill); border: 2px solid var(--color-bar-bg); flex-shrink: 0; }
+    .receipts-face {
+      width: 32px; display: block; object-fit: cover;
+      background: rgba(255, 255, 255, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='12.5' r='5.75' fill='white' fill-opacity='.6'/%3E%3Cpath d='M4.5 32c.8-6.5 5.4-10.75 11.5-10.75S26.7 25.5 27.5 32z' fill='white' fill-opacity='.6'/%3E%3C/svg%3E") center / cover no-repeat;
+    }
+    .receipts-face + .receipts-face, .receipts-more { margin-left: -8px; }
+    .receipts-more {
+      display: inline-flex; align-items: center; justify-content: center; padding: 0 7px;
+      background: var(--color-gold); color: #3A3313; font-size: calc(var(--dt-ui) * 11px); font-weight: 700; letter-spacing: -0.01em;
+    }
+    .receipts-count { font-size: var(--text-label); font-weight: 500; line-height: 1.35; color: rgba(255, 255, 255, 0.9); text-wrap: balance; }
+    .receipts-said { position: relative; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.28); }
+    /* a gap between the quotes, so no letter of the next one shows at the edge, and none touch mid-swipe */
+    .receipts-track { display: flex; gap: var(--sp-3); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+    .receipts-track::-webkit-scrollbar { display: none; }
+    .receipt { flex: 0 0 100%; min-width: 0; margin: 0; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; }
+    .receipt-words { margin: 0 0 16px; }
+    .receipt-words p {
+      font-size: calc(var(--dt) * 19px); font-weight: 500; line-height: 1.4; letter-spacing: var(--track-normal);
+      quotes: '\201C' '\201D'; text-wrap: pretty;
+    }
+    .receipt-words p::before { content: open-quote; }
+    .receipt-words p::after { content: close-quote; }
+    /* the name and where they're from sit level with the arrows and clear of them, the same height whichever quote shows */
+    .receipt-by { margin-top: auto; min-height: 40px; padding-right: 104px; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+    .receipt-name { font-size: var(--text-label); font-weight: 600; line-height: 1.25; }
+    .receipt-from { font-size: var(--text-caption); font-weight: 500; line-height: 1.3; color: rgba(255, 255, 255, 0.8); }
+    .receipts-steps { position: absolute; right: 0; bottom: 0; display: flex; gap: 12px; }
+    .receipts-step {
+      appearance: none; width: 40px; height: 40px; padding: 0; border-radius: 50%; position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.36); background: rgba(255, 255, 255, 0.12); color: var(--color-white);
+      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .receipts-step svg { width: 14px; height: 14px; display: block; }
+    /* a fingertip's 44 points, though the circle is drawn smaller */
+    .receipts-step::after { content: ''; position: absolute; inset: -2px; }
+    .receipts-step:active { background: rgba(255, 255, 255, 0.22); transform: scale(0.96); }
+    /* what VoiceOver reads when an arrow brings in a quote; nothing to see */
+    .receipts-said-now { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    /* the focus ring is the green of the bar, so on it the ring turns white */
+    .counter-bar :focus-visible { outline-color: rgba(255, 255, 255, 0.92); }
+
     .site-footer { padding: 40px var(--sp-3) max(calc(var(--safe-bottom) + 32px), 40px); }
     .site-footer-inner {
       max-width: 432px; margin: 0 auto;
@@ -683,6 +739,28 @@
       .blurb-intro-close { margin: 40px 0; }
       .blurb-intro-close .tagline-setup, .blurb-intro-close .tagline-punch { font-size: max(calc(var(--dt-ui) * 24px), calc(var(--dt) * 19px)); line-height: 1.5; }
       .blurb-intro-close .tagline-setup[lang] + .tagline-punch { margin-top: 2px; }
+      .receipts { flex-direction: row; }
+      /* the market line stays level with the Receipts, and the faces and count with the name and the arrows */
+      .receipts-who { flex: 0 0 auto; width: 300px; padding-right: 48px; display: flex; flex-direction: column; align-items: flex-start; }
+      .receipts-tagline .tagline-setup, .receipts-tagline .tagline-punch { font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.3; }
+      .receipts-faces { margin-top: auto; }
+      .receipts-label { margin-bottom: 18px; }
+      .receipts-faces { margin-bottom: 14px; }
+      .receipts-face, .receipts-more { height: 40px; min-width: 40px; }
+      .receipts-face { width: 40px; }
+      .receipts-face + .receipts-face, .receipts-more { margin-left: -10px; }
+      .receipts-more { padding: 0 9px; font-size: calc(var(--dt-ui) * 13px); }
+      .receipts-count { font-size: calc(var(--dt-ui) * 17px); }
+      .receipts-said { flex: 1; min-width: 0; margin-top: 0; padding: 0 0 0 48px; border-top: 0; border-left: 1px solid rgba(255, 255, 255, 0.28); display: flex; flex-direction: column; }
+      .receipts-track { flex: 1; }
+      .receipt-words { margin-bottom: 24px; }
+      .receipt-words p { font-size: max(calc(var(--dt-ui) * 24px), calc(var(--dt) * 19px)); line-height: 1.38; }
+      .receipt-by { min-height: 44px; padding-right: 112px; }
+      .receipt-name { font-size: calc(var(--dt-ui) * 17px); }
+      .receipt-from { font-size: calc(var(--dt-ui) * 15px); }
+      .receipts-step { width: 44px; height: 44px; }
+      .receipts-step::after { inset: 0; }
+      .receipts-step svg { width: 16px; height: 16px; }
 
       .about-page-inner { display: block; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; }
       .about-platter { max-width: 980px; margin: 0 auto; }
@@ -946,12 +1024,42 @@
         </div>
       </div>
 
-      <footer id="counter-bar" class="counter-bar">
-        <p class="counter-bar-tagline">
-          <span class="tagline-setup">The market opens every morning.</span>
-          <span class="tagline-punch">Show up.</span>
-        </p>
-      </footer>
+      <!-- sample words, faces and numbers, for the design only: real quotes from readers who agreed to be shown, and the
+           true count, replace them before this goes live -->
+      <section id="receipts" class="counter-bar receipts" aria-labelledby="receipts-heading">
+        <div class="receipts-who">
+          <p class="receipts-tagline">
+            <span class="tagline-setup">The market opens every morning.</span>
+            <span class="tagline-punch">Show up.</span>
+          </p>
+          <div class="receipts-faces" aria-hidden="true">
+            <span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-more">+00</span>
+          </div>
+          <p class="receipts-count">00 investors in the market</p>
+        </div>
+        <div class="receipts-said">
+          <h2 id="receipts-heading" class="receipts-label">The Receipts</h2>
+          <div class="receipts-track" tabindex="-1">
+            <figure class="receipt">
+              <blockquote class="receipt-words"><p>Sample quote. A reader's own words go here, with their permission.</p></blockquote>
+              <figcaption class="receipt-by"><span class="receipt-name">Reader's name</span> <span class="receipt-from">City, or what they do</span></figcaption>
+            </figure>
+            <figure class="receipt">
+              <blockquote class="receipt-words"><p>Sample quote. One or two sentences in the reader's words, about the book itself.</p></blockquote>
+              <figcaption class="receipt-by"><span class="receipt-name">Reader's name</span> <span class="receipt-from">City, or what they do</span></figcaption>
+            </figure>
+            <figure class="receipt">
+              <blockquote class="receipt-words"><p>Sample quote. Quotes of about this length keep the bar from jumping as they change.</p></blockquote>
+              <figcaption class="receipt-by"><span class="receipt-name">Reader's name</span> <span class="receipt-from">City, or what they do</span></figcaption>
+            </figure>
+          </div>
+          <div class="receipts-steps">
+            <button type="button" class="receipts-step" data-step="-1" aria-label="Previous quote"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M7.75 2 4 6l3.75 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="receipts-step" data-step="1" aria-label="Next quote"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <p class="receipts-said-now" aria-live="polite"></p>
+        </div>
+      </section>
 
     </div>
   </section>
@@ -1123,6 +1231,24 @@
         }
       });
     });
+
+    // The Receipts: the arrows step through the quotes, round from the last to the first, and a finger can swipe them.
+    // The quote an arrow brings in is read to VoiceOver, which can also read them all in turn; with Reduce Motion they
+    // simply change
+    var receipts = document.getElementById('receipts');
+    if (receipts) {
+      var track = receipts.querySelector('.receipts-track'), quotes = track.children, readOut = receipts.querySelector('.receipts-said-now');
+      if (quotes.length < 2) receipts.querySelector('.receipts-steps').style.display = 'none';
+      // one quote and the gap after it, the distance each step travels
+      var span = function () { return quotes[1].offsetLeft - quotes[0].offsetLeft; };
+      receipts.querySelectorAll('.receipts-step').forEach(function (step) {
+        step.addEventListener('click', function () {
+          var to = (Math.round(track.scrollLeft / span()) + Number(step.dataset.step) + quotes.length) % quotes.length;
+          track.scrollTo({ left: to * span(), behavior: still.matches ? 'auto' : 'smooth' });
+          readOut.textContent = [].map.call(quotes[to].querySelectorAll('p, .receipt-name, .receipt-from'), function (el) { return el.textContent; }).join(', ');
+        });
+      });
+    }
 
   });
 </script>
