@@ -459,6 +459,10 @@
     }
     .preview-hint::after { content: ''; position: absolute; inset: -8px; }
     .preview-hint:active { opacity: 0.6; }
+    /* the page ends as it opens, with the book's sample a tap away: the same pill under Questions, kept the cards' gap
+       from them and from the footer, measured from the pill's edge */
+    .page-end { display: flex; justify-content: center; padding: calc(var(--sp-2) + 8px) var(--sp-3) 8px; }
+    .page-end .preview-hint { margin: 0; }
 
 
     .content-platter {
@@ -675,6 +679,7 @@
 
       .about-page-inner { display: block; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; }
       .about-platter { max-width: 980px; margin: 0 auto; }
+      .page-end { padding-top: 48px; }
       #about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
       .about-hero { height: 0; min-height: 100%; object-position: 50% 30%; }
       .about-platter-body { padding: 56px 64px 64px; }
@@ -842,7 +847,7 @@
             <div class="blurb-intro">
               <p class="blurb-intro-hook">At thirty I lived on cup noodles and two-for-one energy drinks, cheap at the register and expensive by two o'clock.</p>
               <p class="blurb-intro-body">I learned better at the carts of Bangkok, Phnom Penh and Mexico City, where the cooks measured by hand: rice packed into the same small bowl and turned out in a dome, one chop off the grill, the next plate waiting.</p>
-              <p class="blurb-intro-body">Back home on a delivery route, I pulled out of the drive-thru line two cars from the speaker and built the plate the carts had taught me. Three weeks later lunch held me through the last stop, with gas to spare. The rest took longer: reading the back of a box, shopping in aisle order, cooking ahead.</p>
+              <p class="blurb-intro-body">Back home on a delivery route, I pulled out of the drive-thru line two cars from the speaker and built the plate the carts had taught me: a chicken bowl with avocado, radishes and lime. Three weeks later lunch held me through the last stop, with gas to spare. The rest took longer: reading the back of a box, shopping for the plate, cooking ahead.</p>
               <p class="blurb-intro-body">No apps, no trackers, no meal plans. A notebook entry a week, and at ninety&nbsp;days you decide what&nbsp;stays.</p>
               <div class="blurb-intro-rule" aria-hidden="true"></div>
               <h3 id="breakdown-heading" class="blurb-intro-lead">The Breakdown</h3>
@@ -910,7 +915,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
                 </span>
               </span>
-              <div class="blurb-text"><span class="blurb-title">Audit</span> <span class="blurb-body">What to ask your doctor to test, from A1c to ApoB, and what to do when a number won't move, with pages on perimenopause and after fifty. More tubes aren't automatically more information.</span></div>
+              <div class="blurb-text"><span class="blurb-title">Audit</span> <span class="blurb-body">What to ask your doctor to test, from A1c to vitamin D, and what to do when a number won't move, with pages on perimenopause and after fifty. More tubes aren't automatically more information.</span></div>
             </div>
 
             <div class="blurb-item" role="listitem">
@@ -1157,12 +1162,16 @@
       <div id="faq-scroll" class="about-bio-scroll">
       <h3 class="faq-q">What do I get?</h3>
       <p class="about-bio faq-a">On Payhip you get both files, PDF and EPUB, the moment you check out. The EPUB goes into the Kindle app, Apple Books or Google Play Books. The PDF opens on anything with a screen. On Amazon it lands in your Kindle library, ready on a Kindle or in the app.</p>
-      <h3 class="faq-q">Is this medical advice?</h3>
-      <p class="about-bio faq-a">No. It's notes from the road, not a clinic's protocol. Diabetes, kidney disease, a heart condition, a pregnancy, a diet your doctor wrote down: any of those, and the book goes to the doctor before anything changes on your plate or in your cabinet.</p>
+      <h3 class="faq-q">What if I fall off?</h3>
+      <p class="about-bio faq-a">The next meal is still available. Three drive-thrus in a row can make the whole plan look finished, so the book has you decide now what you'll do when the week breaks.</p>
+      <h3 class="faq-q">Does it work without a kitchen?</h3>
+      <p class="about-bio faq-a">Yes. In Phnom Penh it ran on a microwave, a mini fridge and the market down the street. The pages on cooking without a stove build the plate from a rotisserie chicken, the microwave and the kettle beside the hotel coffee.</p>
       <h3 class="faq-q">Why ninety days?</h3>
       <p class="about-bio faq-a">Because ninety days after my first blood draw, I was back in the same lab chair and the numbers had moved. Vitamin D and A1c take about that long to settle, and by then the notebook holds thirteen weekly entries, enough to draw a line. Day ninety closes the quarter.</p>
       <h3 class="faq-q">Do I need a blood test?</h3>
       <p class="about-bio faq-a">No. The plate and the notebook run without one. If your doctor agrees a panel is due, the book covers what to ask for and how to read the results.</p>
+      <h3 class="faq-q">Is this medical advice?</h3>
+      <p class="about-bio faq-a">No. It's notes from the road, not a clinic's protocol. Diabetes, kidney disease, a heart condition, a pregnancy, a diet your doctor wrote down: any of those, and the book goes to the doctor before anything changes on your plate or in your cabinet.</p>
       <h3 id="humane-accord" class="faq-q" tabindex="-1">What's the Humane Accord Initiative?</h3>
       <p class="about-bio faq-a">It's my pledge. Health doesn't stop at the plate; our phones want a portion too: the feed that asks for one more swipe, the ping that pulls us back, the scroll with no bottom. Every year, I put 1% of each sale into organizations teaching people to read the recipe and invest their time.</p>
       </div>
@@ -1170,6 +1179,16 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="page-end">
+  <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system" class="preview-hint">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width:16px; height:16px;">
+      <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+      <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+    </svg>
+    Read a preview
+  </a>
 </div>
 </main>
 
