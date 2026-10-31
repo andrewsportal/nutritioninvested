@@ -174,7 +174,8 @@
         --nav-bg-open: rgba(15, 20, 17, 0.94);
         --curtain: rgba(15, 20, 17, 0.45);
         --nav-link: rgba(236, 238, 236, 0.82);
-        --hero-glow: rgba(var(--tint-rgb), 0.10);
+        /* no glow at the top of the dark page: a green one would tint the black-and-white film under the bar */
+        --hero-glow: transparent;
         --shadow-cover: drop-shadow(0 12px 40px rgba(0,0,0,0.55)) drop-shadow(0 4px 12px rgba(0,0,0,0.35));
         --shadow-btn: 0 1px 3px rgba(0,0,0,0.35);
         --shadow-surface: 0 2px 20px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.25);
@@ -575,7 +576,7 @@
       display: flex; flex-direction: column; align-items: center; gap: 16px;
       font-size: calc(var(--dt-ui) * 12px); line-height: 1.33; color: var(--color-muted); text-align: center;
     }
-    /* Contact and Instagram read as two links: the same faint bar the copyright gets on desktop, 10 points either side */
+    /* Email and Instagram read as two links: the same faint bar the copyright gets on desktop, 10 points either side */
     .site-footer-links { display: flex; gap: 10px; list-style: none; }
     .site-footer-links .site-footer-sep { display: inline; margin: 0 10px 0 0; opacity: 0.4; }
     .site-footer-links a, .site-footer-giving a { display: inline-block; padding: 14px 8px; margin: -14px -8px; color: inherit; text-decoration: none; }
@@ -773,7 +774,7 @@
       <li><a href="#whats-inside">What's Inside</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#questions">Questions</a></li>
-      <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
+      <li><a href="mailto:riosandrew9@gmail.com">Email</a></li>
     </ul>
     <span class="site-nav-buy-slot"><a class="site-nav-buy" href="#buy">Buy</a></span>
   </div>
@@ -1255,7 +1256,7 @@
   <div class="site-footer-inner">
     <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><a href="#humane-accord"><img class="site-footer-globe" src="./globe-americas.png" alt="" width="64" height="64" loading="lazy" decoding="async"> <span class="site-footer-name">The Humane Accord Initiative</span></a></span></p>
     <ul class="site-footer-links">
-      <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
+      <li><a href="mailto:riosandrew9@gmail.com">Email</a></li>
       <li><span class="site-footer-sep" aria-hidden="true">|</span><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
     </ul>
   </div>
