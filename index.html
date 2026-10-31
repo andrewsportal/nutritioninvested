@@ -494,7 +494,7 @@
        one unit that drops beneath the words, centred, where the line can't hold both. Edge to edge as drawn, the row
        sits 11 points under the buttons, as the first line there always has, and 24 over "Reads on": the widest gap
        under the buttons, so the book's details read as their own closing group */
-    .payment-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; margin: 1px 0 11px;
+    .payment-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; margin: 2px 0 11px;
       font-size: var(--text-caption); color: var(--color-muted); font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; }
     /* "Reads on" and the book's facts are about the book, so they close the card as one group, 10 points apart as
        drawn: the facts' marks stand a little taller than the words, which takes 2 off the 8-point gap */
@@ -506,10 +506,11 @@
       font-size: var(--text-caption); font-weight: 500; color: var(--color-muted); letter-spacing: var(--track-normal); line-height: 1.4; }
     .book-facts li { display: inline-flex; align-items: center; gap: 0.4em; }
     .book-facts svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
-    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the words beside them.
-       Each box fits its mark, so the row centres on what's drawn */
+    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest, 14 points tall so Visa's letters stand
+       as tall as the words' capitals; faded to the grey of the words beside them. Each box fits its mark, so the row
+       centres on what's drawn */
     .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: nowrap; opacity: 0.57; }
-    .payment-logos img { width: auto; max-width: 22px; height: 12px; object-fit: contain; display: block; -webkit-user-drag: none; }
+    .payment-logos img { width: auto; max-width: 26px; height: 14px; object-fit: contain; display: block; -webkit-user-drag: none; }
 
     .page-2-inner {
       width: 100%; display: flex; flex-direction: column; align-items: center;
