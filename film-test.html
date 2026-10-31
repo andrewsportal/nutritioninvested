@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Nutrition, Invested">
+  <meta name="theme-color" content="#F1F4EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1411" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="A survival guide to food. One plate. Five anchors. Ninety days. No apps, no trackers, no meal plans. Measured with your own hand.">
+  <!-- a temporary copy of the home page for trying changes on an iPhone; kept out of search, and removed once it's settled -->
+  <meta name="robots" content="noindex">
+  <title>Test · Nutrition, Invested</title>
+  <link rel="canonical" href="https://nutritioninvested.com/">
+
+  <meta property="og:type" content="book">
+  <meta property="og:site_name" content="Nutrition, Invested">
+  <meta property="og:title" content="Nutrition, Invested by Andrew Rios">
+  <meta property="og:description" content="A survival guide to food. One plate. Five anchors. Ninety days.">
+  <meta property="og:url" content="https://nutritioninvested.com/">
+  <meta property="og:image" content="https://nutritioninvested.com/share.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nutrition, Invested by Andrew Rios">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Nutrition, Invested",
+        "url": "https://nutritioninvested.com/"
+      },
+      {
+        "@type": ["Book", "Product"],
+        "name": "Nutrition, Invested",
+        "description": "A survival guide to food. One plate. Five anchors. Ninety days.",
+        "url": "https://nutritioninvested.com/",
+        "bookFormat": "https://schema.org/EBook",
+        "inLanguage": "en",
+        "author": {
+          "@type": "Person",
+          "name": "Andrew Rios",
+          "description": "A traveler who kept notes. He didn't study nutrition. He took it apart.",
+          "image": "https://nutritioninvested.com/author.jpg",
+          "sameAs": ["https://www.instagram.com/whatsupandrewriosx"]
+        },
+        "offers": [
+          { "@type": "Offer", "url": "https://payhip.com/b/eBook-Nutrition-Invested", "price": "9.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock" },
+          { "@type": "Offer", "url": "https://www.amazon.com/dp/B0F1RX4JWV", "price": "9.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Icons: the hourglass. The SVG is black on light tabs and white on dark ones;
+       browsers without SVG icons (older Safari) use the PNGs, which sit on a white tile -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="96x96" href="./favicon-96x96.png?v=3">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=3">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    :focus:not(:focus-visible) { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--color-tint);
+      outline-offset: 2px;
+      border-radius: 10px;
+    }
+    /* where a menu link lands: a heading never shows the ring, and the cover shows it only after a key press */
+    [tabindex="-1"]:focus, .landed:focus { outline: none; }
+
+    :root {
+      color-scheme: light dark;
+      --color-bg: #F1F4EF;
+      --color-surface: #ffffff;
+      --color-accent: #35714B;
+      --color-accent-hover: #2C5F3F;
+      --accent-rgb: 53, 113, 75;
+      --color-tint: var(--color-accent);
+      --tint-rgb: var(--accent-rgb);
+      --color-body: #333333;
+      --color-muted: #6E6E73;
+      --color-gold: #D4AF37;
+      --teal-rgb: 44, 110, 99;
+      --line-teal: rgba(var(--teal-rgb), 0.32);
+      --color-white: #ffffff;
+      --color-bar-bg: var(--color-accent);
+      --color-fill: rgba(118, 118, 128, 0.12);
+      --color-fill-strong: rgba(118, 118, 128, 0.2);
+      --card-bg: rgba(255, 255, 255, 0.86);
+      --card-border: rgba(255, 255, 255, 0.78);
+      --btn-border: rgba(0, 0, 0, 0.08);
+      --btn-secondary-border: rgba(0, 0, 0, 0.1);
+      --footer-rule: rgba(0, 0, 0, 0.1);
+      --rule: rgba(var(--teal-rgb), 0.16);
+      --rule-intro: rgba(var(--teal-rgb), 0.18);
+      --hairline: rgba(0, 0, 0, 0.08);
+      --nav-bg: rgba(241, 244, 239, 0.72);
+      --nav-bg-open: rgba(241, 244, 239, 0.94);
+      --curtain: rgba(241, 244, 239, 0.4);
+      --nav-link: rgba(51, 51, 51, 0.82);
+      --hero-glow: rgba(255, 255, 255, 0.84);
+      --font: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+      /* Text follows the reader's text size setting on iPhone and iPad (Dynamic Type): a script in the head
+         sets --dt to their Body size over the default 17pt. Reading text follows it all the way; bars, buttons
+         and labels stop at the largest standard size, and headings never fall below the text they head */
+      --dt: 1;
+      --dt-ui: clamp(1, var(--dt), 1.35);
+      --text-caption: clamp(calc(var(--dt-ui) * 0.75rem), calc(var(--dt-ui) * 2.8vw), calc(var(--dt-ui) * 0.8125rem));
+      --text-label: clamp(calc(var(--dt-ui) * 0.875rem), calc(var(--dt-ui) * 3.2vw), calc(var(--dt-ui) * 0.9375rem));
+      --text-body: calc(var(--dt) * 1.0625rem);
+      --text-headline: clamp(calc(var(--dt-ui) * 1.0625rem), calc(var(--dt-ui) * 4vw), calc(var(--dt-ui) * 1.25rem));
+
+      --track-tight: -0.022em;
+      --track-normal: -0.011em;
+      --track-wide: 0.02em;
+
+      --sp-1: 8px;
+      --sp-2: 16px;
+      --sp-3: 24px;
+      --sp-6: 48px;
+      --stack-gap: clamp(12px, calc(var(--first-screen, 100svh) * 0.022), 20px);
+      --radius-lg: 24px;
+      --radius-pill: 980px;
+      --radius-circle: 50%;
+
+      --shadow-cover: drop-shadow(0 12px 40px rgba(0,0,0,0.15)) drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+      --shadow-btn: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+      --shadow-surface: 0 2px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-primary: 0 8px 32px rgba(var(--accent-rgb), 0.25), 0 2px 8px rgba(0,0,0,0.1);
+      --timing-spring: 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    /* Dark Mode follows the visitor's system setting. The green fill keeps its white-text contrast;
+       green used as text, icons and focus rings lightens to read on the dark background */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #0F1411;
+        --color-surface: #262C28;
+        --color-accent-hover: #3E8257;
+        --color-tint: #5DB07D;
+        --tint-rgb: 93, 176, 125;
+        --color-body: #ECEEEC;
+        --color-muted: #A1A6A2;
+        --line-teal: rgba(var(--tint-rgb), 0.35);
+        --color-fill: rgba(118, 118, 128, 0.24);
+        --color-fill-strong: rgba(118, 118, 128, 0.32);
+        --card-bg: rgba(29, 35, 31, 0.92);
+        --card-border: rgba(255, 255, 255, 0.07);
+        --btn-border: rgba(255, 255, 255, 0.10);
+        --btn-secondary-border: rgba(255, 255, 255, 0.12);
+        --footer-rule: rgba(255, 255, 255, 0.12);
+        --rule: rgba(255, 255, 255, 0.10);
+        --rule-intro: rgba(255, 255, 255, 0.10);
+        --hairline: rgba(255, 255, 255, 0.10);
+        --nav-bg: rgba(15, 20, 17, 0.72);
+        --nav-bg-open: rgba(15, 20, 17, 0.94);
+        --curtain: rgba(15, 20, 17, 0.45);
+        --nav-link: rgba(236, 238, 236, 0.82);
+        --hero-glow: rgba(var(--tint-rgb), 0.10);
+        --shadow-cover: drop-shadow(0 12px 40px rgba(0,0,0,0.55)) drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+        --shadow-btn: 0 1px 3px rgba(0,0,0,0.35);
+        --shadow-surface: 0 2px 20px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.25);
+      }
+      .payment-logos img { filter: invert(1); }
+    }
+
+    html {
+      background: var(--color-bg);
+      scroll-padding-top: calc(var(--safe-top) + 72px);
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+    }
+    /* Focus in the bar is always in view, but the browser, minding the room kept for the bar, would scroll the page up to
+       show it. While focus is in the bar that room moves off the page and onto the sections a link there can jump to */
+    html:has(.site-nav:focus-within) { scroll-padding-top: 0; }
+    html:has(.site-nav:focus-within) [id] { scroll-margin-top: calc(var(--safe-top) + 72px); }
+
+    /* the page's colour is the root's alone, so the photograph can sit between it and everything else */
+    body {
+      background: transparent; color: var(--color-body); font-family: var(--font);
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+    }
+
+    svg { pointer-events: none; }
+
+    /* The bar is the same on every screen: on the page at the top, frosted once content scrolls
+       beneath it. On phones its links fold behind the title */
+    .site-nav {
+      position: sticky; top: 0; z-index: 300;
+      padding-top: var(--safe-top);
+      border-bottom: 1px solid transparent;
+    }
+    /* the frosting is a layer of its own, so the open menu can frost the page beneath it too */
+    .site-nav::before {
+      content: ''; position: absolute; inset: 0 0 -1px; z-index: -1;
+      border-bottom: 1px solid transparent;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .site-nav.is-scrolled::before, .site-nav.menu-open::before {
+      background: var(--nav-bg);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom-color: var(--hairline);
+    }
+    .site-nav.menu-open::before { background: var(--nav-bg-open); }
+    .site-nav-inner {
+      height: 52px; display: flex; align-items: center; gap: 12px;
+      padding: 0 max(var(--sp-3), env(safe-area-inset-right)) 0 max(var(--sp-3), env(safe-area-inset-left));
+    }
+    .site-nav-title {
+      display: inline-flex; align-items: center; gap: 8px; min-width: 0; padding: 12px 0;
+      font-size: calc(var(--dt-ui) * 17px); font-weight: 600; letter-spacing: var(--track-normal); color: var(--color-body); text-decoration: none;
+    }
+    .site-nav-title-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .site-nav-mark { width: 16px; height: 16px; flex-shrink: 0; }
+    /* On phones the title and its chevron are one control that opens the menu, as a title with a chevron
+       is in iPhone apps. The top of the page stays a tap on the status bar away */
+    .site-nav-home { display: none; }
+    .site-nav-toggle {
+      margin-right: auto; border: 0; background: none; -webkit-appearance: none; appearance: none;
+      font-family: inherit; text-align: left; cursor: pointer;
+    }
+    .site-nav-chevron { width: 12px; height: 12px; flex-shrink: 0; margin-left: 6px; color: var(--color-muted); transition: transform 0.2s ease; }
+    .site-nav.menu-open .site-nav-chevron { transform: rotate(180deg); }
+    /* while the menu is open the page beneath softens behind a veil, as under the menus on apple.com;
+       a tap on it only closes the menu, and never reaches a link underneath */
+    .menu-curtain {
+      position: fixed; inset: 0; z-index: 299; touch-action: none;
+      background: var(--curtain);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+    }
+    .site-nav.menu-open + .menu-curtain { opacity: 1; visibility: visible; transition: opacity 0.2s ease; }
+    /* nearly solid, so the links read even where the blur is off (Reduce Transparency).
+       It scrolls if very large text runs it past the bottom of the screen */
+    .site-nav-links {
+      position: absolute; top: calc(100% + 1px); left: 0; right: 0; list-style: none;
+      max-height: calc(100vh - 100% - 1px); max-height: calc(100dvh - 100% - 1px); overflow-y: auto; overscroll-behavior: contain;
+      padding: 4px max(var(--sp-3), env(safe-area-inset-right)) 12px max(var(--sp-3), env(safe-area-inset-left));
+      background: var(--nav-bg-open);
+      backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--hairline);
+      visibility: hidden; opacity: 0; transform: translateY(-4px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    }
+    .site-nav.menu-open .site-nav-links { visibility: visible; opacity: 1; transform: none; transition: opacity 0.2s ease, transform 0.2s ease; }
+    .site-nav-links li + li { border-top: 1px solid var(--hairline); }
+    .site-nav-links a {
+      display: block; padding: 12px 0; font-size: calc(var(--dt-ui) * 17px); letter-spacing: var(--track-normal);
+      color: var(--color-body); text-decoration: none;
+    }
+    .site-nav-links a:active { color: var(--color-tint); }
+    .site-nav-buy {
+      display: inline-flex; align-items: center; flex-shrink: 0; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
+      background: var(--color-accent); color: var(--color-white); font-size: calc(var(--dt-ui) * 13px); font-weight: 600;
+      letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; position: relative; pointer-events: auto;
+    }
+    .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
+    /* Buy steps into the bar once the card's own buy buttons have scrolled up past it, and steps out when they come back.
+       It slides out from behind a line at the end of the page's column, where it comes to rest, and back behind it: the
+       edge of a slot of its own, which gives its focus ring and tap area their few points past the line once it's in */
+    .site-nav-buy-slot { display: flex; flex-shrink: 0; padding: 8px 6px; margin: -8px -6px; overflow: hidden; overflow: clip; pointer-events: none; clip-path: inset(0); }
+    .site-nav.buy-away .site-nav-buy-slot { clip-path: inset(0 6px 0 0); }
+    .site-nav.buy-ready .site-nav-buy-slot { transition: clip-path 0s 0.35s; }
+    .site-nav.buy-ready.buy-away .site-nav-buy-slot { transition: none; }
+    .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
+    .site-nav.buy-away .site-nav-buy { translate: var(--buy-room) 0; visibility: hidden; pointer-events: none; }
+    .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.35s; }
+    /* On desktop the links sit beside Buy and move with it as one row: while it's away they sit over its room, so the bar
+       ends where the page does, and it pushes them back as it slides in. The script measures its room */
+    @media (min-width: 1024px) {
+      .site-nav.buy-away .site-nav-links { transform: translateX(var(--buy-room, 0px)); }
+      .site-nav.buy-ready .site-nav-links { transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
+    }
+
+    /* a press shows, as on iPhone */
+    .site-nav-title:active, .site-nav-toggle:active, .faq-row:active, .site-footer-links a:active, .site-footer-giving a:active { opacity: 0.6; }
+    .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
+
+    .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
+
+    /* A photograph behind the page: a street in Phnom Penh at night, in black and white, the upright crop for a screen
+       held upright and the wide one otherwise. It stays put under everything, the cards stand solid over it, and it
+       shows faintly through the page's own colour, so it sets the place and doesn't ask to be looked at. Safari on an
+       iPhone won't draw a fixed layer past the top of its bottom toolbar, wherever the toolbar has got to, and shows
+       only the page's colour behind it; so the photograph is as tall as the screen Safari leaves with its toolbar at
+       full size, the smallest it ever leaves, which keeps it clear of the toolbar at any size and holds it still as
+       the toolbar grows and shrinks. On a phone it fades into the page's colour over its last stretch on a
+       smootherstep curve, flat at both ends, so the fade has no corner of its own where it starts or lands. The
+       picture inside keeps the whole screen's height, so it doesn't swell and shrink with the toolbar either. A night
+       street would dim the light page, so there it's brightened and the page keeps its light. On the dark page it
+       shows a little stronger, less so on a phone, where Read a preview sits over the street's lights */
+    .backdrop { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100svh; z-index: -1; overflow: hidden; pointer-events: none; }
+    .backdrop picture { display: block; }
+    .backdrop-photo { display: block; width: 100%; height: 100vh; height: 100lvh; object-fit: cover; opacity: 0.14; filter: brightness(1.5); }
+    @media (prefers-color-scheme: dark) { .backdrop-photo { opacity: 0.3; filter: none; } }
+    @media (prefers-color-scheme: dark) and (max-width: 1023px) { .backdrop-photo { opacity: 0.22; } }
+    @media (max-width: 1023px) {
+      .backdrop {
+        --fade: linear-gradient(#000 calc(100% - 140px), rgb(0 0 0 / 0.991) calc(100% - 126px), rgb(0 0 0 / 0.942) calc(100% - 112px),
+          rgb(0 0 0 / 0.837) calc(100% - 98px), rgb(0 0 0 / 0.683) calc(100% - 84px), rgb(0 0 0 / 0.5) calc(100% - 70px),
+          rgb(0 0 0 / 0.317) calc(100% - 56px), rgb(0 0 0 / 0.163) calc(100% - 42px), rgb(0 0 0 / 0.058) calc(100% - 28px),
+          rgb(0 0 0 / 0.009) calc(100% - 14px), transparent);
+        -webkit-mask-image: var(--fade); mask-image: var(--fade);
+      }
+    }
+
+    .page-inner {
+      width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+      gap: var(--stack-gap);
+      padding: 16px var(--sp-3);
+      position: relative;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .site-nav-buy:hover { background: var(--color-accent-hover); }
+      .preview-hint:hover { text-decoration: underline; text-underline-offset: 3px; }
+      .about-social-link:hover { background: var(--color-fill-strong); }
+      .cover-wrapper .book:hover { transform: scale(1.01); }
+      .buy-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06); }
+      .buy-btn.primary:hover { box-shadow: 0 6px 22px rgba(var(--accent-rgb), 0.38), 0 2px 8px rgba(0,0,0,0.10); }
+      .receipts-step:hover { background: rgba(255, 255, 255, 0.22); }
+    }
+
+    .about-page-inner {
+      width: 100%; display: flex; flex-direction: column; align-items: center;
+      padding: 16px var(--sp-3) 0;
+    }
+
+    .about-platter {
+      width: 100%; max-width: 432px; position: relative;
+      background: var(--card-bg); border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border); padding: 0;
+      box-shadow: var(--shadow-surface);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    /* framed so a little stone shows above the head, enough for the upward look */
+    .about-hero {
+      display: block; width: 100%; height: clamp(160px, 56vw, 250px);
+      object-fit: cover; object-position: 50% 27%; flex-shrink: 0;
+      background: rgba(var(--accent-rgb), 0.10); -webkit-user-drag: none;
+    }
+    /* text starts at the leading edge, as in What's Inside and on desktop */
+    .about-platter-body {
+      width: 100%; padding: 24px 28px 28px 28px;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .about-id { width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
+    .about-bio-wrap, .about-bio-scroll { width: 100%; }
+    .about-name {
+      font-size: max(clamp(calc(var(--dt-ui) * 1.125rem), calc(var(--dt-ui) * 4.5vw), calc(var(--dt-ui) * 1.25rem)), var(--text-body)); font-weight: 700;
+      color: var(--color-body); letter-spacing: var(--track-tight); margin-bottom: 4px;
+    }
+    .about-role {
+      font-size: var(--text-caption); font-weight: 600; color: var(--color-muted);
+      letter-spacing: var(--track-wide); text-transform: uppercase;
+      line-height: 1; margin-bottom: 14px;
+    }
+    .about-rule { width: 100%; height: 1px; background: var(--rule); margin-bottom: 20px; flex-shrink: 0; }
+    .about-bio {
+      font-size: var(--text-body); color: var(--color-body); line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .about-bio:last-child { margin-bottom: 0; }
+    .faq-q {
+      font-size: var(--text-body); font-weight: 700; color: var(--color-body);
+      margin: 0 0 6px;
+    }
+    .faq-a { margin-bottom: 22px; }
+    /* The questions fold away, on a phone and a desktop alike, each a row as wide as the panel with a line between rows,
+       as in the menu, and the chevron at its end turns over as its answer opens, as the menu's does. The script folds
+       them; without it every answer shows */
+    .faq-folds { margin: -12px 0; }
+    .faq-folds .faq-q { margin: 0; }
+    .faq-folds .faq-a + .faq-q { border-top: 1px solid var(--hairline); }
+    .faq-folds .faq-a { margin: 0; padding-bottom: 16px; }
+    .faq-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 44px;
+      padding: 12px 0; border: 0; background: none; -webkit-appearance: none; appearance: none;
+      font: inherit; color: inherit; letter-spacing: inherit; text-align: left; cursor: pointer;
+    }
+    .faq-chevron { width: 12px; height: 12px; flex-shrink: 0; color: var(--color-muted); transition: transform 0.2s ease; }
+    .faq-row[aria-expanded="true"] .faq-chevron { transform: rotate(180deg); }
+
+    .about-social-link {
+      display: inline-flex; align-items: center; gap: 8px; max-width: 100%;
+      min-height: 40px; padding: 8px 16px; margin: 0 0 18px; position: relative; overflow-wrap: anywhere;
+      background: var(--color-fill); border: 1px solid transparent;
+      border-radius: var(--radius-pill); text-decoration: none;
+      color: var(--color-body); font-size: var(--text-label); font-weight: 600;
+      letter-spacing: var(--track-normal);
+      transition: transform var(--timing-spring), background 0.2s ease;
+    }
+    .about-social-link::after { content: ''; position: absolute; inset: -4px 0; }
+    .about-social-link:active { transform: scale(0.96); background: var(--color-fill-strong); }
+
+    /* half the first screen, so the tagline and the buy buttons show on it too */
+    .cover-wrapper {
+      width: 100%; max-width: 416px; flex-shrink: 0;
+      height: clamp(260px, calc(var(--first-screen, 100svh) / 2), 460px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cover-wrapper a { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+    /* the cover with a crease down the spine, as Apple Books draws one over the artwork; its corners square, as a printed book's.
+       Hovered or pressed, it grows or gives from its foot, so the room above Read a preview holds */
+    .cover-wrapper .book {
+      position: relative; display: block; height: 100%; aspect-ratio: 832 / 1248; max-width: 100%;
+      filter: var(--shadow-cover); will-change: filter; cursor: pointer;
+      transition: transform 0.22s ease, filter 0.22s ease; transform-origin: 50% 100%;
+    }
+    .cover-wrapper .book::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.20) 0, rgba(0,0,0,0.04) 1.2%, rgba(255,255,255,0.20) 2%, rgba(255,255,255,0) 3.6%, rgba(0,0,0,0.10) 4.4%, rgba(0,0,0,0) 7.5%),
+        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0) 40%, rgba(0,0,0,0.05));
+    }
+    .cover-wrapper img {
+      display: block; width: 100%; height: 100%;
+      object-fit: contain; -webkit-user-drag: none; -webkit-touch-callout: none;
+    }
+    .cover-wrapper .book:active { transform: scale(0.99); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.10)); }
+
+    /* a link in the page, so no glass: that's for controls floating above it. It sits straight on the street, though,
+       which would leave its green short of a comfortable read, so it rests on a pill cut from the buy card's own
+       surface: the card's colour, edge and shadow, light or dark, so it reads as one of the card's family. The pill
+       reaches 8 px past the words all round, as the tap area does */
+    .preview-hint {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0;
+      padding: 6px 8px; position: relative; isolation: isolate;
+      font-size: var(--text-label); font-weight: 600; letter-spacing: var(--track-wide);
+      color: var(--color-tint); text-decoration: none;
+      /* the pill keeps the 16 px the cards keep between them from what's above and below it: the column's own gap
+         counts toward that, and the pill's 8 px reach past the words is added to it */
+      margin-block: calc(var(--sp-2) + 8px - var(--stack-gap));
+    }
+    /* on a short first screen the column draws everything in to keep the buy buttons on it, and the pill gives way too */
+    @media (max-height: 599px) { .preview-hint { margin-block: 4px; } }
+    .preview-hint::before {
+      content: ''; position: absolute; inset: -8px; z-index: -1;
+      border-radius: var(--radius-pill); background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--shadow-surface);
+    }
+    .preview-hint::after { content: ''; position: absolute; inset: -8px; }
+    .preview-hint:active { opacity: 0.6; }
+
+
+    .content-platter {
+      width: 100%; max-width: 432px; background: var(--card-bg); border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border); padding: 10px 10px 12px 10px; box-shadow: var(--shadow-surface);
+      display: flex; flex-direction: column; align-items: center; margin: 0; flex-shrink: 0; z-index: 5;
+    }
+
+    .headline {
+      width: 100%; text-align: center; margin-bottom: 10px;
+      font-size: var(--text-headline); font-weight: 600; font-synthesis: none;
+      letter-spacing: var(--track-tight); color: var(--color-body); line-height: 1.4;
+    }
+    .headline .price { color: var(--color-body); font-weight: 700; }
+    .headline .divider { color: var(--color-gold); margin: 0 var(--sp-1); font-weight: 400; }
+
+    .buttons { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+    .buy-btn {
+      display: flex; align-items: center; justify-content: center; gap: var(--sp-1);
+      width: 100%; min-height: 44px; background: var(--color-surface); color: var(--color-body);
+      border: 1px solid var(--btn-border); border-radius: 14px; padding: 8px 16px; font-family: var(--font);
+      font-size: var(--text-label); font-weight: 600; font-synthesis: none; letter-spacing: var(--track-normal); text-decoration: none; box-shadow: var(--shadow-btn);
+      user-select: none; -webkit-user-select: none;
+      transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1), box-shadow 0.2s ease, opacity 0.15s ease;
+    }
+    .buy-btn:active { transform: scale(0.96); opacity: 0.9; }
+    .buy-btn.primary { background: var(--color-accent); color: var(--color-white); border-color: transparent; box-shadow: 0 4px 18px rgba(var(--accent-rgb), 0.32), 0 2px 6px rgba(0,0,0,0.10); }
+    .buy-btn.secondary { background: var(--color-surface); border-color: var(--btn-secondary-border); }
+
+    .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
+    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
+    /* the book's facts take two lines on every screen, so the lines are evened out and the number stays with its words */
+    .payment-section .book-facts { text-wrap: balance; }
+    /* "Reads on" is about the book, so it stays with the buttons; "Accepted on Payhip" and its logos are one group below.
+       Edge to edge as drawn, the lines inside a group sit 10 points apart and the groups about 18, near the card's foot:
+       that takes 6 points under "Reads on" and 2 more over the logos, on top of the 8-point gap */
+    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the text above.
+       Each box fits its mark, so the row centres on what's drawn */
+    .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; opacity: 0.57; margin-top: 2px; }
+    .payment-logos img { width: auto; max-width: 22px; height: 12px; object-fit: contain; display: block; -webkit-user-drag: none; }
+
+    .page-2-inner {
+      width: 100%; display: flex; flex-direction: column; align-items: center;
+      padding: 0 var(--sp-3); gap: 16px;
+    }
+
+    .page-2-platter {
+      width: 100%; max-width: 448px;
+      background: var(--card-bg); border-radius: var(--radius-lg); border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-surface); position: relative;
+    }
+
+    .page-2-header { width: 100%; padding: 22px 24px 0; }
+    .info-section-sublabel { font-size: max(clamp(calc(var(--dt-ui) * 1.125rem), calc(var(--dt-ui) * 4.5vw), calc(var(--dt-ui) * 1.375rem)), var(--text-body)); letter-spacing: var(--track-tight); font-weight: 600; color: var(--color-body); }
+
+    .blurb-scroll-wrapper { margin: 14px 0 0; }
+    .blurb-list { padding: 6px 24px 24px; }
+    .blurb-intro { padding: 2px 0 var(--sp-2); }
+    .blurb-intro-hook { font-size: var(--text-body); font-weight: 600; color: var(--color-body); line-height: 1.4; letter-spacing: var(--track-normal); margin-bottom: 10px; }
+    .blurb-intro-body { font-size: var(--text-body); color: var(--color-body); line-height: 1.6; margin-bottom: var(--sp-2); }
+    .blurb-intro-rule { height: 1px; background: var(--rule-intro); margin: 0 0 var(--sp-2); }
+    .blurb-intro-lead { font-size: var(--text-body); font-weight: 600; color: var(--color-body); letter-spacing: var(--track-tight); }
+    .blurb-item { display: flex; align-items: flex-start; gap: var(--sp-2); padding-bottom: var(--sp-2); }
+    .blurb-item:last-child { padding-bottom: 0; }
+    .blurb-icon {
+      flex-shrink: 0; width: 36px; color: var(--color-tint); margin-top: 0;
+      display: flex; flex-direction: column; align-items: center; align-self: stretch;
+    }
+    .blurb-icon-badge {
+      width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%;
+      background: rgba(var(--tint-rgb), 0.10); border: 1px solid var(--line-teal);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .blurb-icon-badge svg { width: 18px; height: 18px; display: block; flex-shrink: 0; }
+    .blurb-text { flex: 1; min-width: 0; overflow-wrap: break-word; }
+    .blurb-title { display: block; margin: 6px 0 2px; font-size: var(--text-body); font-weight: 600; color: var(--color-body); }
+    .blurb-body { font-size: var(--text-body); color: var(--color-body); line-height: 1.6; }
+
+    .counter-bar {
+      width: 100%; max-width: 448px; flex-shrink: 0; background: var(--color-bar-bg); border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: var(--shadow-primary); padding: var(--sp-2) 20px;
+      display: flex; align-items: center; justify-content: center; z-index: 100;
+      position: relative; overflow: hidden;
+    }
+    .counter-bar-tagline { margin: 0; padding: 10px 0; text-align: center; color: var(--color-white); }
+    .tagline-setup {
+      display: block; font-size: var(--text-body); font-weight: 500;
+      line-height: 1.3; letter-spacing: var(--track-normal);
+      margin-bottom: 4px; text-wrap: balance;
+    }
+    .tagline-punch {
+      display: block;
+      font-size: var(--text-body); font-weight: 700;
+      line-height: 1.3; letter-spacing: var(--track-tight);
+      color: var(--color-white);
+    }
+    /* the book's closing lines, one language to a line: Thai and Khmer carry marks above and below their letters, so
+       the lines get the height those scripts need, and the gap stays above the English line alone */
+    .tagline-setup[lang] { line-height: 1.5; margin-bottom: 0; }
+    .tagline-setup[lang] + .tagline-punch { margin-top: 4px; }
+    /* the page closes on them, as the book does, under Questions and as wide as it */
+    .about-page .counter-bar { max-width: 432px; }
+
+    /* The Receipts: readers' own words, given with their permission, and how many have bought in. The faces and the
+       count sit over the words on a phone and beside them on a wide screen; the words step with the arrows or a swipe */
+    .receipts { flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 24px; color: var(--color-white); }
+    .receipts-label {
+      font-size: var(--text-caption); font-weight: 600; letter-spacing: var(--track-wide); text-transform: uppercase;
+      line-height: 1; color: rgba(255, 255, 255, 0.9); margin-bottom: 14px;
+    }
+    .receipts-faces { display: flex; align-items: center; margin-bottom: 10px; }
+    /* each face is cut from the bar by a ring of its green, as overlapping faces are on an iPhone; until a reader's
+       photo goes in, a plain figure stands in */
+    .receipts-face, .receipts-more { height: 32px; min-width: 32px; border-radius: var(--radius-pill); border: 2px solid var(--color-bar-bg); flex-shrink: 0; }
+    .receipts-face {
+      width: 32px; display: block; object-fit: cover;
+      background: rgba(255, 255, 255, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='12.5' r='5.75' fill='white' fill-opacity='.6'/%3E%3Cpath d='M4.5 32c.8-6.5 5.4-10.75 11.5-10.75S26.7 25.5 27.5 32z' fill='white' fill-opacity='.6'/%3E%3C/svg%3E") center / cover no-repeat;
+    }
+    .receipts-face + .receipts-face, .receipts-more { margin-left: -8px; }
+    .receipts-more {
+      display: inline-flex; align-items: center; justify-content: center; padding: 0 7px;
+      background: var(--color-gold); color: #3A3313; font-size: calc(var(--dt-ui) * 11px); font-weight: 700; letter-spacing: -0.01em;
+    }
+    .receipts-count { font-size: var(--text-label); font-weight: 500; line-height: 1.35; color: rgba(255, 255, 255, 0.9); text-wrap: balance; }
+    .receipts-said { position: relative; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.28); }
+    /* a gap between the quotes, so no letter of the next one shows at the edge, and none touch mid-swipe */
+    .receipts-track { display: flex; gap: var(--sp-3); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+    .receipts-track::-webkit-scrollbar { display: none; }
+    .receipt { flex: 0 0 100%; min-width: 0; margin: 0; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; }
+    .receipt-words { margin: 0 0 16px; }
+    .receipt-words p {
+      font-size: calc(var(--dt) * 19px); font-weight: 500; line-height: 1.4; letter-spacing: var(--track-normal);
+      quotes: '\201C' '\201D'; text-wrap: pretty;
+    }
+    .receipt-words p::before { content: open-quote; }
+    .receipt-words p::after { content: close-quote; }
+    /* the name and where they're from sit level with the arrows and clear of them, the same height whichever quote shows */
+    .receipt-by { margin-top: auto; min-height: 40px; padding-right: 104px; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+    .receipt-name { font-size: var(--text-label); font-weight: 600; line-height: 1.25; }
+    .receipt-from { font-size: var(--text-caption); font-weight: 500; line-height: 1.3; color: rgba(255, 255, 255, 0.8); }
+    .receipts-steps { position: absolute; right: 0; bottom: 0; display: flex; gap: 12px; }
+    .receipts-step {
+      appearance: none; width: 40px; height: 40px; padding: 0; border-radius: 50%; position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.36); background: rgba(255, 255, 255, 0.12); color: var(--color-white);
+      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .receipts-step svg { width: 14px; height: 14px; display: block; }
+    /* a fingertip's 44 points, though the circle is drawn smaller */
+    .receipts-step::after { content: ''; position: absolute; inset: -2px; }
+    .receipts-step:active { background: rgba(255, 255, 255, 0.22); transform: scale(0.96); }
+    /* what VoiceOver reads when an arrow brings in a quote; nothing to see */
+    .receipts-said-now { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    /* the focus ring is the green of the bar, so on it the ring turns white */
+    .counter-bar :focus-visible { outline-color: rgba(255, 255, 255, 0.92); }
+
+    .site-footer { padding: 40px var(--sp-3) max(calc(var(--safe-bottom) + 32px), 40px); }
+    .site-footer-inner {
+      max-width: 432px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      font-size: calc(var(--dt-ui) * 12px); line-height: 1.33; color: var(--color-muted); text-align: center;
+    }
+    .site-footer-links { display: flex; gap: 24px; list-style: none; }
+    .site-footer-links a, .site-footer-giving a { display: inline-block; padding: 14px 8px; margin: -14px -8px; color: inherit; text-decoration: none; }
+    /* the giving line sits under the copyright, and beside it after a bar once the footer is one row */
+    .site-footer-giving { display: block; margin-top: 12px; }
+    .site-footer-sep { display: none; }
+    /* the globe before the name is a picture the size the emoji was, sitting on the line where the emoji sat, and it grows with the text */
+    .site-footer-globe { width: 1.25em; height: 1.25em; vertical-align: -0.25em; }
+
+    /* Small phones: a tighter bar, so the whole title fits */
+    @media (max-width: 339px) {
+      .site-nav-inner { gap: 8px; padding-left: 16px; padding-right: 16px; }
+      .site-nav-buy { padding: 0 12px; }
+    }
+
+    /* Text enlarged so far that the screen is under 300 points wide: the Breakdown's icons step aside for the words,
+       and the bar gives its Buy button's room to the title, which may take two lines; the buy buttons are in the page */
+    @media (max-width: 299px) {
+      .page-inner, .page-2-inner, .about-page-inner, .site-nav-inner, .site-nav-links { padding-left: 12px; padding-right: 12px; }
+      .blurb-list { padding-left: 16px; padding-right: 16px; }
+      .blurb-icon, .site-nav-buy-slot { display: none; }
+      .site-nav-title-text { white-space: normal; line-height: 1.15; }
+    }
+
+    @media (min-width: 768px) {
+      .page-inner, .page-2-inner, .about-page-inner { padding-left: var(--sp-6); padding-right: var(--sp-6); }
+      .cover-wrapper { max-width: 480px; }
+      .page-2-platter, .counter-bar { max-width: 520px; }
+      .about-platter, .about-page .counter-bar { max-width: 480px; }
+      .about-hero { object-position: 50% 25.5%; }
+      .about-platter-body { padding: 28px 32px 32px; }
+    }
+
+    /* The title and tagline show beside the cover on wide screens; on phones the cover itself carries them */
+    .hero-title, .hero-tagline { display: none; }
+    .hero-copy { display: contents; }
+
+    /* Computers and iPads held sideways: the bar's links in a row, wider sections side by side */
+    @media (min-width: 1024px) {
+      html { scroll-padding-top: 84px; }
+      html:has(.site-nav:focus-within) [id] { scroll-margin-top: 84px; }
+
+      /* no menu to frost here, so the bar frosts itself */
+      .site-nav { transition: background-color 0.2s ease, border-color 0.2s ease; }
+      .site-nav::before { content: none; }
+      .site-nav.is-scrolled {
+        background: var(--nav-bg);
+        backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+        border-bottom-color: var(--hairline);
+      }
+      .site-nav-inner { max-width: 1076px; margin: 0 auto; padding: 0 48px; gap: 32px; }
+      .site-nav-title { margin-right: auto; padding: 10px 0; font-size: calc(var(--dt-ui) * 19px); }
+      .site-nav-title-text { overflow: visible; }
+      .site-nav-home { display: inline-flex; }
+      .site-nav-toggle, .menu-curtain { display: none; }
+      .site-nav-links {
+        position: static; display: flex; gap: 28px; padding: 0; max-height: none; overflow: visible;
+        background: none; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0;
+        visibility: visible; opacity: 1; transform: none; transition: none;
+      }
+      .site-nav-links li + li { border-top: 0; }
+      .site-nav-links a { padding: 14px 8px; margin: 0 -8px; font-size: calc(var(--dt-ui) * 14px); color: var(--nav-link); transition: color 0.2s ease; }
+      .site-nav-links a:hover { color: var(--color-tint); }
+
+      /* the cover's height follows the window's, so the whole section fits the first screen */
+      :root { --hero-cover-h: clamp(320px, calc(100vh - 232px), 640px); }
+      @supports (height: 100svh) { :root { --hero-cover-h: clamp(320px, calc(100svh - 232px), 640px); } }
+      /* The cover keeps to the column's left edge and the buy card to its right, as the bar and every section below do, the
+         room going into the gap between them. Where the window is so short that the gap would more than double, the cover and
+         text stay together instead, centred, with the gap as designed: the max() turns the stretch off past double */
+      .page-1 .page-inner {
+        --gap: clamp(64px, 8vw, 120px); --stretched: calc(100% - var(--hero-cover-h) * 832 / 1248 - 440px);
+        min-height: calc(100vh - 53px); min-height: calc(100svh - 53px);
+        max-width: 1076px; margin: 0 auto; padding: 48px 48px 72px;
+        display: grid; grid-template-columns: auto minmax(0, 440px); grid-template-areas: 'cover copy' 'hint copy';
+        column-gap: clamp(var(--gap), var(--stretched), max(var(--gap), calc((2 * var(--gap) - var(--stretched)) * 1000 + var(--gap)))); row-gap: 20px;
+        align-content: center; justify-content: center; align-items: center;
+      }
+      .page-1 .cover-wrapper {
+        grid-area: cover; align-self: end; width: auto; max-width: none;
+        height: var(--hero-cover-h); aspect-ratio: 832 / 1248;
+      }
+      .page-1 .preview-hint { grid-area: hint; align-self: start; justify-self: center; margin-block: calc(var(--sp-2) + 8px - 20px) calc(20px - 8px - var(--sp-2)); }
+      .hero-copy { grid-area: copy; display: flex; flex-direction: column; align-items: flex-start; }
+      .hero-title { display: block; font-size: calc(var(--dt-ui) * 56px); line-height: 1.07; font-weight: 700; letter-spacing: -0.005em; color: var(--color-body); }
+      .hero-tagline { display: block; margin-top: 16px; font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.4; font-weight: 500; color: var(--color-body); }
+      .page-1 .content-platter { width: 100%; max-width: 440px; margin-top: 40px; padding: 24px; }
+      .page-1 .buy-btn { min-height: 50px; font-size: calc(var(--dt-ui) * 17px); }
+
+      .page-2-inner { max-width: 1076px; margin: 0 auto; padding: 24px 48px 0; gap: 40px; }
+      .page-2-platter { max-width: 980px; padding: 56px 64px 64px; }
+      .page-2-header { padding: 0; }
+      .info-section-sublabel { font-size: max(calc(var(--dt-ui) * 40px), calc(var(--dt) * 19px)); line-height: 1.1; font-weight: 700; letter-spacing: 0; }
+      .blurb-scroll-wrapper { margin: 28px 0 0; }
+      .blurb-list { padding: 0; }
+      .blurb-intro { padding: 0; }
+      .blurb-intro-hook, .blurb-intro-body { max-width: 760px; }
+      .blurb-intro-hook { font-size: max(calc(var(--dt-ui) * 24px), calc(var(--dt) * 19px)); line-height: 1.33; margin-bottom: 16px; }
+      .blurb-intro-body { font-size: calc(var(--dt) * 19px); line-height: 1.55; margin-bottom: 16px; }
+      .blurb-intro-rule { margin: 40px 0 32px; }
+      .blurb-intro-lead { margin-bottom: 28px; font-size: max(calc(var(--dt-ui) * 28px), calc(var(--dt) * 17px)); line-height: 1.15; font-weight: 700; letter-spacing: 0; }
+      .blurb-items { display: grid; grid-template-columns: 1fr 1fr; column-gap: 56px; row-gap: 32px; }
+      .blurb-item { padding-bottom: 0; }
+      .blurb-icon, .blurb-icon-badge { width: 44px; }
+      .blurb-icon-badge { height: 44px; }
+      .blurb-icon-badge svg { width: 20px; height: 20px; }
+      .blurb-title { margin: 10px 0 4px; font-size: calc(var(--dt) * 17px); font-weight: 700; }
+      .blurb-body { font-size: calc(var(--dt) * 17px); line-height: 1.55; }
+      .counter-bar { max-width: 980px; padding: 48px 64px; }
+      .receipts { flex-direction: row; }
+      /* the label stays level with the words, and the faces and count with the name and the arrows */
+      .receipts-who { flex: 0 0 auto; width: 264px; padding-right: 48px; display: flex; flex-direction: column; align-items: flex-start; }
+      .receipts-faces { margin-top: auto; }
+      .receipts-label { margin-bottom: 18px; }
+      .receipts-faces { margin-bottom: 14px; }
+      .receipts-face, .receipts-more { height: 40px; min-width: 40px; }
+      .receipts-face { width: 40px; }
+      .receipts-face + .receipts-face, .receipts-more { margin-left: -10px; }
+      .receipts-more { padding: 0 9px; font-size: calc(var(--dt-ui) * 13px); }
+      .receipts-count { font-size: calc(var(--dt-ui) * 17px); }
+      .receipts-said { flex: 1; min-width: 0; margin-top: 0; padding: 0 0 0 48px; border-top: 0; border-left: 1px solid rgba(255, 255, 255, 0.28); }
+      .receipt-words { margin-bottom: 24px; }
+      .receipt-words p { font-size: max(calc(var(--dt-ui) * 24px), calc(var(--dt) * 19px)); line-height: 1.38; }
+      .receipt-by { min-height: 44px; padding-right: 112px; }
+      .receipt-name { font-size: calc(var(--dt-ui) * 17px); }
+      .receipt-from { font-size: calc(var(--dt-ui) * 15px); }
+      .receipts-step { width: 44px; height: 44px; }
+      .receipts-step::after { inset: 0; }
+      .receipts-step svg { width: 16px; height: 16px; }
+      .tagline-setup, .tagline-punch { font-size: max(calc(var(--dt-ui) * 28px), calc(var(--dt) * 17px)); line-height: 1.2; }
+      .tagline-setup { margin-bottom: 6px; }
+      .tagline-setup[lang] + .tagline-punch { margin-top: 6px; }
+
+      .about-page-inner { display: block; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; }
+      .about-platter, .about-page .counter-bar { max-width: 980px; margin: 0 auto; }
+      #about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+      .about-hero { height: 0; min-height: 100%; object-position: 50% 30%; }
+      .about-platter-body { padding: 56px 64px 64px; }
+      .about-name { font-size: max(calc(var(--dt-ui) * 40px), calc(var(--dt) * 17px)); line-height: 1.1; letter-spacing: 0; margin-bottom: 8px; }
+      .about-role { margin-bottom: 20px; }
+      .about-rule { margin-bottom: 28px; }
+      .about-bio { max-width: 640px; font-size: calc(var(--dt) * 17px); line-height: 1.6; margin-bottom: 16px; }
+      .faq-q { font-size: max(calc(var(--dt-ui) * 21px), calc(var(--dt) * 17px)); line-height: 1.3; margin-bottom: 8px; }
+      /* without the script every answer shows, two questions across, each answer level with its neighbour's; a third
+         starts the next row, under the first */
+      #faq-scroll:not(.faq-folds) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; column-gap: 56px; }
+      #faq-scroll:not(.faq-folds) > :nth-child(4n+1), #faq-scroll:not(.faq-folds) > :nth-child(4n+2) { grid-column: 1; }
+      #faq-scroll:not(.faq-folds) > :nth-child(4n+3), #faq-scroll:not(.faq-folds) > :nth-child(4n+4) { grid-column: 2; }
+      #faq-scroll:not(.faq-folds) > .faq-q:nth-child(n+5) { margin-top: 48px; }
+      .faq-a { margin-bottom: 0; }
+
+      /* the footer's line sits as far below the closing lines as the cards sit from one another */
+      .site-footer { max-width: 1076px; margin: 40px auto 0; padding: 0 48px 48px; }
+      .site-footer-inner {
+        max-width: none; flex-direction: row; justify-content: space-between; gap: 24px; text-align: left;
+        padding-top: 20px; border-top: 1px solid var(--footer-rule);
+      }
+      .site-footer-links a, .site-footer-giving a { padding: 14px 0; margin: -14px 0; }
+      .site-footer-links a:hover, .site-footer-giving a:hover { color: var(--color-body); }
+      /* the underline marks the words; the globe in front of the name stays clear of it */
+      .site-footer-links a:hover, .site-footer-giving a:hover .site-footer-name { text-decoration: underline; }
+      .site-footer-giving { display: inline; margin: 0; }
+      .site-footer-sep { display: inline; margin: 0 10px; opacity: 0.4; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+      }
+    }
+  </style>
+  <script>
+    // Dynamic Type: on iPhone and iPad the page's text follows the reader's text size setting. Their Body size
+    // over the default 17pt becomes --dt, measured again whenever the page comes back, as after a trip to Settings
+    (function () {
+      if (!(window.CSS && CSS.supports('font', '-apple-system-body') && CSS.supports('-webkit-touch-callout', 'none'))) return;
+      var root = document.documentElement;
+      function measure() {
+        var probe = document.createElement('span');
+        probe.style.font = '-apple-system-body';
+        root.appendChild(probe);
+        var size = parseFloat(getComputedStyle(probe).fontSize);
+        root.removeChild(probe);
+        if (size) root.style.setProperty('--dt', String(size / 17));
+      }
+      measure();
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) measure(); });
+    })();
+  </script>
+</head>
+<body>
+
+<div class="backdrop" aria-hidden="true"><picture><source media="(orientation: portrait)" srcset="./phnom-penh-tall.jpg"><img class="backdrop-photo" src="./phnom-penh-wide.jpg" alt="" decoding="async"></picture></div>
+
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="site-nav-title site-nav-home" href="#top">
+      <svg class="site-nav-mark" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M186.0 951.6C186.0 872.1 186.3 866.5 191.9 844.8C205.3 793.4 235.8 753.9 308.4 694.2C350.3 659.7 363.9 648.3 372.0 641.1C401.5 614.9 431.3 583.0 437.5 571.0C444.4 557.4 448.0 537.4 448.0 512.0C448.0 486.6 444.4 466.6 437.5 453.0C431.2 440.8 401.7 409.2 371.5 382.4C363.8 375.6 348.8 363.1 308.4 329.8C262.4 292.0 237.5 266.7 218.9 238.6C206.0 219.1 197.4 200.3 191.9 179.2C186.3 157.5 186.0 151.9 186.0 72.4L186.0 0.0L512.0 0.0L838.0 0.0L838.0 72.4C838.0 152.0 837.7 157.4 832.0 179.6C820.2 225.4 791.0 265.7 735.0 313.7C728.7 319.1 711.3 333.5 696.4 345.7C681.6 357.9 664.3 372.2 658.2 377.5C627.0 404.3 593.3 439.8 586.5 453.0C579.6 466.6 576.0 486.6 576.0 512.0C576.0 537.4 579.6 557.4 586.5 571.0C593.3 584.2 627.0 619.7 658.2 646.5C664.3 651.8 681.6 666.1 696.4 678.3C711.3 690.5 728.7 704.9 735.0 710.3C791.0 758.3 820.2 798.6 832.0 844.4C837.7 866.6 838.0 872.0 838.0 951.6L838.0 1024.0L512.0 1024.0L186.0 1024.0L186.0 951.6Z"/></svg>
+      <span class="site-nav-title-text">Nutrition, Invested</span>
+    </a>
+    <button class="site-nav-title site-nav-toggle" aria-label="Nutrition, Invested menu" aria-expanded="false" aria-controls="site-nav-links">
+      <svg class="site-nav-mark" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M186.0 951.6C186.0 872.1 186.3 866.5 191.9 844.8C205.3 793.4 235.8 753.9 308.4 694.2C350.3 659.7 363.9 648.3 372.0 641.1C401.5 614.9 431.3 583.0 437.5 571.0C444.4 557.4 448.0 537.4 448.0 512.0C448.0 486.6 444.4 466.6 437.5 453.0C431.2 440.8 401.7 409.2 371.5 382.4C363.8 375.6 348.8 363.1 308.4 329.8C262.4 292.0 237.5 266.7 218.9 238.6C206.0 219.1 197.4 200.3 191.9 179.2C186.3 157.5 186.0 151.9 186.0 72.4L186.0 0.0L512.0 0.0L838.0 0.0L838.0 72.4C838.0 152.0 837.7 157.4 832.0 179.6C820.2 225.4 791.0 265.7 735.0 313.7C728.7 319.1 711.3 333.5 696.4 345.7C681.6 357.9 664.3 372.2 658.2 377.5C627.0 404.3 593.3 439.8 586.5 453.0C579.6 466.6 576.0 486.6 576.0 512.0C576.0 537.4 579.6 557.4 586.5 571.0C593.3 584.2 627.0 619.7 658.2 646.5C664.3 651.8 681.6 666.1 696.4 678.3C711.3 690.5 728.7 704.9 735.0 710.3C791.0 758.3 820.2 798.6 832.0 844.4C837.7 866.6 838.0 872.0 838.0 951.6L838.0 1024.0L512.0 1024.0L186.0 1024.0L186.0 951.6Z"/></svg>
+      <span class="site-nav-title-text">Nutrition, Invested</span>
+      <svg class="site-nav-chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <ul id="site-nav-links" class="site-nav-links">
+      <li class="site-nav-top"><a href="#top">The Book</a></li>
+      <li><a href="#whats-inside">What's Inside</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#questions">Questions</a></li>
+      <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
+    </ul>
+    <span class="site-nav-buy-slot"><a class="site-nav-buy" href="#buy">Buy</a></span>
+  </div>
+</nav>
+<div class="menu-curtain" aria-hidden="true"></div>
+
+<main>
+<div id="slide-container" class="slide-container">
+
+  <section id="top" class="page page-1">
+    <div class="page-inner">
+
+      <div class="cover-wrapper">
+        <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system">
+          <span class="book"><img src="./cover-placeholder.svg" alt="Nutrition, Invested by Andrew Rios" width="832" height="1248" fetchpriority="high" decoding="async"></span>
+        </a>
+      </div>
+
+      <a href="https://read.amazon.com/kp/kshare?asin=B0F1RX4JWV&id=m63qwfvltfhkvpcw4t4djigtte&reshareId=NTSJ2YDH4KJ5RT2F1EXV&reshareChannel=system" class="preview-hint">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width:16px; height:16px;">
+          <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+          <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+        </svg>
+        Read a preview
+      </a>
+
+      <div class="hero-copy">
+      <p class="hero-title">Nutrition, Invested</p>
+      <p class="hero-tagline">A survival guide to food.<br>One plate. Five anchors. Ninety days.</p>
+      <div id="buy" class="content-platter">
+        <h1 class="headline">The Book<span class="divider" aria-hidden="true">—</span><span class="price">$9.99</span></h1>
+
+        <div class="buttons">
+          <a href="https://www.amazon.com/dp/B0F1RX4JWV" class="buy-btn primary">
+            <span style="display:flex; align-items:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </span>
+            <span>Buy on Amazon</span>
+          </a>
+          <a href="https://payhip.com/b/eBook-Nutrition-Invested" class="buy-btn secondary">
+            <span style="display:flex; align-items:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>
+              </svg>
+            </span>
+            <span>Buy on Payhip</span>
+          </a>
+        </div>
+
+        <div class="payment-section">
+          <p>Reads on Kindle, Apple Books &amp; Google Play Books</p>
+          <p class="book-facts">An evening's read, with a kit for the kitchen and more than&nbsp;200 sources at the back.</p>
+          <div style="font-size: var(--text-caption); color: var(--color-muted); font-weight: 500;">Accepted on Payhip</div>
+          <div class="payment-logos">
+            <img src="./applepay.svg" alt="Apple Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./googlepay.svg" alt="Google Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./paypal.svg" alt="PayPal" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./visa.svg" alt="Visa" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./mastercard.svg" alt="Mastercard" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./americanexpress.svg" alt="Amex" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="page page-2">
+    <div class="page-2-inner">
+
+      <div id="whats-inside" class="page-2-platter">
+        <header class="page-2-header">
+          <h2 id="whats-inside-heading" class="info-section-sublabel" tabindex="-1">What's Inside</h2>
+        </header>
+
+        <div id="blurb-wrapper" class="blurb-scroll-wrapper">
+          <div id="blurb-list" class="blurb-list">
+
+            <div class="blurb-intro">
+              <p class="blurb-intro-hook">At thirty I lived on cup noodles and two-for-one energy drinks, cheap at the register and expensive by two o'clock.</p>
+              <p class="blurb-intro-body">I learned better at the carts of Bangkok, Phnom Penh and Mexico City, where the cooks measured by hand: rice packed into the same small bowl and turned out in a dome, one chop off the grill, the next plate waiting.</p>
+              <p class="blurb-intro-body">Back home on a delivery route, I pulled out of the drive-thru line two cars from the speaker and built the plate the carts had taught me. Three weeks later lunch held me through the last stop, with gas to spare. The rest took longer: reading the back of a box, shopping in aisle order, cooking ahead.</p>
+              <p class="blurb-intro-body">No apps, no trackers, no meal plans. A notebook entry a week, and ninety days to see what it adds up to.</p>
+              <div class="blurb-intro-rule" aria-hidden="true"></div>
+              <h3 id="breakdown-heading" class="blurb-intro-lead">The Breakdown</h3>
+            </div>
+
+            <div class="blurb-items" role="list" aria-labelledby="breakdown-heading">
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Eat</span> <span class="blurb-body">Whole food with meat, fish or eggs at the center: five anchors, protein, carbohydrate, fat, color and water, on one plate. The seasonings and sauces, from curry paste to chipotle, make you want it again.</span></div>
+            </div>
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Measure</span> <span class="blurb-body">Portions without a scale or an app: a palm of protein, a cupped palm of cooked starch, a thumb of fat, a fist or two of color, about half the plate, set for a desk day, a training day or a hard shift.</span></div>
+            </div>
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Compound</span> <span class="blurb-body">Daily returns built for a tired Tuesday: breakfast and lunch on repeat, one Sunday batch, the same dinner for the whole house. Three plates keep coming back: grilled fish with pickled daikon, beef tacos with nopales, chicken with warm pita and beet-pink turnips.</span></div>
+            </div>
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Tune</span> <span class="blurb-body">The gut, movement and sleep: fiber eased in, strength twice a week, the phone across the room for the last hour. Coffee can make you sharper, but it can't give back the night you spent.</span></div>
+            </div>
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Supplement</span> <span class="blurb-body">Which bottles earn a place, and how to tell one is doing anything: one change at a time. Six bottles once came to three hundred dollars a month, and I couldn't tell which was working.</span></div>
+            </div>
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Recover</span> <span class="blurb-body">Back on the plate after a trip, a hard week or the morning after, and at restaurants and family tables without a speech. Don't wait for home, and don't wait for Monday.</span></div>
+            </div>
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Audit</span> <span class="blurb-body">What to ask your doctor to test, from A1c to vitamin D, and what to do when a number won't move, with pages on perimenopause and after fifty. More tubes aren't automatically more information.</span></div>
+            </div>
+
+            <div class="blurb-item" role="listitem">
+              <span class="blurb-icon" aria-hidden="true">
+                <span class="blurb-icon-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </span>
+              </span>
+              <div class="blurb-text"><span class="blurb-title">Carry</span> <span class="blurb-body">The ninety days on one page, a ten-item shopping list and a budget version, the cook times. The stories are mine. The science isn't, and the sources at the back say whose it is.</span></div>
+            </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- sample words, faces and numbers, for the design only: real quotes from readers who agreed to be shown, and the
+           true count, replace them before this goes live -->
+      <section id="receipts" class="counter-bar receipts" aria-labelledby="receipts-heading">
+        <div class="receipts-who">
+          <h2 id="receipts-heading" class="receipts-label">The Receipts</h2>
+          <div class="receipts-faces" aria-hidden="true">
+            <span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-face"></span><span class="receipts-more">+00</span>
+          </div>
+          <p class="receipts-count">00 investors in the market</p>
+        </div>
+        <div class="receipts-said">
+          <div class="receipts-track" tabindex="-1">
+            <figure class="receipt">
+              <blockquote class="receipt-words"><p>Sample quote. A reader's own words go here, with their permission.</p></blockquote>
+              <figcaption class="receipt-by"><span class="receipt-name">Reader's name</span> <span class="receipt-from">City, or what they do</span></figcaption>
+            </figure>
+            <figure class="receipt">
+              <blockquote class="receipt-words"><p>Sample quote. One or two sentences in the reader's words, about the book itself.</p></blockquote>
+              <figcaption class="receipt-by"><span class="receipt-name">Reader's name</span> <span class="receipt-from">City, or what they do</span></figcaption>
+            </figure>
+            <figure class="receipt">
+              <blockquote class="receipt-words"><p>Sample quote. Quotes of about this length keep the bar from jumping as they change.</p></blockquote>
+              <figcaption class="receipt-by"><span class="receipt-name">Reader's name</span> <span class="receipt-from">City, or what they do</span></figcaption>
+            </figure>
+          </div>
+          <div class="receipts-steps">
+            <button type="button" class="receipts-step" data-step="-1" aria-label="Previous quote"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M7.75 2 4 6l3.75 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="receipts-step" data-step="1" aria-label="Next quote"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <p class="receipts-said-now" aria-live="polite"></p>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // iPhone shows the pressed look (:active) only on a page that listens for touches
+    document.addEventListener('touchstart', function () {}, { passive: true });
+
+    // The first screen's height, taken once and again only when the width changes: in Chrome on
+    // iPhone the page grows taller as the toolbars slide away, and the cover mustn't grow with it
+    var screenWidth = 0;
+    function measureScreen() {
+      if (window.innerWidth === screenWidth) return;
+      screenWidth = window.innerWidth;
+      document.documentElement.style.setProperty('--first-screen', window.innerHeight + 'px');
+    }
+    measureScreen();
+    window.addEventListener('resize', measureScreen);
+
+    // The bar: clear while the page sits at the top, frosted once content scrolls beneath it
+    var siteNav = document.querySelector('.site-nav');
+    var navToggle = siteNav.querySelector('.site-nav-toggle');
+    function updateNav() { siteNav.classList.toggle('is-scrolled', window.scrollY > 0); }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+
+    // Buy waits while the card's own buy buttons are on screen, and steps into the bar once they've scrolled up past it.
+    // The first look is taken before anything is drawn, so nothing slides in or out as the page opens
+    var cardButtons = document.querySelector('#buy .buttons');
+    if (cardButtons && 'IntersectionObserver' in window) {
+      var setBuy = function (passed) { siteNav.classList.toggle('buy-away', !passed); };
+      // the room Buy takes in the bar, at whatever text size and width: how far it slides, and the desktop links with it
+      var buy = siteNav.querySelector('.site-nav-buy'), bar = siteNav.querySelector('.site-nav-inner');
+      var setRoom = function () { siteNav.style.setProperty('--buy-room', (parseFloat(getComputedStyle(buy).width) + (parseFloat(getComputedStyle(bar).columnGap) || 0)) + 'px'); };
+      setRoom();
+      if ('ResizeObserver' in window) { var roomWatch = new ResizeObserver(setRoom); roomWatch.observe(buy); roomWatch.observe(bar); }
+      setBuy(cardButtons.getBoundingClientRect().bottom <= siteNav.offsetHeight);
+      // the watch runs from under the bar to far below the screen, so a jump straight past the buttons still counts as passing them
+      new IntersectionObserver(function (entries) {
+        var e = entries[entries.length - 1];
+        setBuy(!e.isIntersecting && e.boundingClientRect.bottom <= e.rootBounds.top + 1);
+      }, { rootMargin: '-' + siteNav.offsetHeight + 'px 0px 100000px 0px' }).observe(cardButtons);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { siteNav.classList.add('buy-ready'); }); });
+    }
+
+    // Buy in the bar goes back to the book with its buttons beneath, the page as it opens, as The Book does. The jump is
+    // still to the card, so the keyboard carries on from its buttons, but while they're on the first screen the room kept
+    // above the card reaches past the top of the page. Where they aren't, a phone on its side, it lands on the card
+    var buyCard = document.getElementById('buy');
+    siteNav.querySelector('.site-nav-buy').addEventListener('click', function () {
+      var firstScreen = buyCard.querySelector('.buttons').getBoundingClientRect().bottom + window.scrollY <= window.innerHeight;
+      buyCard.style.scrollMarginTop = firstScreen ? '100vh' : '';
+    });
+
+    // On phones the title unfolds the links; choosing one, tapping elsewhere or Escape folds them away
+    function setMenu(open) {
+      siteNav.classList.toggle('menu-open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+    }
+    navToggle.addEventListener('click', function () { setMenu(!siteNav.classList.contains('menu-open')); });
+    // the veil closes the menu as the finger lifts, not as it lands: gone from under a finger still down,
+    // it would hand the lift to the link beneath
+    var curtain = document.querySelector('.menu-curtain');
+    document.addEventListener('pointerdown', function (e) { if (!siteNav.contains(e.target) && e.target !== curtain) setMenu(false); });
+    curtain.addEventListener('click', function () { setMenu(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && siteNav.classList.contains('menu-open')) { setMenu(false); navToggle.focus(); }
+    });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
+
+    // Each question becomes a row that opens its answer, with the menu's own chevron, on a phone and a desktop alike:
+    // a reader comes for one answer or two, not all four. Without the script every answer shows
+    var faq = document.getElementById('faq-scroll');
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var questions = [].map.call(faq.querySelectorAll('.faq-q'), function (q, i) {
+      var item = { q: q, answer: q.nextElementSibling, row: document.createElement('button'), words: document.createElement('span'), open: false };
+      var chevron = navToggle.querySelector('.site-nav-chevron').cloneNode(true);
+      chevron.setAttribute('class', 'faq-chevron');
+      item.answer.id = item.answer.id || 'faq-answer-' + (i + 1);
+      item.row.type = 'button';
+      item.row.className = 'faq-row';
+      item.row.setAttribute('aria-controls', item.answer.id);
+      item.row.setAttribute('aria-expanded', 'false');
+      item.row.append(item.words, chevron);
+      item.row.addEventListener('click', function () { setAnswer(item, !item.open, true); });
+      return item;
+    });
+    // the answer slides out from under its question and back, from wherever a quick second tap catches it;
+    // with Reduce Motion it simply shows
+    function setAnswer(item, open, slide) {
+      var a = item.answer;
+      item.open = open;
+      item.row.setAttribute('aria-expanded', String(open));
+      var from = a.hidden ? [0, '0px', 0] : [a.getBoundingClientRect().height, getComputedStyle(a).paddingBottom, getComputedStyle(a).opacity];
+      if (a.getAnimations) a.getAnimations().forEach(function (run) { run.cancel(); });
+      a.style.overflow = '';
+      a.hidden = false;
+      if (!slide || still.matches || !a.animate) { a.hidden = !open; return; }
+      var to = open ? [a.getBoundingClientRect().height, getComputedStyle(a).paddingBottom, 1] : [0, '0px', 0];
+      a.style.overflow = 'hidden';
+      var run = a.animate([
+        { height: from[0] + 'px', paddingBottom: from[1], opacity: from[2] },
+        { height: to[0] + 'px', paddingBottom: to[1], opacity: to[2] }
+      ], { duration: 300, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'forwards' });
+      run.onfinish = function () { a.hidden = !open; a.style.overflow = ''; run.cancel(); };
+    }
+    // folding moves each question's words into its row and the row into the heading, and puts each answer away
+    faq.classList.add('faq-folds');
+    questions.forEach(function (item) {
+      while (item.q.firstChild) item.words.appendChild(item.q.firstChild);
+      item.q.appendChild(item.row);
+      item.answer.hidden = true;
+    });
+    // a link to a question opens it at once, so the jump lands on its answer, and its row takes the focus
+    function reveal(q) {
+      var item = questions.filter(function (it) { return it.q === q; })[0];
+      if (!item) return q;
+      setAnswer(item, true, false);
+      return item.row;
+    }
+    function askedFor() {
+      var q = location.hash && document.getElementById(location.hash.slice(1));
+      if (q && q.classList.contains('faq-q')) reveal(q);
+    }
+    askedFor();
+    window.addEventListener('hashchange', askedFor);
+
+    // A link to a section, from the bar or the footer, also gives its heading focus, or at the top the cover,
+    // so VoiceOver and the keyboard land there too; a question taking focus itself is its own landing
+    document.querySelectorAll('.site-nav a, .site-footer a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        setMenu(false);
+        var href = link.getAttribute('href');
+        var section = href.charAt(0) === '#' && document.querySelector(href);
+        var landing = section && (section.matches('h3[tabindex]') ? reveal(section) : section.querySelector('h2[tabindex], .cover-wrapper a'));
+        // once the jump is done; the jump itself leaves focus nowhere. iPhones would ring it even after a tap
+        if (landing) setTimeout(function () {
+          if (e.detail) landing.classList.add('landed');
+          landing.focus({ preventScroll: true });
+        });
+      });
+    });
+    // the top of the page is the page itself, and Buy goes back to it: a jump to either leaves the address plain,
+    // nutritioninvested.com, with no #top or #buy on it, and so does a link to them from elsewhere; the jump, where it
+    // lands, the keyboard's next stop and the step in Back stay as they were
+    function plainAddress() {
+      if (location.hash === '#top' || location.hash === '#buy') history.replaceState(history.state, '', location.pathname + location.search);
+    }
+    window.addEventListener('hashchange', plainAddress);
+    plainAddress();
+    // the mark goes when focus moves on in the page; a trip to another app or tab keeps focus there and brings it back
+    document.addEventListener('focusout', function (e) {
+      if (document.activeElement !== e.target) e.target.classList.remove('landed');
+    });
+
+    // Instagram, from About and from the footer, opens in its app on phones, where messages are; without the app, the web page.
+    // an iPhone does that with the plain link alone; asking it for the app by name makes Safari ask first and leaves
+    // phones without the app nowhere, so only Android is asked
+    document.querySelectorAll('#about-social, .site-footer-links a[href*="instagram.com"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var ua = navigator.userAgent;
+        var webUrl = this.href;
+        if (/android/i.test(ua)) {
+          e.preventDefault();
+          window.location.href = 'intent://www.instagram.com/whatsupandrewriosx/#Intent;package=com.instagram.android;scheme=https;S.browser_fallback_url=' + encodeURIComponent(webUrl) + ';end';
+        }
+      });
+    });
+
+    // The Receipts: the arrows step through the quotes, round from the last to the first, and a finger can swipe them.
+    // The quote an arrow brings in is read to VoiceOver, which can also read them all in turn; with Reduce Motion they
+    // simply change
+    var receipts = document.getElementById('receipts');
+    if (receipts) {
+      var track = receipts.querySelector('.receipts-track'), quotes = track.children, readOut = receipts.querySelector('.receipts-said-now');
+      if (quotes.length < 2) receipts.querySelector('.receipts-steps').style.display = 'none';
+      // one quote and the gap after it, the distance each step travels
+      var span = function () { return quotes[1].offsetLeft - quotes[0].offsetLeft; };
+      receipts.querySelectorAll('.receipts-step').forEach(function (step) {
+        step.addEventListener('click', function () {
+          var to = (Math.round(track.scrollLeft / span()) + Number(step.dataset.step) + quotes.length) % quotes.length;
+          track.scrollTo({ left: to * span(), behavior: still.matches ? 'auto' : 'smooth' });
+          readOut.textContent = [].map.call(quotes[to].querySelectorAll('p, .receipt-name, .receipt-from'), function (el) { return el.textContent; }).join(', ');
+        });
+      });
+    }
+
+  });
+</script>
+
+<div id="about-page" class="about-page">
+  <div class="about-page-inner">
+    <div id="about" class="about-platter">
+      <img class="about-hero" src="./author.jpg" alt="Andrew Rios at Angkor Wat in Siem Reap, Cambodia"
+           width="640" height="1137" fetchpriority="low" decoding="async"
+           onerror="this.remove();">
+      <div id="about-body" class="about-platter-body">
+      <div id="about-id" class="about-id">
+        <h2 class="about-name" tabindex="-1">Andrew Rios</h2>
+        <p class="about-role">Author</p>
+        <a id="about-social" href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener" class="about-social-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+          @whatsupandrewriosx
+        </a>
+      </div>
+      <div class="about-rule" aria-hidden="true"></div>
+      <div id="about-bio-wrap" class="about-bio-wrap">
+      <div id="about-bio-scroll" class="about-bio-scroll">
+      <div id="about-bio-content" class="about-bio-content">
+      <p class="about-bio">Andrew Rios is a traveler who kept notes. He didn't study nutrition. He took it apart.</p>
+      <p class="about-bio">Before food was ever the subject, he spent two years pushing a wheelchair to a window every morning and counting another man's pills into a paper cup, eleven of them. The man in the chair told him what he should have eaten.</p>
+      <p class="about-bio">Raised in L.A.'s San Fernando Valley on family pozole and a boulevard of drive-thrus. A valet stand in Death Valley: a paycheck with nowhere to go, nights on a screen watching strangers eight thousand miles away live out of one bag. His own life already fit in one. He kept watching. A teaching certificate, then the one-way ticket. Two years across Southeast Asia, where eating well wasn't a project. Just dinner.</p>
+      <p class="about-bio">Home, onto delivery routes. Every paycheck bought one new food, and every break went to reading up on it.</p>
+      <p class="about-bio">Nutrition, Invested is the notes: eight thousand miles of them, written between bites, then pieced together.</p>
+      <p class="about-bio">His bag is still by the door.</p>
+      </div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="faq-page" class="about-page">
+  <div class="about-page-inner">
+    <div id="questions" class="about-platter">
+      <div class="about-platter-body">
+      <h2 class="about-name" tabindex="-1">Questions</h2>
+      <p class="about-role">The fine print</p>
+      <div class="about-rule" aria-hidden="true"></div>
+      <div id="faq-wrap" class="about-bio-wrap">
+      <div id="faq-scroll" class="about-bio-scroll">
+      <h3 class="faq-q">What do I get?</h3>
+      <p class="about-bio faq-a">On Payhip you get both files, PDF and EPUB, the moment you check out. The EPUB goes into the Kindle app, Apple Books or Google Play Books. The PDF opens on anything with a screen. On Amazon it lands in your Kindle library, ready on a Kindle or in the app.</p>
+      <h3 class="faq-q">Is this medical advice?</h3>
+      <p class="about-bio faq-a">No. It's notes from the road, not a clinic's protocol. Diabetes, kidney disease, a heart condition, a pregnancy, a diet your doctor wrote down: any of those, and the book goes to the doctor before anything changes on your plate or in your cabinet.</p>
+      <h3 class="faq-q">Why ninety days?</h3>
+      <p class="about-bio faq-a">Because ninety days after my first blood draw, I was back in the same lab chair and the numbers had moved. Vitamin D and A1c take about that long to settle, and by then the notebook holds thirteen weekly entries, enough to draw a line. Day ninety closes the quarter.</p>
+      <h3 class="faq-q">Do I need a blood test?</h3>
+      <p class="about-bio faq-a">No. The plate and the notebook run without one. If your doctor agrees a panel is due, the book covers what to ask for and how to read the results.</p>
+      <h3 id="humane-accord" class="faq-q" tabindex="-1">What's the Humane Accord Initiative?</h3>
+      <p class="about-bio faq-a">It's my pledge. Health doesn't stop at the plate; our phones want a portion too: the feed that asks for one more swipe, the ping that pulls us back, the scroll with no bottom. Every year, I put 1% of each sale into organizations teaching people to read the recipe and invest their time.</p>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="about-page">
+  <div class="about-page-inner">
+    <div class="counter-bar">
+      <p class="counter-bar-tagline">
+        <span class="tagline-setup" lang="th">กินข้าวยัง</span>
+        <span class="tagline-setup" lang="km">ញ៉ាំបាយហើយឬនៅ</span>
+        <span class="tagline-setup" lang="vi">Ăn cơm chưa?</span>
+        <span class="tagline-setup" lang="es">¿Ya comiste?</span>
+        <span class="tagline-punch">Eaten yet?</span>
+      </p>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><a href="#humane-accord"><img class="site-footer-globe" src="./globe-americas.png" alt="" width="64" height="64" loading="lazy" decoding="async"> <span class="site-footer-name">The Humane Accord Initiative</span></a></span></p>
+    <ul class="site-footer-links">
+      <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
+      <li><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>
