@@ -495,16 +495,18 @@
     .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
     /* the stores' names stay whole, and the line evens out where it wraps */
     .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; text-wrap: balance; }
-    /* the book's facts sit right under the buttons as two short items, each behind a drawn mark in the tint green that
-       grows with the text, one item a line on the narrowest phones and at larger text sizes. They and "Reads on" are
-       about the book, so they're one group, 10 points apart as drawn: the facts' taller line takes 3 off the 8-point gap */
-    .payment-section .book-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; list-style: none; margin-bottom: -3px;
-      font-size: var(--text-label); font-weight: 600; color: var(--color-body); letter-spacing: var(--track-normal); line-height: 1.4; }
-    .book-facts li { display: inline-flex; align-items: center; gap: 0.45em; }
-    .book-facts svg { width: 1.125em; height: 1.125em; flex-shrink: 0; color: var(--color-tint); }
+    /* "Reads on" and the book's facts are about the book, so they're one group under the buttons, 10 points apart as
+       drawn: the facts' marks stand a little taller than the words, which takes 2 off the 8-point gap */
+    .payment-section .reads-on { margin-bottom: -2px; }
+    /* the facts as two short items in the fine print's own grey, each behind a drawn mark in the same grey that grows
+       with the text, so nothing under the buttons adds colour; one item a line only where the line can't hold both */
+    .payment-section .book-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; list-style: none; margin-bottom: 6px;
+      font-size: var(--text-caption); font-weight: 500; color: var(--color-muted); letter-spacing: var(--track-normal); line-height: 1.4; }
+    .book-facts li { display: inline-flex; align-items: center; gap: 0.4em; }
+    .book-facts svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
     /* "Accepted on Payhip" and its logos are one group below.
        Edge to edge as drawn, the lines inside a group sit 10 points apart and the groups about 18, near the card's foot:
-       that takes 6 points under "Reads on" and 2 more over the logos, on top of the 8-point gap */
+       that takes 6 points under the facts and 2 more over the logos, on top of the 8-point gap */
     /* each mark gets the same space, so the wide wordmarks don't outweigh the rest; faded to the grey of the text above.
        Each box fits its mark, so the row centres on what's drawn */
     .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; opacity: 0.57; margin-top: 2px; }
@@ -821,11 +823,11 @@
         </div>
 
         <div class="payment-section">
+          <p class="reads-on">Reads on Kindle, Apple&nbsp;Books &amp; Google&nbsp;Play&nbsp;Books</p>
           <ul class="book-facts" role="list">
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>An evening's read</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></svg>200+ citations</li>
           </ul>
-          <p>Reads on Kindle, Apple&nbsp;Books &amp; Google&nbsp;Play&nbsp;Books</p>
           <div style="font-size: var(--text-caption); color: var(--color-muted); font-weight: 500;">Accepted on Payhip</div>
           <div class="payment-logos">
             <img src="./applepay.svg" alt="Apple Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
