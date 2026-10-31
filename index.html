@@ -557,6 +557,10 @@
        the lines get the height those scripts need, and the gap stays above the English line alone */
     .tagline-setup[lang] { line-height: 1.5; margin-bottom: 0; }
     .tagline-setup[lang] + .tagline-punch { margin-top: 4px; }
+    /* What's Inside ends as the book does, on those lines, in the card's own ink */
+    .blurb-close-rule { margin: 24px 0 20px; }
+    .blurb-close { text-align: center; color: var(--color-body); }
+    .blurb-close .tagline-punch { color: inherit; }
 
     .site-footer { padding: 40px var(--sp-3) max(calc(var(--safe-bottom) + 32px), 40px); }
     .site-footer-inner {
@@ -675,6 +679,7 @@
       .tagline-setup, .tagline-punch { font-size: max(calc(var(--dt-ui) * 28px), calc(var(--dt) * 17px)); line-height: 1.2; }
       .tagline-setup { margin-bottom: 6px; }
       .tagline-setup[lang] + .tagline-punch { margin-top: 6px; }
+      .blurb-close-rule { margin: 48px 0 40px; }
 
       .about-page-inner { display: block; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; }
       .about-platter { max-width: 980px; margin: 0 auto; }
@@ -927,17 +932,23 @@
 
             </div>
 
+            <div class="blurb-intro-rule blurb-close-rule" aria-hidden="true"></div>
+            <p class="blurb-close">
+              <span class="tagline-setup" lang="th">กินข้าวยัง</span>
+              <span class="tagline-setup" lang="km">ញ៉ាំបាយហើយឬនៅ</span>
+              <span class="tagline-setup" lang="vi">Ăn cơm chưa?</span>
+              <span class="tagline-setup" lang="es">¿Ya comiste?</span>
+              <span class="tagline-punch">Eaten yet?</span>
+            </p>
+
           </div>
         </div>
       </div>
 
       <footer id="counter-bar" class="counter-bar">
         <p class="counter-bar-tagline">
-          <span class="tagline-setup" lang="th">กินข้าวยัง</span>
-          <span class="tagline-setup" lang="km">ញ៉ាំបាយហើយឬនៅ</span>
-          <span class="tagline-setup" lang="vi">Ăn cơm chưa?</span>
-          <span class="tagline-setup" lang="es">¿Ya comiste?</span>
-          <span class="tagline-punch">Eaten yet?</span>
+          <span class="tagline-setup">The market opens every morning.</span>
+          <span class="tagline-punch">Show up.</span>
         </p>
       </footer>
 
