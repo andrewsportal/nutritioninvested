@@ -557,9 +557,9 @@
        the lines get the height those scripts need, and the gap stays above the English line alone */
     .tagline-setup[lang] { line-height: 1.5; margin-bottom: 0; }
     .tagline-setup[lang] + .tagline-punch { margin-top: 4px; }
-    /* the story ends on the question the carts asked, in their languages, as the book ends on it: part of the story,
-       set with its paragraphs, the English as heavy as the opening line */
-    .blurb-intro-close { color: var(--color-body); margin-bottom: var(--sp-2); }
+    /* the story ends on the question the carts asked, in their languages, as the book ends on it: centred, a beat apart
+       from the paragraphs with even room above and below, the English as heavy as the opening line */
+    .blurb-intro-close { color: var(--color-body); text-align: center; margin: 24px 0; }
     .blurb-intro-close .tagline-punch { color: inherit; font-weight: 600; }
 
     .site-footer { padding: 40px var(--sp-3) max(calc(var(--safe-bottom) + 32px), 40px); }
@@ -679,7 +679,9 @@
       .tagline-setup, .tagline-punch { font-size: max(calc(var(--dt-ui) * 28px), calc(var(--dt) * 17px)); line-height: 1.2; }
       .tagline-setup { margin-bottom: 6px; }
       .tagline-setup[lang] + .tagline-punch { margin-top: 6px; }
-      .blurb-intro-close .tagline-setup, .blurb-intro-close .tagline-punch { font-size: calc(var(--dt) * 19px); line-height: 1.55; }
+      /* on a wide screen at the opening line's size, so the story starts and ends at one weight */
+      .blurb-intro-close { margin: 40px 0; }
+      .blurb-intro-close .tagline-setup, .blurb-intro-close .tagline-punch { font-size: max(calc(var(--dt-ui) * 24px), calc(var(--dt) * 19px)); line-height: 1.5; }
       .blurb-intro-close .tagline-setup[lang] + .tagline-punch { margin-top: 2px; }
 
       .about-page-inner { display: block; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; }
