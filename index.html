@@ -557,10 +557,10 @@
        the lines get the height those scripts need, and the gap stays above the English line alone */
     .tagline-setup[lang] { line-height: 1.5; margin-bottom: 0; }
     .tagline-setup[lang] + .tagline-punch { margin-top: 4px; }
-    /* What's Inside ends as the book does, on those lines, in the card's own ink */
-    .blurb-close-rule { margin: 24px 0 20px; }
-    .blurb-close { text-align: center; color: var(--color-body); }
-    .blurb-close .tagline-punch { color: inherit; }
+    /* the story ends on the question the carts asked, in their languages, as the book ends on it: part of the story,
+       set with its paragraphs, the English as heavy as the opening line */
+    .blurb-intro-close { color: var(--color-body); margin-bottom: var(--sp-2); }
+    .blurb-intro-close .tagline-punch { color: inherit; font-weight: 600; }
 
     .site-footer { padding: 40px var(--sp-3) max(calc(var(--safe-bottom) + 32px), 40px); }
     .site-footer-inner {
@@ -679,7 +679,8 @@
       .tagline-setup, .tagline-punch { font-size: max(calc(var(--dt-ui) * 28px), calc(var(--dt) * 17px)); line-height: 1.2; }
       .tagline-setup { margin-bottom: 6px; }
       .tagline-setup[lang] + .tagline-punch { margin-top: 6px; }
-      .blurb-close-rule { margin: 48px 0 40px; }
+      .blurb-intro-close .tagline-setup, .blurb-intro-close .tagline-punch { font-size: calc(var(--dt) * 19px); line-height: 1.55; }
+      .blurb-intro-close .tagline-setup[lang] + .tagline-punch { margin-top: 2px; }
 
       .about-page-inner { display: block; max-width: 1076px; margin: 0 auto; padding: 40px 48px 0; }
       .about-platter { max-width: 980px; margin: 0 auto; }
@@ -852,6 +853,13 @@
               <p class="blurb-intro-body">I learned better at the carts of Bangkok, Phnom Penh and Mexico City, where the cooks measured by hand: rice packed into the same small bowl and turned out in a dome, one chop off the grill, the next plate waiting.</p>
               <p class="blurb-intro-body">Back home on a delivery route, I pulled out of the drive-thru line two cars from the speaker and built the plate the carts had taught me. Three weeks later lunch held me through the last stop, with gas to spare. The rest took longer: reading the back of a box, shopping in aisle order, cooking ahead.</p>
               <p class="blurb-intro-body">No apps, no trackers, no meal plans. A notebook entry a week, and ninety days to see what it adds up to.</p>
+              <p class="blurb-intro-close">
+                <span class="tagline-setup" lang="th">กินข้าวยัง</span>
+                <span class="tagline-setup" lang="km">ញ៉ាំបាយហើយឬនៅ</span>
+                <span class="tagline-setup" lang="vi">Ăn cơm chưa?</span>
+                <span class="tagline-setup" lang="es">¿Ya comiste?</span>
+                <span class="tagline-punch">Eaten yet?</span>
+              </p>
               <div class="blurb-intro-rule" aria-hidden="true"></div>
               <h3 id="breakdown-heading" class="blurb-intro-lead">The Breakdown</h3>
             </div>
@@ -931,15 +939,6 @@
             </div>
 
             </div>
-
-            <div class="blurb-intro-rule blurb-close-rule" aria-hidden="true"></div>
-            <p class="blurb-close">
-              <span class="tagline-setup" lang="th">กินข้าวยัง</span>
-              <span class="tagline-setup" lang="km">ញ៉ាំបាយហើយឬនៅ</span>
-              <span class="tagline-setup" lang="vi">Ăn cơm chưa?</span>
-              <span class="tagline-setup" lang="es">¿Ya comiste?</span>
-              <span class="tagline-punch">Eaten yet?</span>
-            </p>
 
           </div>
         </div>
