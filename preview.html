@@ -118,6 +118,28 @@
     }
     .site-nav-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .site-nav-mark { width: 16px; height: 16px; flex-shrink: 0; }
+    /* Sol y luna, as on the main page, but here in the bar beside Buy: the reading page has no menu, and the bar stays at
+       hand down the chapter, where a reader finds the page too bright or too dark. The page's mode lit, the other faint;
+       the pair keeps to Buy, its sun's own margin standing in for the gap after the title. Where the bar can't hold the
+       whole title beside both, on the narrowest phones or at large text, only the faint one shows, a tap away; at the
+       very largest text on a small phone the title keeps the bar, and the main page's menu keeps the pair */
+    .site-nav-title { margin-right: auto; }
+    .theme-choice-pair { display: none; }
+    .theme-ready .theme-choice-pair { display: flex; flex-shrink: 0; margin: 0 -8px 0 -10px; }
+    .theme-choice-pair button {
+      display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0;
+      border: 0; background: none; color: var(--color-body); cursor: pointer; -webkit-appearance: none; appearance: none;
+    }
+    .sol-y-luna {
+      display: block; width: 24px; height: 24px; background: currentColor; opacity: 0.32; transition: opacity 0.2s ease;
+      -webkit-mask: url(./sol.png) center / contain no-repeat; mask: url(./sol.png) center / contain no-repeat;
+    }
+    .sol-y-luna.luna { width: 21px; height: 21px; -webkit-mask-image: url(./luna.png); mask-image: url(./luna.png); }
+    .theme-choice-pair button[aria-pressed="true"] .sol-y-luna { opacity: 1; }
+    .theme-choice-pair button:active .sol-y-luna { opacity: 0.6; }
+    @media (max-width: 374px) { .theme-choice-pair button[aria-pressed="true"] { display: none; } }
+    .pair-tight .theme-choice-pair button[aria-pressed="true"] { display: none; }
+    .pair-none .theme-choice-pair { display: none; }
     .site-nav-buy {
       position: relative; display: inline-flex; align-items: center; flex-shrink: 0; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
       background: var(--color-accent); color: var(--color-white); font-size: calc(var(--dt-ui) * 13px); font-weight: 600;
@@ -142,6 +164,10 @@
       .site-nav-inner { max-width: 1076px; margin: 0 auto; padding: 0 48px; }
       .site-nav-title { padding: 10px 0; font-size: calc(var(--dt-ui) * 19px); }
       .site-nav.buy-away .site-nav-buy { translate: calc(100% + 32px) 0; }
+      .theme-ready .theme-choice-pair { margin: 0 4px 0 0; }
+      .theme-choice-pair button { width: 36px; }
+      .sol-y-luna { width: 22px; height: 22px; }
+      .sol-y-luna.luna { width: 19px; height: 19px; }
     }
 
     /* The reading column: about 65 characters a line, the width a printed page holds, in whatever size the reader reads */
@@ -204,13 +230,35 @@
     .buy-btn.primary { background: var(--color-accent); color: var(--color-white); border-color: transparent; box-shadow: 0 4px 18px rgba(var(--accent-rgb), 0.32), 0 2px 6px rgba(0,0,0,0.10); }
     .buy-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
     .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
-    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
-    .payment-accepted { font-size: var(--text-caption); color: var(--color-muted); font-weight: 500; }
-    .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; opacity: 0.57; margin-top: 2px; }
-    .payment-logos img { width: auto; max-width: 22px; height: 12px; object-fit: contain; display: block; -webkit-user-drag: none; }
+    /* the stores' names stay whole, and the line evens out where it wraps */
+    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; text-wrap: balance; }
+    /* Payhip's ways to pay sit right under its button: the words and the logos on one line, the logos kept together as
+       one unit that drops beneath the words, centred, where the line can't hold both. Edge to edge as drawn, the row
+       sits 14 points under the buttons, clear of the Payhip button's shadow and wider than the 8 between the two
+       buttons, so it reads as that button's fine print, and 24 over "Reads on": the widest gap under the buttons, so
+       the book's details read as their own closing group */
+    .payment-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; margin: 5px 0 11px;
+      font-size: var(--text-caption); color: var(--color-muted); font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; }
+    /* "Reads on" and the book's facts are about the book, so they close the card as one group, 10 points apart as
+       drawn: the facts' marks stand a little taller than the words, which takes 2 off the 8-point gap */
+    .payment-section .reads-on { margin-bottom: -2px; }
+    /* the facts as two short items in the fine print's own grey, each behind a drawn mark in the same grey that grows
+       with the text, so nothing under the buttons adds colour; one item a line only where the line can't hold both.
+       As the card's last line, it keeps the room under it that the card's foot has always had */
+    .payment-section .book-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; list-style: none; margin-bottom: -1px;
+      font-size: var(--text-caption); font-weight: 500; color: var(--color-muted); letter-spacing: var(--track-normal); line-height: 1.4; }
+    .book-facts li { display: inline-flex; align-items: center; gap: 0.4em; }
+    .book-facts svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
+    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest, 14 points tall so Visa's letters stand
+       as tall as the words' capitals; faded to the grey of the words beside them. Each box fits its mark, so the row
+       centres on what's drawn */
+    .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: nowrap; opacity: 0.57; }
+    .payment-logos img { width: auto; max-width: 26px; height: 14px; object-fit: contain; display: block; -webkit-user-drag: none; }
 
     @media (hover: hover) and (pointer: fine) {
       .site-nav-buy:hover { background: var(--color-accent-hover); }
+      .theme-choice-pair button:hover .sol-y-luna { opacity: 0.6; }
+      .theme-choice-pair button[aria-pressed="true"]:hover .sol-y-luna { opacity: 1; }
       .buy-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06); }
       .buy-btn.primary:hover { box-shadow: 0 6px 22px rgba(var(--accent-rgb), 0.38), 0 2px 8px rgba(0,0,0,0.10); }
     }
@@ -278,6 +326,7 @@
       <svg class="site-nav-mark" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M186.0 951.6C186.0 872.1 186.3 866.5 191.9 844.8C205.3 793.4 235.8 753.9 308.4 694.2C350.3 659.7 363.9 648.3 372.0 641.1C401.5 614.9 431.3 583.0 437.5 571.0C444.4 557.4 448.0 537.4 448.0 512.0C448.0 486.6 444.4 466.6 437.5 453.0C431.2 440.8 401.7 409.2 371.5 382.4C363.8 375.6 348.8 363.1 308.4 329.8C262.4 292.0 237.5 266.7 218.9 238.6C206.0 219.1 197.4 200.3 191.9 179.2C186.3 157.5 186.0 151.9 186.0 72.4L186.0 0.0L512.0 0.0L838.0 0.0L838.0 72.4C838.0 152.0 837.7 157.4 832.0 179.6C820.2 225.4 791.0 265.7 735.0 313.7C728.7 319.1 711.3 333.5 696.4 345.7C681.6 357.9 664.3 372.2 658.2 377.5C627.0 404.3 593.3 439.8 586.5 453.0C579.6 466.6 576.0 486.6 576.0 512.0C576.0 537.4 579.6 557.4 586.5 571.0C593.3 584.2 627.0 619.7 658.2 646.5C664.3 651.8 681.6 666.1 696.4 678.3C711.3 690.5 728.7 704.9 735.0 710.3C791.0 758.3 820.2 798.6 832.0 844.4C837.7 866.6 838.0 872.0 838.0 951.6L838.0 1024.0L512.0 1024.0L186.0 1024.0L186.0 951.6Z"/></svg>
       <span>Nutrition, Invested</span>
     </a>
+    <span class="theme-choice-pair" role="group" aria-label="Appearance"><button type="button" value="light" aria-label="Light" aria-pressed="false"><span class="sol-y-luna sol"></span></button><button type="button" value="dark" aria-label="Dark" aria-pressed="false"><span class="sol-y-luna luna"></span></button></span>
     <span class="site-nav-buy-slot"><a class="site-nav-buy" href="#keep-reading">Buy</a></span>
   </div>
 </nav>
@@ -336,16 +385,22 @@
           </a>
       </div>
       <div class="payment-section">
-        <p>Reads on Kindle, Apple Books &amp; Google Play Books</p>
-        <div class="payment-accepted">Accepted on Payhip</div>
-        <div class="payment-logos">
-          <img src="./applepay.svg" alt="Apple Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+        <div class="payment-row">
+          <span>Payhip accepts:</span>
+          <div class="payment-logos">
+            <img src="./applepay.svg" alt="Apple Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
             <img src="./googlepay.svg" alt="Google Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
             <img src="./paypal.svg" alt="PayPal" width="22" height="12" decoding="async" onerror="this.style.display='none'">
             <img src="./visa.svg" alt="Visa" width="22" height="12" decoding="async" onerror="this.style.display='none'">
             <img src="./mastercard.svg" alt="Mastercard" width="22" height="12" decoding="async" onerror="this.style.display='none'">
             <img src="./americanexpress.svg" alt="Amex" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+          </div>
         </div>
+        <p class="reads-on">Reads on Kindle, Apple&nbsp;Books &amp; Google&nbsp;Play&nbsp;Books</p>
+        <ul class="book-facts" role="list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>An evening's read</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></svg>200+ citations</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -368,6 +423,30 @@
       new IntersectionObserver(function (entries) { setAway(entries[entries.length - 1].isIntersecting); },
         { rootMargin: '-' + nav.offsetHeight + 'px 0px 0px 0px' }).observe(cardButtons);
       requestAnimationFrame(function () { requestAnimationFrame(function () { nav.classList.add('buy-ready'); }); });
+    }
+
+    // Sol y luna: the page's mode lit, the other a tap away; choosing the phone's own mode hands the page back to the
+    // phone. Where the title would be cut short beside both, only the faint one stays, and where even that would cut
+    // it, neither; measured again as the text size or the window changes
+    var phoneDark = window.matchMedia('(prefers-color-scheme: dark)');
+    var themeButtons = [].slice.call(document.querySelectorAll('.theme-choice-pair button'));
+    var titleWords = document.querySelector('.site-nav-title span');
+    function themeNow() { return document.documentElement.getAttribute('data-theme') || (phoneDark.matches ? 'dark' : 'light'); }
+    function themeFit() {
+      var cut = function () { return titleWords.scrollWidth > titleWords.clientWidth + 1; };
+      nav.classList.remove('pair-tight', 'pair-none');
+      if (cut()) nav.classList.add('pair-tight');
+      if (cut()) nav.classList.add('pair-none');
+    }
+    function themeMark() { themeButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.value === themeNow())); }); themeFit(); }
+    if (window.setTheme && themeButtons.length) {
+      themeButtons.forEach(function (b) {
+        b.addEventListener('click', function () { window.setTheme(b.value === (phoneDark.matches ? 'dark' : 'light') ? '' : b.value); themeMark(); });
+      });
+      phoneDark.addEventListener('change', themeMark);
+      window.addEventListener('resize', themeFit);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) requestAnimationFrame(themeFit); });
+      themeMark();
     }
   })();
 </script>
