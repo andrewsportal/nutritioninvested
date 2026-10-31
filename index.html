@@ -296,27 +296,21 @@
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
 
-    /* A photograph behind the page: a cook in a wide straw hat at a market stall, ladling from a wok between the pots,
-       in black and white. On a screen held upright it's the upright crop, from the top of the hat down past the big pot
-       in front, anchored to its top, so the book's cover stands over the cook: the face behind it, the hat rising above
-       it. On the biggest iPads held upright it sits centred instead, which moves the face clear of the cover; anchored
-       to its top, the cover's edge would cut it there. On a wide screen it's the stall from its top left corner,
-       anchored to its top, so the face sits beside the cover, clear of its edge; on a phone turned on its side it sits
-       on its foot, so the face is clear of the cover or off the screen, never cut by the cover's edge. It stays put
-       under everything, the cards stand solid over it, and it shows faintly through the page's own colour, so it sets
-       the place and doesn't ask to be looked at. Safari on an iPhone won't draw a fixed layer past the top of its
-       bottom toolbar, wherever the toolbar has got to, and shows only the page's colour behind it; so the photograph is
-       as tall as the screen Safari leaves with its toolbar at full size, the smallest it ever leaves, which keeps it
-       clear of the toolbar at any size and holds it still as the toolbar grows and shrinks. On a phone it fades into
-       the page's colour over its last stretch on a smootherstep curve, flat at both ends, so the fade has no corner of
-       its own where it starts or lands. The picture inside keeps the whole screen's height, so it doesn't swell and
-       shrink with the toolbar either. On the dark page it shows a little stronger */
+    /* A photograph behind the page: a cook at a floating market seen from above, grilling fish between the boats, in
+       black and white; the upright crop for a screen held upright, and otherwise the whole frame, anchored a little
+       above its middle so the row of fish stays in view. It stays put under everything, the cards stand solid over it,
+       and it shows faintly through the page's own colour, so it sets the place and doesn't ask to be looked at. Safari
+       on an iPhone won't draw a fixed layer past the top of its bottom toolbar, wherever the toolbar has got to, and
+       shows only the page's colour behind it; so the photograph is as tall as the screen Safari leaves with its toolbar
+       at full size, the smallest it ever leaves, which keeps it clear of the toolbar at any size and holds it still as
+       the toolbar grows and shrinks. On a phone it fades into the page's colour over its last stretch on a smootherstep
+       curve, flat at both ends, so the fade has no corner of its own where it starts or lands. The picture inside keeps
+       the whole screen's height, so it doesn't swell and shrink with the toolbar either. On the dark page it shows a
+       little stronger */
     .backdrop { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100svh; z-index: -1; overflow: hidden; pointer-events: none; }
     .backdrop picture { display: block; }
     .backdrop-photo { display: block; width: 100%; height: 100vh; height: 100lvh; object-fit: cover; opacity: 0.14; }
-    .backdrop-photo { object-position: 50% 0%; }
-    @media (orientation: portrait) and (min-width: 1024px) { .backdrop-photo { object-position: 50% 50%; } }
-    @media (orientation: landscape) and (max-height: 500px) { .backdrop-photo { object-position: 50% 100%; } }
+    @media (orientation: landscape) { .backdrop-photo { object-position: 50% 30%; } }
     @media (prefers-color-scheme: dark) { .backdrop-photo { opacity: 0.2; } }
     @media (max-width: 1023px) {
       .backdrop {
@@ -765,7 +759,7 @@
 </head>
 <body>
 
-<div class="backdrop" aria-hidden="true"><picture><source media="(orientation: portrait)" srcset="./market-stall-tall.jpg"><img class="backdrop-photo" src="./market-stall-wide.jpg" alt="" decoding="async"></picture></div>
+<div class="backdrop" aria-hidden="true"><picture><source media="(orientation: portrait)" srcset="./floating-grill-tall.jpg"><img class="backdrop-photo" src="./floating-grill-wide.jpg" alt="" decoding="async"></picture></div>
 
 <nav class="site-nav" aria-label="Site">
   <div class="site-nav-inner">
