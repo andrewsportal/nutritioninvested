@@ -495,8 +495,9 @@
     .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; text-wrap: balance; }
     /* Payhip's ways to pay sit right under its button: the words and the logos on one line, the logos kept together as
        one unit that drops beneath the words, centred, where the line can't hold both. Edge to edge as drawn, the row
-       sits 11 points under the buttons, as the first line there always has, and about 18 over "Reads on" */
-    .payment-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; margin: 1px 0 5px;
+       sits 11 points under the buttons, as the first line there always has, and 24 over "Reads on": the widest gap
+       under the buttons, so the book's details read as their own closing group */
+    .payment-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; margin: 1px 0 11px;
       font-size: var(--text-caption); color: var(--color-muted); font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; }
     /* "Reads on" and the book's facts are about the book, so they close the card as one group, 10 points apart as
        drawn: the facts' marks stand a little taller than the words, which takes 2 off the 8-point gap */
