@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#F1F4EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1411" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="Read the opening pages of Nutrition, Invested by Andrew Rios.">
+  <!-- kept out of search results while the page holds sample text; this line goes when the book's pages are in -->
+  <meta name="robots" content="noindex">
+  <!-- a temporary copy of the preview page for trying changes on an iPhone; removed once it's settled -->
+  <title>Test · Preview · Nutrition, Invested</title>
+  <link rel="canonical" href="https://nutritioninvested.com/preview">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="96x96" href="./favicon-96x96.png?v=3">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=3">
+
+  <style>
+    /* The preview reads like the rest of the site: its colours, its type, its bar and its buy card,
+       with the same values as index.html. A colour changed there changes here too */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+    :focus:not(:focus-visible) { outline: none; }
+    :focus-visible { outline: 2px solid var(--color-tint); outline-offset: 2px; border-radius: 10px; }
+
+    :root {
+      color-scheme: light dark;
+      --color-bg: #F1F4EF;
+      --color-surface: #ffffff;
+      --color-accent: #35714B;
+      --color-accent-hover: #2C5F3F;
+      --accent-rgb: 53, 113, 75;
+      --color-tint: var(--color-accent);
+      --color-body: #333333;
+      --color-muted: #6E6E73;
+      --color-gold: #D4AF37;
+      --color-white: #ffffff;
+      --color-fill: rgba(118, 118, 128, 0.12);
+      --card-bg: rgba(255, 255, 255, 0.86);
+      --card-border: rgba(255, 255, 255, 0.78);
+      --btn-border: rgba(0, 0, 0, 0.08);
+      --btn-secondary-border: rgba(0, 0, 0, 0.1);
+      --hairline: rgba(0, 0, 0, 0.08);
+      --nav-bg: rgba(241, 244, 239, 0.72);
+      --font: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+      /* Text follows the reader's text size setting on iPhone and iPad, as on the main page */
+      --dt: 1;
+      --dt-ui: clamp(1, var(--dt), 1.35);
+      --text-caption: clamp(calc(var(--dt-ui) * 0.75rem), calc(var(--dt-ui) * 2.8vw), calc(var(--dt-ui) * 0.8125rem));
+      --text-label: clamp(calc(var(--dt-ui) * 0.875rem), calc(var(--dt-ui) * 3.2vw), calc(var(--dt-ui) * 0.9375rem));
+      --text-headline: clamp(calc(var(--dt-ui) * 1.0625rem), calc(var(--dt-ui) * 4vw), calc(var(--dt-ui) * 1.25rem));
+      --track-tight: -0.022em;
+      --track-normal: -0.011em;
+      --sp-1: 8px; --sp-2: 16px; --sp-3: 24px;
+      --radius-lg: 24px; --radius-pill: 980px;
+      --shadow-btn: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+      --shadow-surface: 0 2px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-page: 0 10px 30px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      --safe-top: env(safe-area-inset-top, 0px);
+
+      /* The book's own type goes here once its pages arrive: face, size, leading, and how paragraphs part */
+      --read-font: var(--font);
+      --read-size: calc(var(--dt) * 1.0625rem);
+      --read-leading: 1.6;
+      --para-gap: 0.9em;
+      --para-indent: 0;
+    }
+    @media (min-width: 768px) { :root { --read-size: calc(var(--dt) * 1.1875rem); } }
+
+    /* Dark Mode follows the reader's system setting, so the preview is dark at night when their phone is */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #0F1411;
+        --color-surface: #262C28;
+        --color-accent-hover: #3E8257;
+        --color-tint: #5DB07D;
+        --color-body: #ECEEEC;
+        --color-muted: #A1A6A2;
+        --color-fill: rgba(118, 118, 128, 0.24);
+        --card-bg: rgba(29, 35, 31, 0.92);
+        --card-border: rgba(255, 255, 255, 0.07);
+        --btn-border: rgba(255, 255, 255, 0.10);
+        --btn-secondary-border: rgba(255, 255, 255, 0.12);
+        --hairline: rgba(255, 255, 255, 0.10);
+        --nav-bg: rgba(15, 20, 17, 0.72);
+        --shadow-btn: 0 1px 3px rgba(0,0,0,0.35);
+        --shadow-surface: 0 2px 20px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.25);
+        --shadow-page: 0 10px 30px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
+      }
+      .payment-logos img { filter: invert(1); }
+    }
+
+    html { background: var(--color-bg); scroll-padding-top: calc(var(--safe-top) + 72px); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    /* as on the main page: while focus is in the bar, the room kept for it moves onto the sections, so Tab into it stays put */
+    html:has(.site-nav:focus-within) { scroll-padding-top: 0; }
+    html:has(.site-nav:focus-within) [id] { scroll-margin-top: calc(var(--safe-top) + 72px); }
+    body { background: var(--color-bg); color: var(--color-body); font-family: var(--font); -webkit-tap-highlight-color: transparent; }
+    svg { pointer-events: none; }
+
+    /* The bar: the title takes the reader back to the main page, Buy goes to the end of the preview */
+    .site-nav { position: sticky; top: 0; z-index: 300; padding-top: var(--safe-top); }
+    .site-nav::before {
+      content: ''; position: absolute; inset: 0 0 -1px; z-index: -1; border-bottom: 1px solid transparent;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .site-nav.is-scrolled::before {
+      background: var(--nav-bg); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom-color: var(--hairline);
+    }
+    .site-nav-inner {
+      height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 0 max(var(--sp-3), env(safe-area-inset-right)) 0 max(var(--sp-3), env(safe-area-inset-left));
+    }
+    .site-nav-title {
+      display: inline-flex; align-items: center; gap: 8px; min-width: 0; padding: 12px 0;
+      font-size: calc(var(--dt-ui) * 17px); font-weight: 600; letter-spacing: var(--track-normal); color: var(--color-body); text-decoration: none;
+    }
+    .site-nav-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .site-nav-mark { width: 16px; height: 16px; flex-shrink: 0; }
+    /* Sol y luna, as on the main page, but here in the bar beside Buy: the reading page has no menu, and the bar stays at
+       hand down the chapter, where a reader finds the page too bright or too dark. The page's mode lit, the other faint;
+       the pair keeps to Buy, its sun's own margin standing in for the gap after the title. Where the bar can't hold the
+       whole title beside both, on the narrowest phones or at large text, only the faint one shows, a tap away; at the
+       very largest text on a small phone the title keeps the bar, and the main page's menu keeps the pair */
+    .site-nav-title { margin-right: auto; }
+    .theme-choice-pair { display: none; }
+    .theme-ready .theme-choice-pair { display: flex; flex-shrink: 0; margin: 0 -8px 0 -10px; }
+    .theme-choice-pair button {
+      display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0;
+      border: 0; background: none; color: var(--color-body); cursor: pointer; -webkit-appearance: none; appearance: none;
+    }
+    .sol-y-luna {
+      display: block; width: 24px; height: 24px; background: currentColor; opacity: 0.32; transition: opacity 0.2s ease;
+      -webkit-mask: url(./sol.png) center / contain no-repeat; mask: url(./sol.png) center / contain no-repeat;
+    }
+    .sol-y-luna.luna { width: 21px; height: 21px; -webkit-mask-image: url(./luna.png); mask-image: url(./luna.png); }
+    .theme-choice-pair button[aria-pressed="true"] .sol-y-luna { opacity: 1; }
+    .theme-choice-pair button:active .sol-y-luna { opacity: 0.6; }
+    @media (max-width: 374px) { .theme-choice-pair button[aria-pressed="true"] { display: none; } }
+    .pair-tight .theme-choice-pair button[aria-pressed="true"] { display: none; }
+    .pair-none .theme-choice-pair { display: none; }
+    .site-nav-buy {
+      position: relative; display: inline-flex; align-items: center; flex-shrink: 0; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
+      background: var(--color-accent); color: var(--color-white); font-size: calc(var(--dt-ui) * 13px); font-weight: 600;
+      letter-spacing: var(--track-normal); text-decoration: none; transition: background 0.2s ease; pointer-events: auto;
+    }
+    .site-nav-buy::after { content: ''; position: absolute; inset: -7px -6px; }
+    .site-nav-buy:active { transform: scale(0.96); opacity: 0.9; transition-duration: 0s; }
+    /* Buy is the shortcut to the buy card at the end; it steps out while that card's own buttons are on screen and back in
+       when they leave, with the main page's motion: it slides back behind a line at the end of the bar, where it comes to
+       rest, and out again, as far as on the main page. The line is the edge of a slot of its own, which gives its focus ring
+       and tap area their few points past the line once it's in */
+    .site-nav-buy-slot { display: flex; flex-shrink: 0; padding: 8px 6px; margin: -8px -6px; overflow: hidden; overflow: clip; pointer-events: none; clip-path: inset(0); }
+    .site-nav.buy-away .site-nav-buy-slot { clip-path: inset(0 6px 0 0); }
+    .site-nav.buy-ready .site-nav-buy-slot { transition: clip-path 0s 0.35s; }
+    .site-nav.buy-ready.buy-away .site-nav-buy-slot { transition: none; }
+    .site-nav.buy-ready .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s; }
+    .site-nav.buy-away .site-nav-buy { translate: calc(100% + 12px) 0; visibility: hidden; pointer-events: none; }
+    .site-nav.buy-ready.buy-away .site-nav-buy { transition: background 0.2s ease, translate 0.35s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0.35s; }
+    /* small phones: a tighter bar; desktop: the bar keeps to the page's width. Both as on the main page */
+    @media (max-width: 339px) { .site-nav-inner { padding-left: 16px; padding-right: 16px; } .site-nav-buy { padding: 0 12px; } }
+    @media (min-width: 1024px) {
+      .site-nav-inner { max-width: 1076px; margin: 0 auto; padding: 0 48px; }
+      .site-nav-title { padding: 10px 0; font-size: calc(var(--dt-ui) * 19px); }
+      .site-nav.buy-away .site-nav-buy { translate: calc(100% + 32px) 0; }
+      .theme-ready .theme-choice-pair { margin: 0 4px 0 0; }
+      .theme-choice-pair button { width: 36px; }
+      .sol-y-luna { width: 22px; height: 22px; }
+      .sol-y-luna.luna { width: 19px; height: 19px; }
+    }
+
+    /* The reading column: about 65 characters a line, the width a printed page holds, in whatever size the reader reads */
+    .reader {
+      width: 100%; max-width: calc(34em + 2 * var(--sp-3)); margin: 0 auto;
+      padding: var(--sp-3) max(var(--sp-3), env(safe-area-inset-right)) 0 max(var(--sp-3), env(safe-area-inset-left));
+      font-family: var(--read-font); font-size: var(--read-size); line-height: var(--read-leading);
+      letter-spacing: var(--track-normal); overflow-wrap: break-word;
+    }
+    /* for VoiceOver only: the page's title, which the bar already shows */
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .preview-label {
+      font-family: var(--font); font-size: var(--text-caption); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-muted); margin-bottom: var(--sp-1);
+    }
+    .reader h2 { font-family: var(--font); font-size: 1.75em; line-height: 1.15; font-weight: 700; letter-spacing: var(--track-tight); margin: 0.2em 0 1.1em; }
+    .reader h3 { font-family: var(--font); font-size: 1.2em; line-height: 1.3; font-weight: 600; letter-spacing: var(--track-tight); margin: 1.8em 0 0.6em; }
+    .reader .chapter-label { margin-top: 2.6em; }
+    .reader .chapter-label:first-child { margin-top: var(--sp-2); }
+    .reader p { margin: 0 0 var(--para-gap); }
+    .reader p + p { text-indent: var(--para-indent); }
+    .reader a { color: var(--color-tint); text-underline-offset: 2px; }
+    .reader blockquote { margin: 1.4em 0; padding: 0.1em 0 0.1em 1em; border-left: 3px solid var(--color-tint); color: var(--color-muted); font-style: italic; }
+    .reader blockquote p:last-child { margin-bottom: 0; }
+    .reader ul, .reader ol { margin: 0 0 var(--para-gap) 1.3em; }
+    .reader li { margin-bottom: 0.35em; padding-left: 0.2em; }
+    /* a tip or note the book sets apart in a box */
+    .reader aside { margin: 1.6em 0; padding: 1em 1.15em; border-radius: 14px; background: var(--color-fill); font-size: 0.94em; }
+    .reader aside p:last-child { margin-bottom: 0; }
+    /* a section break: the gold rule from the cover and the price line */
+    .reader hr { width: 40px; height: 2px; margin: 2.2em auto; border: 0; border-radius: 1px; background: var(--color-gold); }
+    /* the book's pictures, as they are; the caption sits under them in the page's small grey */
+    .reader figure { margin: 1.8em 0; }
+    .reader figure img { display: block; width: 100%; height: auto; border-radius: 10px; }
+    .reader figcaption { margin-top: 0.7em; font-family: var(--font); font-size: var(--text-caption); line-height: 1.45; color: var(--color-muted); text-align: center; }
+    /* a page kept exactly as designed, for charts and layouts that shouldn't reflow: shown whole, like a page laid on the desk */
+    .reader figure.page img { width: auto; max-width: 100%; max-height: 82svh; margin: 0 auto; border-radius: 4px; box-shadow: var(--shadow-page); }
+    .reader table { width: 100%; margin: 1.4em 0; border-collapse: collapse; font-family: var(--font); font-size: 0.88em; }
+    .reader th, .reader td { padding: 0.5em 0.6em; border-bottom: 1px solid var(--hairline); text-align: left; vertical-align: top; }
+    .reader th { font-weight: 600; }
+
+    /* The end of the preview: the buy card from the main page */
+    .keep-reading { max-width: calc(440px + 2 * var(--sp-3)); margin: var(--sp-3) auto 0; padding: var(--sp-3) var(--sp-3) calc(48px + env(safe-area-inset-bottom)); text-align: center; }
+    .keep-reading .preview-label { margin-bottom: var(--sp-2); }
+    .content-platter {
+      width: 100%; background: var(--card-bg); border-radius: var(--radius-lg); border: 1px solid var(--card-border);
+      padding: 24px; box-shadow: var(--shadow-surface); display: flex; flex-direction: column; align-items: center;
+    }
+    .headline { width: 100%; text-align: center; margin-bottom: 10px; font-size: var(--text-headline); font-weight: 600; letter-spacing: var(--track-tight); line-height: 1.4; }
+    .headline .price { font-weight: 700; }
+    .headline .divider { color: var(--color-gold); margin: 0 var(--sp-1); font-weight: 400; }
+    .buttons { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+    .buy-btn {
+      display: flex; align-items: center; justify-content: center; gap: var(--sp-1); width: 100%; min-height: 50px;
+      background: var(--color-surface); color: var(--color-body); border: 1px solid var(--btn-border); border-radius: 14px; padding: 8px 16px;
+      font-family: var(--font); font-size: calc(var(--dt-ui) * 17px); font-weight: 600; letter-spacing: var(--track-normal); text-decoration: none;
+      box-shadow: var(--shadow-btn); transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1), box-shadow 0.2s ease, opacity 0.15s ease;
+    }
+    .buy-btn:active { transform: scale(0.96); opacity: 0.9; }
+    .buy-btn.primary { background: var(--color-accent); color: var(--color-white); border-color: transparent; box-shadow: 0 4px 18px rgba(var(--accent-rgb), 0.32), 0 2px 6px rgba(0,0,0,0.10); }
+    .buy-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
+    /* the stores' names stay whole, and the line evens out where it wraps */
+    .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; text-wrap: balance; }
+    /* Payhip's ways to pay sit right under its button: the words and the logos on one line, the logos kept together as
+       one unit that drops beneath the words, centred, where the line can't hold both. Edge to edge as drawn, the row
+       sits 14 points under the buttons, clear of the Payhip button's shadow and wider than the 8 between the two
+       buttons, so it reads as that button's fine print, and 24 over "Reads on": the widest gap under the buttons, so
+       the book's details read as their own closing group */
+    .payment-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; margin: 5px 0 11px;
+      font-size: var(--text-caption); color: var(--color-muted); font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; }
+    /* "Reads on" and the book's facts are about the book, so they close the card as one group, 10 points apart as
+       drawn: the facts' marks stand a little taller than the words, which takes 2 off the 8-point gap */
+    .payment-section .reads-on { margin-bottom: -2px; }
+    /* the facts as two short items in the fine print's own grey, each behind a drawn mark in the same grey that grows
+       with the text, so nothing under the buttons adds colour; one item a line only where the line can't hold both.
+       As the card's last line, it keeps the room under it that the card's foot has always had */
+    .payment-section .book-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; list-style: none; margin-bottom: -1px;
+      font-size: var(--text-caption); font-weight: 500; color: var(--color-muted); letter-spacing: var(--track-normal); line-height: 1.4; }
+    .book-facts li { display: inline-flex; align-items: center; gap: 0.4em; }
+    .book-facts svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
+    /* each mark gets the same space, so the wide wordmarks don't outweigh the rest, 14 points tall so Visa's letters stand
+       as tall as the words' capitals; faded to the grey of the words beside them. Each box fits its mark, so the row
+       centres on what's drawn */
+    .payment-logos { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: nowrap; opacity: 0.57; }
+    .payment-logos img { width: auto; max-width: 26px; height: 14px; object-fit: contain; display: block; -webkit-user-drag: none; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .site-nav-buy:hover { background: var(--color-accent-hover); }
+      .theme-choice-pair button:hover .sol-y-luna { opacity: 0.6; }
+      .theme-choice-pair button[aria-pressed="true"]:hover .sol-y-luna { opacity: 1; }
+      .buy-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06); }
+      .buy-btn.primary:hover { box-shadow: 0 6px 22px rgba(var(--accent-rgb), 0.38), 0 2px 8px rgba(0,0,0,0.10); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
+    }
+  </style>
+  <script>
+    // Dynamic Type, as on the main page: the reader's Body size over the default 17pt becomes --dt
+    (function () {
+      if (!(window.CSS && CSS.supports('font', '-apple-system-body') && CSS.supports('-webkit-touch-callout', 'none'))) return;
+      var root = document.documentElement;
+      function measure() {
+        var probe = document.createElement('span');
+        probe.style.font = '-apple-system-body';
+        root.appendChild(probe);
+        var size = parseFloat(getComputedStyle(probe).fontSize);
+        root.removeChild(probe);
+        if (size) root.style.setProperty('--dt', String(size / 17));
+      }
+      measure();
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) measure(); });
+    })();
+  </script>
+  <script>
+    // Light or dark, the reader's own choice: kept on this device and laid over the phone's setting before anything is
+    // drawn, so a page never opens in the other one first. With nothing kept the page follows the phone. The page's dark
+    // rules stay where they are written; a choice only switches them on for good or off for good, and Safari's bar with them
+    (function () {
+      var rules = [], metas = [].slice.call(document.querySelectorAll('meta[name="theme-color"]'));
+      [].forEach.call(document.styleSheets, function (sheet) {
+        try {
+          [].forEach.call(sheet.cssRules, function (r) {
+            if (r.media && /prefers-color-scheme:\s*dark/.test(r.media.mediaText)) rules.push([r, r.media.mediaText]);
+          });
+        } catch (e) {}
+      });
+      metas.forEach(function (m) { m.setAttribute('data-media', m.getAttribute('media') || ''); });
+      function apply(mode) {
+        rules.forEach(function (x) { x[0].media.mediaText = mode === 'dark' ? 'all' : mode === 'light' ? 'not all' : x[1]; });
+        metas.forEach(function (m) {
+          var own = m.getAttribute('data-media');
+          m.setAttribute('media', !mode ? own : /dark/.test(own) === (mode === 'dark') ? 'all' : 'not all');
+        });
+        var root = document.documentElement;
+        root.style.colorScheme = mode || '';
+        if (mode) root.setAttribute('data-theme', mode); else root.removeAttribute('data-theme');
+      }
+      var kept = null;
+      try { kept = localStorage.getItem('theme'); } catch (e) {}
+      if (kept === 'light' || kept === 'dark') apply(kept);
+      window.setTheme = function (mode) {
+        try { if (mode) localStorage.setItem('theme', mode); else localStorage.removeItem('theme'); } catch (e) {}
+        apply(mode);
+      };
+      document.documentElement.classList.add('theme-ready');
+    })();
+  </script>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="site-nav-title" href="./">
+      <svg class="site-nav-mark" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M186.0 951.6C186.0 872.1 186.3 866.5 191.9 844.8C205.3 793.4 235.8 753.9 308.4 694.2C350.3 659.7 363.9 648.3 372.0 641.1C401.5 614.9 431.3 583.0 437.5 571.0C444.4 557.4 448.0 537.4 448.0 512.0C448.0 486.6 444.4 466.6 437.5 453.0C431.2 440.8 401.7 409.2 371.5 382.4C363.8 375.6 348.8 363.1 308.4 329.8C262.4 292.0 237.5 266.7 218.9 238.6C206.0 219.1 197.4 200.3 191.9 179.2C186.3 157.5 186.0 151.9 186.0 72.4L186.0 0.0L512.0 0.0L838.0 0.0L838.0 72.4C838.0 152.0 837.7 157.4 832.0 179.6C820.2 225.4 791.0 265.7 735.0 313.7C728.7 319.1 711.3 333.5 696.4 345.7C681.6 357.9 664.3 372.2 658.2 377.5C627.0 404.3 593.3 439.8 586.5 453.0C579.6 466.6 576.0 486.6 576.0 512.0C576.0 537.4 579.6 557.4 586.5 571.0C593.3 584.2 627.0 619.7 658.2 646.5C664.3 651.8 681.6 666.1 696.4 678.3C711.3 690.5 728.7 704.9 735.0 710.3C791.0 758.3 820.2 798.6 832.0 844.4C837.7 866.6 838.0 872.0 838.0 951.6L838.0 1024.0L512.0 1024.0L186.0 1024.0L186.0 951.6Z"/></svg>
+      <span>Nutrition, Invested</span>
+    </a>
+    <span class="theme-choice-pair" role="group" aria-label="Appearance"><button type="button" value="light" aria-label="Light" aria-pressed="false"><span class="sol-y-luna sol"></span></button><button type="button" value="dark" aria-label="Dark" aria-pressed="false"><span class="sol-y-luna luna"></span></button></span>
+    <span class="site-nav-buy-slot"><a class="site-nav-buy" href="#keep-reading">Buy</a></span>
+  </div>
+</nav>
+
+<main>
+  <article class="reader" aria-labelledby="preview-title">
+    <h1 id="preview-title" class="visually-hidden">Nutrition, Invested: a preview</h1>
+    <!-- preview:start. Everything from here to preview:end is replaced by the book's own pages -->
+    <p class="preview-label chapter-label">Chapter 1</p>
+    <h2>The chapter's title</h2>
+    <p>The chapter's opening paragraph sits here. When the book arrives, its own pages replace this sample word for word, with the pictures where the book has them.</p>
+    <p>Body text follows the reader's text size and turns dark with the phone. Lines run about sixty-five characters, the width a printed page holds, so the eye finds the next line without hunting for it.</p>
+    <h3>A section heading</h3>
+    <p>Sections inside a chapter open under a heading like the one above. <em>Italics</em> and <strong>bold</strong> come through as the book sets them.</p>
+    <blockquote><p>A quotation, or a line the book sets apart from the text, reads like this.</p></blockquote>
+    <ul>
+      <li>A list keeps its items</li>
+      <li>One to a line</li>
+      <li>As the book has them</li>
+    </ul>
+    <figure>
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Crect width='1200' height='800' fill='%23d9ded6'/%3E%3Cpath d='M0 800 L380 380 L620 620 L820 440 L1200 800Z' fill='%23b9c3b4'/%3E%3Ccircle cx='900' cy='230' r='80' fill='%23c9d1c4'/%3E%3C/svg%3E" alt="A picture from the book" width="1200" height="800">
+      <figcaption>A picture from the book, with its caption underneath.</figcaption>
+    </figure>
+    <aside role="note"><p>A tip or a note the book puts in a box sits in a panel like this one.</p></aside>
+    <hr>
+    <p>A section break, the short gold rule above, parts one stretch of a chapter from the next.</p>
+    <figure class="page">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 900'%3E%3Crect width='600' height='900' fill='%23ffffff'/%3E%3Crect x='60' y='80' width='300' height='22' rx='4' fill='%23333'/%3E%3Cg fill='%23c8c8c8'%3E%3Crect x='60' y='140' width='480' height='10' rx='3'/%3E%3Crect x='60' y='166' width='450' height='10' rx='3'/%3E%3Crect x='60' y='192' width='470' height='10' rx='3'/%3E%3C/g%3E%3Crect x='60' y='250' width='480' height='330' rx='10' fill='%23e5ece3'/%3E%3Cg fill='%2335714b'%3E%3Crect x='100' y='460' width='60' height='90'/%3E%3Crect x='190' y='400' width='60' height='150'/%3E%3Crect x='280' y='330' width='60' height='220'/%3E%3Crect x='370' y='300' width='60' height='250'/%3E%3C/g%3E%3Cg fill='%23c8c8c8'%3E%3Crect x='60' y='630' width='480' height='10' rx='3'/%3E%3Crect x='60' y='656' width='420' height='10' rx='3'/%3E%3Crect x='60' y='682' width='460' height='10' rx='3'/%3E%3Crect x='60' y='708' width='300' height='10' rx='3'/%3E%3C/g%3E%3C/svg%3E" alt="A page from the book, kept exactly as designed" width="600" height="900">
+      <figcaption>A page kept exactly as designed, for a chart or a layout that shouldn't reflow.</figcaption>
+    </figure>
+    <p>The last lines of the preview end here, and the buy card follows.</p>
+    <!-- preview:end -->
+  </article>
+
+  <section id="keep-reading" class="keep-reading" aria-labelledby="keep-reading-title">
+    <p class="preview-label">End of the preview</p>
+    <div class="content-platter">
+      <h2 id="keep-reading-title" class="headline">The Book<span class="divider" aria-hidden="true">—</span><span class="price">$9.99</span></h2>
+      <div class="buttons">
+        <a href="https://www.amazon.com/dp/B0F1RX4JWV" class="buy-btn primary">
+            <span style="display:flex; align-items:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </span>
+            <span>Buy on Amazon</span>
+          </a>
+          <a href="https://payhip.com/b/eBook-Nutrition-Invested" class="buy-btn secondary">
+            <span style="display:flex; align-items:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>
+              </svg>
+            </span>
+            <span>Buy on Payhip</span>
+          </a>
+      </div>
+      <div class="payment-section">
+        <div class="payment-row">
+          <span>Payhip accepts:</span>
+          <div class="payment-logos">
+            <img src="./applepay.svg" alt="Apple Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./googlepay.svg" alt="Google Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./paypal.svg" alt="PayPal" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./visa.svg" alt="Visa" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./mastercard.svg" alt="Mastercard" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+            <img src="./americanexpress.svg" alt="Amex" width="22" height="12" decoding="async" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <p class="reads-on">Reads on Kindle, Apple&nbsp;Books &amp; Google&nbsp;Play&nbsp;Books</p>
+        <ul class="book-facts" role="list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>An evening's read</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></svg>200+ citations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // The bar: clear while the page sits at the top, frosted once text scrolls beneath it
+  (function () {
+    var nav = document.querySelector('.site-nav');
+    function update() { nav.classList.toggle('is-scrolled', window.scrollY > 0); }
+    update(); window.addEventListener('scroll', update, { passive: true });
+
+    // Buy steps out while the end card's own buttons are on screen, below the bar, and back in when they're not.
+    // The first look is taken before anything is drawn, so nothing slides in or out as the page opens
+    var cardButtons = document.querySelector('.keep-reading .buttons');
+    if (cardButtons && 'IntersectionObserver' in window) {
+      var setAway = function (onScreen) { nav.classList.toggle('buy-away', onScreen); };
+      var r = cardButtons.getBoundingClientRect();
+      setAway(r.bottom > nav.offsetHeight && r.top < window.innerHeight);
+      new IntersectionObserver(function (entries) { setAway(entries[entries.length - 1].isIntersecting); },
+        { rootMargin: '-' + nav.offsetHeight + 'px 0px 0px 0px' }).observe(cardButtons);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { nav.classList.add('buy-ready'); }); });
+    }
+
+    // Sol y luna: the page's mode lit, the other a tap away; choosing the phone's own mode hands the page back to the
+    // phone. Where the title would be cut short beside both, only the faint one stays, and where even that would cut
+    // it, neither; measured again as the text size or the window changes
+    var phoneDark = window.matchMedia('(prefers-color-scheme: dark)');
+    var themeButtons = [].slice.call(document.querySelectorAll('.theme-choice-pair button'));
+    var titleWords = document.querySelector('.site-nav-title span');
+    function themeNow() { return document.documentElement.getAttribute('data-theme') || (phoneDark.matches ? 'dark' : 'light'); }
+    function themeFit() {
+      var cut = function () { return titleWords.scrollWidth > titleWords.clientWidth + 1; };
+      nav.classList.remove('pair-tight', 'pair-none');
+      if (cut()) nav.classList.add('pair-tight');
+      if (cut()) nav.classList.add('pair-none');
+    }
+    function themeMark() { themeButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.value === themeNow())); }); themeFit(); }
+    if (window.setTheme && themeButtons.length) {
+      themeButtons.forEach(function (b) {
+        b.addEventListener('click', function () { window.setTheme(b.value === (phoneDark.matches ? 'dark' : 'light') ? '' : b.value); themeMark(); });
+      });
+      phoneDark.addEventListener('change', themeMark);
+      window.addEventListener('resize', themeFit);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) requestAnimationFrame(themeFit); });
+      themeMark();
+    }
+  })();
+</script>
+</body>
+</html>
