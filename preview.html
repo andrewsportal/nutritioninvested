@@ -235,6 +235,40 @@
       document.addEventListener('visibilitychange', function () { if (!document.hidden) measure(); });
     })();
   </script>
+  <script>
+    // Light or dark, the reader's own choice: kept on this device and laid over the phone's setting before anything is
+    // drawn, so a page never opens in the other one first. With nothing kept the page follows the phone. The page's dark
+    // rules stay where they are written; a choice only switches them on for good or off for good, and Safari's bar with them
+    (function () {
+      var rules = [], metas = [].slice.call(document.querySelectorAll('meta[name="theme-color"]'));
+      [].forEach.call(document.styleSheets, function (sheet) {
+        try {
+          [].forEach.call(sheet.cssRules, function (r) {
+            if (r.media && /prefers-color-scheme:\s*dark/.test(r.media.mediaText)) rules.push([r, r.media.mediaText]);
+          });
+        } catch (e) {}
+      });
+      metas.forEach(function (m) { m.setAttribute('data-media', m.getAttribute('media') || ''); });
+      function apply(mode) {
+        rules.forEach(function (x) { x[0].media.mediaText = mode === 'dark' ? 'all' : mode === 'light' ? 'not all' : x[1]; });
+        metas.forEach(function (m) {
+          var own = m.getAttribute('data-media');
+          m.setAttribute('media', !mode ? own : /dark/.test(own) === (mode === 'dark') ? 'all' : 'not all');
+        });
+        var root = document.documentElement;
+        root.style.colorScheme = mode || '';
+        if (mode) root.setAttribute('data-theme', mode); else root.removeAttribute('data-theme');
+      }
+      var kept = null;
+      try { kept = localStorage.getItem('theme'); } catch (e) {}
+      if (kept === 'light' || kept === 'dark') apply(kept);
+      window.setTheme = function (mode) {
+        try { if (mode) localStorage.setItem('theme', mode); else localStorage.removeItem('theme'); } catch (e) {}
+        apply(mode);
+      };
+      document.documentElement.classList.add('theme-ready');
+    })();
+  </script>
 </head>
 <body>
 

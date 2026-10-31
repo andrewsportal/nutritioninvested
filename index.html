@@ -267,6 +267,28 @@
       color: var(--color-body); text-decoration: none;
     }
     .site-nav-links a:active { color: var(--color-tint); }
+    /* Sol y luna, the reader's choice of light or dark: the sun and moon that hang on the walls of Mexican homes, cut from
+       the author's own drawing. The drawing's white is the icon and its black lines let the page through, so on the dark
+       page they hang as on a wall and on the light one they print like a woodcut. The page's mode shows at full strength
+       and the other faint, a tap away; their faces want room, so they never go smaller than the text beside them. On a
+       phone they close the menu's list in a row of their own, and they show only where the script is there to work them */
+    .theme-choice { display: none; }
+    .theme-ready .theme-choice {
+      display: flex; align-items: center; justify-content: space-between; min-height: 50px;
+      font-size: calc(var(--dt-ui) * 17px); letter-spacing: var(--track-normal); color: var(--color-body);
+    }
+    .theme-choice-pair { display: flex; margin-right: -9px; }
+    .theme-choice button {
+      display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0;
+      border: 0; background: none; color: var(--color-body); cursor: pointer; -webkit-appearance: none; appearance: none;
+    }
+    .sol-y-luna {
+      display: block; width: 26px; height: 26px; background: currentColor; opacity: 0.32; transition: opacity 0.2s ease;
+      -webkit-mask: url(./sol.png) center / contain no-repeat; mask: url(./sol.png) center / contain no-repeat;
+    }
+    .sol-y-luna.luna { width: 23px; height: 23px; -webkit-mask-image: url(./luna.png); mask-image: url(./luna.png); }
+    .theme-choice button[aria-pressed="true"] .sol-y-luna { opacity: 1; }
+    .theme-choice button:active .sol-y-luna { opacity: 0.6; }
     .site-nav-buy {
       display: inline-flex; align-items: center; flex-shrink: 0; height: 30px; padding: 0 16px; border-radius: var(--radius-pill);
       background: var(--color-accent); color: var(--color-white); font-size: calc(var(--dt-ui) * 13px); font-weight: 600;
@@ -654,6 +676,15 @@
       .site-nav-links li + li { border-top: 0; }
       .site-nav-links a { padding: 14px 8px; margin: 0 -8px; font-size: calc(var(--dt-ui) * 14px); color: var(--nav-link); transition: color 0.2s ease; }
       .site-nav-links a:hover { color: var(--color-tint); }
+      /* after Email the pair goes without its word, as far from Email as the links are from one another */
+      .theme-ready .theme-choice { min-height: 0; }
+      .theme-choice-label { display: none; }
+      .theme-choice-pair { margin: 0 -7px; }
+      .theme-choice button { width: 36px; }
+      .sol-y-luna { width: 22px; height: 22px; }
+      .sol-y-luna.luna { width: 19px; height: 19px; }
+      .theme-choice button:hover .sol-y-luna { opacity: 0.6; }
+      .theme-choice button[aria-pressed="true"]:hover .sol-y-luna { opacity: 1; }
 
       /* the cover's height follows the window's, so the whole section fits the first screen */
       :root { --hero-cover-h: clamp(320px, calc(100vh - 232px), 640px); }
@@ -767,6 +798,40 @@
       document.addEventListener('visibilitychange', function () { if (!document.hidden) measure(); });
     })();
   </script>
+  <script>
+    // Light or dark, the reader's own choice: kept on this device and laid over the phone's setting before anything is
+    // drawn, so a page never opens in the other one first. With nothing kept the page follows the phone. The page's dark
+    // rules stay where they are written; a choice only switches them on for good or off for good, and Safari's bar with them
+    (function () {
+      var rules = [], metas = [].slice.call(document.querySelectorAll('meta[name="theme-color"]'));
+      [].forEach.call(document.styleSheets, function (sheet) {
+        try {
+          [].forEach.call(sheet.cssRules, function (r) {
+            if (r.media && /prefers-color-scheme:\s*dark/.test(r.media.mediaText)) rules.push([r, r.media.mediaText]);
+          });
+        } catch (e) {}
+      });
+      metas.forEach(function (m) { m.setAttribute('data-media', m.getAttribute('media') || ''); });
+      function apply(mode) {
+        rules.forEach(function (x) { x[0].media.mediaText = mode === 'dark' ? 'all' : mode === 'light' ? 'not all' : x[1]; });
+        metas.forEach(function (m) {
+          var own = m.getAttribute('data-media');
+          m.setAttribute('media', !mode ? own : /dark/.test(own) === (mode === 'dark') ? 'all' : 'not all');
+        });
+        var root = document.documentElement;
+        root.style.colorScheme = mode || '';
+        if (mode) root.setAttribute('data-theme', mode); else root.removeAttribute('data-theme');
+      }
+      var kept = null;
+      try { kept = localStorage.getItem('theme'); } catch (e) {}
+      if (kept === 'light' || kept === 'dark') apply(kept);
+      window.setTheme = function (mode) {
+        try { if (mode) localStorage.setItem('theme', mode); else localStorage.removeItem('theme'); } catch (e) {}
+        apply(mode);
+      };
+      document.documentElement.classList.add('theme-ready');
+    })();
+  </script>
 </head>
 <body>
 
@@ -789,6 +854,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#questions">Questions</a></li>
       <li><a href="mailto:riosandrew9@gmail.com">Email</a></li>
+      <li class="theme-choice"><span class="theme-choice-label" id="theme-choice-label">Appearance</span><span class="theme-choice-pair" role="group" aria-labelledby="theme-choice-label"><button type="button" value="light" aria-label="Light" aria-pressed="false"><span class="sol-y-luna sol"></span></button><button type="button" value="dark" aria-label="Dark" aria-pressed="false"><span class="sol-y-luna luna"></span></button></span></li>
     </ul>
     <span class="site-nav-buy-slot"><a class="site-nav-buy" href="#buy">Buy</a></span>
   </div>
@@ -1042,6 +1108,20 @@
       if (e.key === 'Escape' && siteNav.classList.contains('menu-open')) { setMenu(false); navToggle.focus(); }
     });
     window.matchMedia('(min-width: 1024px)').addEventListener('change', function () { setMenu(false); });
+
+    // Sol y luna: the page's mode lit, the other a tap away. Choosing the mode the phone is in hands the page back to the
+    // phone, so it follows the phone's own changes again; a tap leaves the menu open, the page changing behind it
+    var phoneDark = window.matchMedia('(prefers-color-scheme: dark)');
+    var themeButtons = [].slice.call(document.querySelectorAll('.theme-choice button'));
+    function themeNow() { return document.documentElement.getAttribute('data-theme') || (phoneDark.matches ? 'dark' : 'light'); }
+    function themeMark() { themeButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.value === themeNow())); }); }
+    if (window.setTheme) {
+      themeButtons.forEach(function (b) {
+        b.addEventListener('click', function () { window.setTheme(b.value === (phoneDark.matches ? 'dark' : 'light') ? '' : b.value); themeMark(); });
+      });
+      phoneDark.addEventListener('change', themeMark);
+      themeMark();
+    }
 
     // Each question becomes a row that opens its answer, with the menu's own chevron, on a phone and a desktop alike:
     // a reader comes for one answer or two, not all four. Without the script every answer shows
