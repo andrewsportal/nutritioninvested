@@ -510,6 +510,11 @@
     }
 
     .page-2-header { width: 100%; padding: 22px 24px 0; }
+    /* the plate opens What's Inside, drawn as the book draws. It's drawn on white for light pages and on black for dark
+       ones, and that ground drops into the card, so only the ink and the green show */
+    .whats-inside-plate { display: block; padding: 20px 24px 0; }
+    .whats-inside-plate img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; -webkit-user-drag: none; }
+    @media (prefers-color-scheme: dark) { .whats-inside-plate img { mix-blend-mode: screen; } }
     .info-section-sublabel { font-size: max(clamp(calc(var(--dt-ui) * 1.125rem), calc(var(--dt-ui) * 4.5vw), calc(var(--dt-ui) * 1.375rem)), var(--text-body)); letter-spacing: var(--track-tight); font-weight: 600; color: var(--color-body); }
 
     .blurb-scroll-wrapper { margin: 14px 0 0; }
@@ -659,6 +664,7 @@
       .page-2-inner { max-width: 1076px; margin: 0 auto; padding: 24px 48px 0; gap: 40px; }
       .page-2-platter { max-width: 980px; padding: 56px 64px 64px; }
       .page-2-header { padding: 0; }
+      .whats-inside-plate { padding: 0; max-width: 600px; margin-bottom: 32px; }
       .info-section-sublabel { font-size: max(calc(var(--dt-ui) * 40px), calc(var(--dt) * 19px)); line-height: 1.1; font-weight: 700; letter-spacing: 0; }
       .blurb-scroll-wrapper { margin: 28px 0 0; }
       .blurb-list { padding: 0; }
@@ -843,6 +849,11 @@
     <div class="page-2-inner">
 
       <div id="whats-inside" class="page-2-platter">
+        <picture class="whats-inside-plate">
+          <source srcset="./plate-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="./plate.webp" alt="A plate with a dome of rice under a fried egg, grilled fish, lettuce and herbs, pickled carrot and daikon and a small bowl of dipping sauce, with a glass of water beside it"
+               width="1280" height="716" loading="lazy" decoding="async">
+        </picture>
         <header class="page-2-header">
           <h2 id="whats-inside-heading" class="info-section-sublabel" tabindex="-1">What's Inside</h2>
         </header>
@@ -874,7 +885,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
                 </span>
               </span>
-              <div class="blurb-text"><span class="blurb-title">Eat</span> <span class="blurb-body">Whole food with meat, fish or eggs at the center: five anchors, protein, carbohydrate, fat, color and water, on one plate. The seasonings and sauces, from curry paste to chipotle, make you want it again.</span></div>
+              <div class="blurb-text"><span class="blurb-title">Eat</span> <span class="blurb-body">Whole food with meat, fish or eggs at the center: five anchors, protein, carbohydrate, fat and color on one plate, and water beside it. The seasonings and sauces, from curry paste to chipotle, make you want it again.</span></div>
             </div>
 
             <div class="blurb-item" role="listitem">
