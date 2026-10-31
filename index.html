@@ -576,7 +576,9 @@
       display: flex; flex-direction: column; align-items: center; gap: 16px;
       font-size: calc(var(--dt-ui) * 12px); line-height: 1.33; color: var(--color-muted); text-align: center;
     }
-    .site-footer-links { display: flex; gap: 24px; list-style: none; }
+    /* Contact and Instagram read as two links: the same faint bar the copyright gets on desktop, 10 points either side */
+    .site-footer-links { display: flex; gap: 10px; list-style: none; }
+    .site-footer-links .site-footer-sep { display: inline; margin: 0 10px 0 0; opacity: 0.4; }
     .site-footer-links a, .site-footer-giving a { display: inline-block; padding: 14px 8px; margin: -14px -8px; color: inherit; text-decoration: none; }
     /* the giving line sits under the copyright, and beside it after a bar once the footer is one row */
     .site-footer-giving { display: block; margin-top: 12px; }
@@ -1208,7 +1210,7 @@
     <p>&copy; 2026 Andrew Rios<span class="site-footer-giving"><span class="site-footer-sep" aria-hidden="true">|</span><a href="#humane-accord"><img class="site-footer-globe" src="./globe-americas.png" alt="" width="64" height="64" loading="lazy" decoding="async"> <span class="site-footer-name">The Humane Accord Initiative</span></a></span></p>
     <ul class="site-footer-links">
       <li><a href="mailto:riosandrew9@gmail.com">Contact</a></li>
-      <li><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
+      <li><span class="site-footer-sep" aria-hidden="true">|</span><a href="https://www.instagram.com/whatsupandrewriosx" target="_blank" rel="noopener">Instagram</a></li>
     </ul>
   </div>
 </footer>
