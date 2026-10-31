@@ -488,6 +488,8 @@
 
     .payment-section { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 8px; margin-bottom: 6px; }
     .payment-section p { font-size: var(--text-caption); color: var(--color-muted); margin-bottom: 6px; font-weight: 500; letter-spacing: var(--track-normal); line-height: 1.4; text-align: center; }
+    /* the book's facts take two lines on every screen, so the lines are evened out and the number stays with its words */
+    .payment-section .book-facts { text-wrap: balance; }
     /* "Reads on" is about the book, so it stays with the buttons; "Accepted on Payhip" and its logos are one group below.
        Edge to edge as drawn, the lines inside a group sit 10 points apart and the groups about 18, near the card's foot:
        that takes 6 points under "Reads on" and 2 more over the logos, on top of the 8-point gap */
@@ -812,6 +814,7 @@
 
         <div class="payment-section">
           <p>Reads on Kindle, Apple Books &amp; Google Play Books</p>
+          <p class="book-facts">An evening's read, with a kit for the kitchen and more than&nbsp;200 sources at the back.</p>
           <div style="font-size: var(--text-caption); color: var(--color-muted); font-weight: 500;">Accepted on Payhip</div>
           <div class="payment-logos">
             <img src="./applepay.svg" alt="Apple Pay" width="22" height="12" decoding="async" onerror="this.style.display='none'">
@@ -856,7 +859,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
                 </span>
               </span>
-              <div class="blurb-text"><span class="blurb-title">Eat</span> <span class="blurb-body">Whole food with meat, fish or eggs at the center: five anchors, protein, carbohydrate, fat, color and water, on one plate. The seasonings and sauces, from Thai curry paste to chipotle, make you want it again.</span></div>
+              <div class="blurb-text"><span class="blurb-title">Eat</span> <span class="blurb-body">Whole food with meat, fish or eggs at the center: five anchors, protein, carbohydrate, fat, color and water, on one plate. The seasonings and sauces, from curry paste to chipotle, make you want it again.</span></div>
             </div>
 
             <div class="blurb-item" role="listitem">
@@ -874,7 +877,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                 </span>
               </span>
-              <div class="blurb-text"><span class="blurb-title">Compound</span> <span class="blurb-body">Daily returns built for a tired Tuesday: breakfast and lunch on repeat, one Sunday batch, the same dinner for the whole house. Three plates keep coming back: Mekong grilled fish, Mexico City beef tacos, Lebanese chicken with pickled turnips.</span></div>
+              <div class="blurb-text"><span class="blurb-title">Compound</span> <span class="blurb-body">Daily returns built for a tired Tuesday: breakfast and lunch on repeat, one Sunday batch, the same dinner for the whole house. Three plates keep coming back: grilled fish with pickled daikon, beef tacos with nopales, chicken with warm pita and beet-pink turnips.</span></div>
             </div>
 
             <div class="blurb-item" role="listitem">
@@ -1164,6 +1167,8 @@
       <p class="about-bio faq-a">No. It's notes from the road, not a clinic's protocol. Diabetes, kidney disease, a heart condition, a pregnancy, a diet your doctor wrote down: any of those, and the book goes to the doctor before anything changes on your plate or in your cabinet.</p>
       <h3 class="faq-q">Why ninety days?</h3>
       <p class="about-bio faq-a">Because ninety days after my first blood draw, I was back in the same lab chair and the numbers had moved. Vitamin D and A1c take about that long to settle, and by then the notebook holds thirteen weekly entries, enough to draw a line. Day ninety closes the quarter.</p>
+      <h3 class="faq-q">Do I need a blood test?</h3>
+      <p class="about-bio faq-a">No. The plate and the notebook run without one. If your doctor agrees a panel is due, the book covers what to ask for and how to read the results.</p>
       <h3 id="humane-accord" class="faq-q" tabindex="-1">What's the Humane Accord Initiative?</h3>
       <p class="about-bio faq-a">It's my pledge. Health doesn't stop at the plate; our phones want a portion too: the feed that asks for one more swipe, the ping that pulls us back, the scroll with no bottom. Every year, I put 1% of each sale into organizations teaching people to read the recipe and invest their time.</p>
       </div>
