@@ -174,7 +174,7 @@
         --nav-bg-open: rgba(15, 20, 17, 0.94);
         --curtain: rgba(15, 20, 17, 0.45);
         --nav-link: rgba(236, 238, 236, 0.82);
-        /* no glow at the top of the dark page: a green one would tint the black-and-white film under the bar */
+        /* no glow at the top of the dark page: a green one would tint the black-and-white picture under the bar */
         --hero-glow: transparent;
         --shadow-cover: drop-shadow(0 12px 40px rgba(0,0,0,0.55)) drop-shadow(0 4px 12px rgba(0,0,0,0.35));
         --shadow-btn: 0 1px 3px rgba(0,0,0,0.35);
@@ -296,19 +296,28 @@
 
     .page-1 { background-image: radial-gradient(ellipse 92% 62% at 50% -8%, var(--hero-glow) 0%, transparent 66%); }
 
-    /* A film behind the page: a noodle stall at a floating market, ten seconds in black and white, boats passing behind
-       the pot; the upright cut for a screen held upright and the wide one otherwise. It stays put under everything, the
-       cards stand solid over it, and it shows faintly through the page's own colour, so it sets the place and doesn't
-       ask to be watched. Safari on an iPhone won't draw a fixed layer past the top of its bottom toolbar, wherever the
-       toolbar has got to, and shows only the page's colour behind it; so the film is as tall as the screen Safari leaves
-       with its toolbar at full size, the smallest it ever leaves, which keeps it clear of the toolbar at any size and
-       holds it still as the toolbar grows and shrinks. On a phone it fades into the page's colour over its last stretch
-       on a smootherstep curve, flat at both ends, so the fade has no corner of its own where it starts or lands. The
-       picture inside keeps the whole screen's height, so it doesn't swell and shrink with the toolbar either. On the
-       dark page it shows a little stronger */
+    /* A photograph behind the page: a cook in a wide straw hat at a market stall, ladling from a wok between the pots,
+       in black and white. On a screen held upright it's the upright crop, from the top of the hat down past the big pot
+       in front, anchored to its top, so the book's cover stands over the cook: the face behind it, the hat rising above
+       it. On the biggest iPads held upright it sits centred instead, which moves the face clear of the cover; anchored
+       to its top, the cover's edge would cut it there. On a wide screen it's the stall from its top left corner,
+       anchored to its top, so the face sits beside the cover, clear of its edge; on a phone turned on its side it sits
+       on its foot, so the face is clear of the cover or off the screen, never cut by the cover's edge. It stays put
+       under everything, the cards stand solid over it, and it shows faintly through the page's own colour, so it sets
+       the place and doesn't ask to be looked at. Safari on an iPhone won't draw a fixed layer past the top of its
+       bottom toolbar, wherever the toolbar has got to, and shows only the page's colour behind it; so the photograph is
+       as tall as the screen Safari leaves with its toolbar at full size, the smallest it ever leaves, which keeps it
+       clear of the toolbar at any size and holds it still as the toolbar grows and shrinks. On a phone it fades into
+       the page's colour over its last stretch on a smootherstep curve, flat at both ends, so the fade has no corner of
+       its own where it starts or lands. The picture inside keeps the whole screen's height, so it doesn't swell and
+       shrink with the toolbar either. On the dark page it shows a little stronger */
     .backdrop { position: fixed; top: 0; left: 0; right: 0; height: 100vh; height: 100svh; z-index: -1; overflow: hidden; pointer-events: none; }
-    .backdrop-film { display: block; width: 100%; height: 100vh; height: 100lvh; object-fit: cover; opacity: 0.14; }
-    @media (prefers-color-scheme: dark) { .backdrop-film { opacity: 0.2; } }
+    .backdrop picture { display: block; }
+    .backdrop-photo { display: block; width: 100%; height: 100vh; height: 100lvh; object-fit: cover; opacity: 0.14; }
+    .backdrop-photo { object-position: 50% 0%; }
+    @media (orientation: portrait) and (min-width: 1024px) { .backdrop-photo { object-position: 50% 50%; } }
+    @media (orientation: landscape) and (max-height: 500px) { .backdrop-photo { object-position: 50% 100%; } }
+    @media (prefers-color-scheme: dark) { .backdrop-photo { opacity: 0.2; } }
     @media (max-width: 1023px) {
       .backdrop {
         --fade: linear-gradient(#000 calc(100% - 140px), rgb(0 0 0 / 0.991) calc(100% - 126px), rgb(0 0 0 / 0.942) calc(100% - 112px),
@@ -756,7 +765,7 @@
 </head>
 <body>
 
-<div class="backdrop" aria-hidden="true"><video class="backdrop-film" muted playsinline disablepictureinpicture disableremoteplayback preload="none" tabindex="-1"></video></div>
+<div class="backdrop" aria-hidden="true"><picture><source media="(orientation: portrait)" srcset="./market-stall-tall.jpg"><img class="backdrop-photo" src="./market-stall-wide.jpg" alt="" decoding="async"></picture></div>
 
 <nav class="site-nav" aria-label="Site">
   <div class="site-nav-inner">
@@ -1127,53 +1136,6 @@
         }
       });
     });
-
-    // The film: the upright cut for a screen held upright, the wide one otherwise. Readers who asked for less motion get
-    // its still and never download the film; a phone in Low Power Mode won't start it, and keeps the still. It moves at
-    // each end of the page and no longer, so it never needs a pause: as the page opens it plays through once and holds
-    // on its last frame, and when the reader comes to rest at the foot it plays through once more and holds the same way.
-    // A scroll away holds it at once; coming back to the same end finishes the run from the frame it stopped on, and an
-    // end reached after its run has finished, or the other end, starts it again from the first frame
-    var film = document.querySelector('.backdrop-film'), upright = window.matchMedia('(orientation: portrait)');
-    var atEnd = '', runEnd = '', runDone = false, endSettle = 0;
-    film.muted = film.defaultMuted = true;
-    function filmCut() {
-      var name = './film/floating-' + (upright.matches ? 'tall' : 'wide');
-      film.poster = name + '.jpg';
-      if (still.matches) { film.removeAttribute('src'); film.load(); }
-      else if (film.getAttribute('src') !== name + '.mp4') { film.src = name + '.mp4'; runEnd = ''; }
-      filmRun();
-    }
-    function filmRun() {
-      if (still.matches) return;
-      if (document.hidden || !atEnd) { film.pause(); return; }
-      if (runEnd !== atEnd || runDone) { runEnd = atEnd; runDone = false; if (film.currentTime) film.currentTime = 0; }
-      var playing = film.play();
-      // a refusal leaves the still; a start cut short by a scroll, a hidden tab or a turned phone waits for the next run
-      if (playing && playing.catch) playing.catch(function () {});
-    }
-    film.addEventListener('ended', function () { runDone = true; });
-    document.addEventListener('visibilitychange', filmRun);
-    upright.addEventListener('change', filmCut);
-    still.addEventListener('change', filmCut);
-    // an end allows a few points of give, so an iPhone's bounce at the top or the foot still counts as resting there;
-    // leaving it holds the film at once, and arriving plays it only when the scroll has settled, so it never flickers,
-    // even on a jump straight from one end to the other. A question opened at the foot lengthens the page under the
-    // reader, and that counts as leaving too
-    function filmEnd() { var y = window.scrollY; return y <= 8 ? 'top' : y >= document.documentElement.scrollHeight - window.innerHeight - 8 ? 'foot' : ''; }
-    function filmArrive(end) { atEnd = end; filmRun(); }
-    function filmScroll() {
-      clearTimeout(endSettle);
-      var end = filmEnd();
-      if (end === atEnd) return;
-      if (atEnd) filmArrive('');
-      if (end) endSettle = setTimeout(function () { filmArrive(filmEnd()); }, 160);
-    }
-    window.addEventListener('scroll', filmScroll, { passive: true });
-    window.addEventListener('resize', filmScroll);
-    if ('ResizeObserver' in window) new ResizeObserver(filmScroll).observe(document.body);
-    atEnd = filmEnd();
-    filmCut();
 
   });
 </script>
